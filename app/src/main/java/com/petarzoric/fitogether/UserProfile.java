@@ -13,9 +13,9 @@ public class UserProfile {
     int location;
 
     public UserProfile(String email,String name,int age,   int userlevel, int studio, int location) {
-        this.age = age;
-        this.name = name;
         this.email = email;
+        this.name = name;
+        this.age = age;
         this.userlevel = userlevel;
         this.studio = studio;
         this.location = location;
