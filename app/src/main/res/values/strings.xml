@@ -14,11 +14,29 @@
         <item>Clever Fit</item>
         <item>Andere</item>
     </string-array>
-    <string-array name="LocationFITSTAR"></string-array>
-    <string-array name="LocationFitnessFirst"></string-array>
-    <string-array name="LocationBodyandSoul"></string-array>
-    <string-array name="LocationMcFit"></string-array>
-    <string-array name="LocationCleverFit"></string-array>
-    <string-array name="LocationAndere"></string-array>
+    <string-array name="LocationFITSTAR">
+        <item>A </item>
+    </string-array>
+
+    <string-array name="LocationFitnessFirst">
+        <item> B</item>
+
+    </string-array>
+    <string-array name="LocationBodyandSoul">
+        <item> C</item>
+
+    </string-array>
+    <string-array name="LocationMcFit">
+        <item> D</item>
+
+    </string-array>
+    <string-array name="LocationCleverFit">
+        <item> E</item>
+
+    </string-array>
+    <string-array name="LocationAndere">
+        <item> F</item>
+
+    </string-array>
 
 </resources>

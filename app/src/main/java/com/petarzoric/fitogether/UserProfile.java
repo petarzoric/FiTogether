@@ -5,9 +5,9 @@ package com.petarzoric.fitogether;
  */
 
 public class UserProfile {
-    int age;
-    String name;
     String email;
+    String name;
+    int age;
     int userlevel;
     int studio;
     int location;
@@ -21,6 +21,40 @@ public class UserProfile {
         this.location = location;
     }
 
+    public UserProfile() {
+    }
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+
+
+    public int getUserlevel() {
+        return userlevel;
+    }
+
+    public void setUserlevel(int userlevel) {
+        this.userlevel = userlevel;
+    }
     public int getStudio() {
         return studio;
     }
@@ -37,38 +71,6 @@ public class UserProfile {
         this.location = location;
     }
 
-    public UserProfile() {
-    }
 
-    public int getAge() {
-        return age;
-    }
 
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public int getUserlevel() {
-        return userlevel;
-    }
-
-    public void setUserlevel(int userlevel) {
-        this.userlevel = userlevel;
-    }
 }

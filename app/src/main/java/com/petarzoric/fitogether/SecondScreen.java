@@ -63,13 +63,12 @@ public class SecondScreen extends AppCompatActivity {
             userlevel = level.getSelectedItemPosition();
             Intent intent = getIntent();
             usermail = intent.getStringExtra("email");
-            Intent userdata = new Intent(SecondScreen.this, StudioScreen.class);
             Intent user = new Intent(SecondScreen.this, StudioScreen.class);
-           // user.putExtra("mail", usermail);
-           // user.putExtra("age", userage);
-           // user.putExtra("level", userlevel);
-           // user.putExtra("name", username);
-            startActivity(userdata);
+            user.putExtra("mail", usermail);
+            user.putExtra("age", userage);
+            user.putExtra("level", userlevel);
+            user.putExtra("name", username);
+            startActivity(user);
 
         }
         else {

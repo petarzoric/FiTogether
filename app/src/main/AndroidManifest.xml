@@ -19,7 +19,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".SecondScreen" />
-        <activity android:name=".StudioScreen"></activity>
+        <activity android:name=".StudioScreen" />
+        <activity android:name=".MainScreen"></activity>
     </application>
 
 </manifest>
