@@ -1,3 +1,24 @@
 <resources>
     <string name="app_name">FiTogether</string>
+    <string-array name="Level">
+        <item>Anfänger</item>
+        <item>Fortgeschritten</item>
+        <item>Profi</item>
+        <item>Arnold</item>
+    </string-array>
+    <string-array name="Studio">
+        <item>FIT STAR</item>
+        <item>Fitness First</item>
+        <item>Body and Soul</item>
+        <item>McFit</item>
+        <item>Clever Fit</item>
+        <item>Andere</item>
+    </string-array>
+    <string-array name="LocationFITSTAR"></string-array>
+    <string-array name="LocationFitnessFirst"></string-array>
+    <string-array name="LocationBodyandSoul"></string-array>
+    <string-array name="LocationMcFit"></string-array>
+    <string-array name="LocationCleverFit"></string-array>
+    <string-array name="LocationAndere"></string-array>
+
 </resources>
