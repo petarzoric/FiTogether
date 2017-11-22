@@ -102,6 +102,7 @@ public class StudioScreen extends AppCompatActivity {
         profile = new UserProfile(usermail, username, userage, userlevel, userstudio, userlocation);
         databaseReference.child(username).setValue(profile);
         Intent data = new Intent(StudioScreen.this, MainScreen.class);
+        data.putExtra("email", usermail);
         startActivity(data);
 
     }
