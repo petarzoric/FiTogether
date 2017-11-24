@@ -20,7 +20,10 @@
         </activity>
         <activity android:name=".SecondScreen" />
         <activity android:name=".StudioScreen" />
-        <activity android:name=".MainScreen"></activity>
+        <activity
+            android:name=".MainScreen"
+            android:label="@string/title_activity_studio_screen2"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
