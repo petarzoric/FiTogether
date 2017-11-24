@@ -20,6 +20,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends AppCompatActivity {
     EditText email;
+    EditText email2;
     EditText password;
     DatabaseReference databaseReference;
     FirebaseAuth auth;
@@ -41,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
         }
         databaseReference = FirebaseDatabase.getInstance().getReference("Log In");
         email =  findViewById(R.id.email);
+        email2 =  findViewById(R.id.email2);
         password =  findViewById(R.id.password);
         auth = FirebaseAuth.getInstance();
         signup = findViewById(R.id.signup);
@@ -57,9 +59,7 @@ public class MainActivity extends AppCompatActivity {
                 if (user != null) {
 
                     Toast.makeText(MainActivity.this, "Welcome", Toast.LENGTH_LONG).show();
-                  //  Intent data = new Intent(MainActivity.this, SecondScreen.class);
-                  //  data.putExtra("email", email.getText().toString());
-                 //   startActivity(data);
+
 
                     // User is signed in
                 } else {
@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     public void startLogIn() {
-        String mail = email.getText().toString();
+        String mail = email.getText().toString()+"." + email2.getText().toString();
         String pw = password.getText().toString();
         if (!TextUtils.isEmpty(mail) && !TextUtils.isEmpty(pw)){
             auth.signInWithEmailAndPassword(mail, pw).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -118,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     public void startSignIn(){
-        String mail = email.getText().toString();
+        String mail = email.getText().toString() + "." + email2.getText().toString();
         String pw = password.getText().toString();
         if (!TextUtils.isEmpty(mail) && !TextUtils.isEmpty(pw)){
             auth.createUserWithEmailAndPassword(mail, pw).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -129,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
                     }else {
                         Toast.makeText(MainActivity.this, "Created Account", Toast.LENGTH_LONG).show();
                         Intent data = new Intent(MainActivity.this, SecondScreen.class);
-                        data.putExtra("email", email.getText().toString());
+                        data.putExtra("email", email.getText().toString() + "_DOT_" + email2.getText().toString());
                         startActivity(data);
                     }
                 }
