@@ -57,9 +57,9 @@ public class MainActivity extends AppCompatActivity {
                 if (user != null) {
 
                     Toast.makeText(MainActivity.this, "Welcome", Toast.LENGTH_LONG).show();
-                    Intent data = new Intent(MainActivity.this, SecondScreen.class);
-                    data.putExtra("email", email.getText().toString());
-                    startActivity(data);
+                  //  Intent data = new Intent(MainActivity.this, SecondScreen.class);
+                  //  data.putExtra("email", email.getText().toString());
+                 //   startActivity(data);
 
                     // User is signed in
                 } else {
@@ -109,6 +109,8 @@ public class MainActivity extends AppCompatActivity {
                     if (!task.isSuccessful()){
                         Toast.makeText(MainActivity.this, "Try Again", Toast.LENGTH_LONG).show();
                     }else {
+                        Intent data = new Intent(MainActivity.this, MainScreen.class);
+                        startActivity(data);
 
                     }
                 }
@@ -126,6 +128,9 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(MainActivity.this, "this email is already used", Toast.LENGTH_LONG).show();
                     }else {
                         Toast.makeText(MainActivity.this, "Created Account", Toast.LENGTH_LONG).show();
+                        Intent data = new Intent(MainActivity.this, SecondScreen.class);
+                        data.putExtra("email", email.getText().toString());
+                        startActivity(data);
                     }
                 }
             });
