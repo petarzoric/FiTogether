@@ -39,10 +39,10 @@
                 android:text="Dashboard" />
 
             <android.support.design.widget.TabItem
-                android:id="@+id/tabItem2"
+                android:id="@+id/tabcalender"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/tab_text_2" />
+                android:text="Calender" />
 
             <android.support.design.widget.TabItem
                 android:id="@+id/tabsearch"

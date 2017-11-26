@@ -96,7 +96,7 @@ public class MainScreen extends AppCompatActivity {
                     Tab1Dashboard tab1 = new Tab1Dashboard();
                     return tab1;
                 case 1:
-                    Tab1Dashboard tab2 = new Tab1Dashboard();
+                    Tab2Calender tab2 = new Tab2Calender();
                     return tab2;
 
                 case 2:
@@ -125,7 +125,7 @@ public class MainScreen extends AppCompatActivity {
                 case 0:
                     return "Dashboard";
                 case 1:
-                    return "Section 2";
+                    return "Calender";
 
                 case 2:
                     return "Search";
