@@ -27,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
     FirebaseAuth.AuthStateListener authListener;
     Button signup;
     Button login;
+    String emailtext;
+    String key;
 
 
 
@@ -109,8 +111,10 @@ public class MainActivity extends AppCompatActivity {
                     if (!task.isSuccessful()){
                         Toast.makeText(MainActivity.this, "Try Again", Toast.LENGTH_LONG).show();
                     }else {
+                        emailtext = email.getText().toString() + "." + email2.getText().toString();
+                        key = email.getText().toString() + "_DOT_" + email2.getText().toString();
                         Intent data = new Intent(MainActivity.this, MainScreen.class);
-                        data.putExtra("email", email.getText().toString() + "_DOT_" + email2.getText().toString());
+                        data.putExtra("key", key);
                         startActivity(data);
 
                     }
@@ -128,9 +132,12 @@ public class MainActivity extends AppCompatActivity {
                     if (!task.isSuccessful()){
                         Toast.makeText(MainActivity.this, "this email is already used", Toast.LENGTH_LONG).show();
                     }else {
+                        emailtext = email.getText().toString() + "." + email2.getText().toString();
+                        key = email.getText().toString() + "_DOT_" + email2.getText().toString();
                         Toast.makeText(MainActivity.this, "Created Account", Toast.LENGTH_LONG).show();
                         Intent data = new Intent(MainActivity.this, SecondScreen.class);
-                        data.putExtra("email", email.getText().toString() + "_DOT_" + email2.getText().toString());
+                        data.putExtra("key", key);
+                        data.putExtra("email", emailtext);
                         startActivity(data);
                     }
                 }

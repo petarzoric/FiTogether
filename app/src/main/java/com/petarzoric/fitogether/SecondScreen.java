@@ -21,6 +21,7 @@ public class SecondScreen extends AppCompatActivity {
     String username;
     int userlevel;
     String usermail;
+    String key;
 
 
     @Override
@@ -62,8 +63,10 @@ public class SecondScreen extends AppCompatActivity {
             userlevel = level.getSelectedItemPosition();
             Intent intent = getIntent();
             usermail = intent.getStringExtra("email");
+            key = intent. getStringExtra("key");
             Intent user = new Intent(SecondScreen.this, StudioScreen.class);
             user.putExtra("mail", usermail);
+            user.putExtra("key", key);
             user.putExtra("age", userage);
             user.putExtra("level", userlevel);
             user.putExtra("name", username);

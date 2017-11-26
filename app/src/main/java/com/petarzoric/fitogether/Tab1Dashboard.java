@@ -8,6 +8,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.app.Fragment;
 import android.widget.Button;
+import android.widget.TextView;
+
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 
 /**
@@ -16,12 +25,31 @@ import android.widget.Button;
 
 public class Tab1Dashboard extends Fragment {
     Button logout;
+    FirebaseDatabase database;
+    DatabaseReference databaseReference;
+    UserProfile profile;
+    TextView emailtext;
+    TextView nametext;
+    TextView leveltext;
+    TextView agetext;
+    TextView studiotext;
+    String level;
+    String studio;
+
+
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.tab1dashboard, container, false);
+        database = FirebaseDatabase.getInstance();
+        databaseReference = database.getReference();
+        emailtext = rootView.findViewById(R.id.emailtext);
+        nametext = rootView.findViewById(R.id.nametext);
+        leveltext = rootView.findViewById(R.id.leveltext);
+        agetext = rootView.findViewById(R.id.agetext);
+        studiotext = rootView.findViewById(R.id.studiotext);
         logout = rootView.findViewById(R.id.logout);
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -31,6 +59,58 @@ public class Tab1Dashboard extends Fragment {
                 startActivity(intent);
             }
         });
+        databaseReference.child("UserData").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+               Iterable<DataSnapshot> children = dataSnapshot.getChildren();
+               Intent data = getActivity().getIntent();
+               String email = data.getStringExtra("key");
+               for(DataSnapshot child : children){
+                   if (child.getKey().equals(email)){
+                       profile = child.getValue(UserProfile.class);
+                   }
+               }
+                emailtext.setText(profile.getEmail());
+                nametext.setText(profile.getName());
+                agetext.setText(String.valueOf(profile.getAge()));
+                if (profile.getUserlevel() == 0){
+                    level = "Anfänger";
+                }else if (profile.getUserlevel() == 1){
+                    level = "Fortgeschritten";
+                }else if (profile.getUserlevel() == 2){
+                    level = "Profi";
+                }else if (profile.getUserlevel() == 0){
+                    level = "Arnold";
+                }
+                leveltext.setText(level);
+                String[] studios = getResources().getStringArray(R.array.Studio);
+                String[] location = getResources().getStringArray(R.array.LocationFITSTAR);
+                if (profile.getStudio() == 0){
+                        location = getResources().getStringArray(R.array.LocationFITSTAR);
+                }else if (profile.getStudio() == 1){
+                        location = getResources().getStringArray(R.array.LocationFitnessFirst);
+                }else if (profile.getStudio() == 2){
+                        location = getResources().getStringArray(R.array.LocationBodyandSoul);
+                }else if (profile.getStudio() == 3){
+                        location = getResources().getStringArray(R.array.LocationMcFit);
+                }else if (profile.getStudio() == 4){
+                        location = getResources().getStringArray(R.array.LocationCleverFit);
+                }else if (profile.getStudio() == 5){
+                        location = getResources().getStringArray(R.array.LocationAndere);
+                }
+                studio = studios[profile.getStudio()] +" "+location[profile.getLocation()];
+                studiotext.setText(studio);
+
+
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
         return rootView;
     }
 }

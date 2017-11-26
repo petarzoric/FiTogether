@@ -18,6 +18,7 @@ public class StudioScreen extends AppCompatActivity {
     int userage;
     String username;
     String usermail;
+    String key;
     UserProfile profile;
     DatabaseReference databaseReference;
     Button save;
@@ -98,11 +99,12 @@ public class StudioScreen extends AppCompatActivity {
         userage = intent.getIntExtra("age", 0);
         usermail = intent.getStringExtra("mail");
         username = intent.getStringExtra("name");
+        key = intent.getStringExtra("key");
 
         profile = new UserProfile(usermail, username, userage, userlevel, userstudio, userlocation);
-        databaseReference.child(usermail).setValue(profile);
+        databaseReference.child(key).setValue(profile);
         Intent data = new Intent(StudioScreen.this, MainScreen.class);
-        data.putExtra("email", usermail);
+        data.putExtra("key", key);
         startActivity(data);
 
     }
