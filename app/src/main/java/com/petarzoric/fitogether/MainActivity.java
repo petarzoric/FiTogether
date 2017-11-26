@@ -110,6 +110,7 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(MainActivity.this, "Try Again", Toast.LENGTH_LONG).show();
                     }else {
                         Intent data = new Intent(MainActivity.this, MainScreen.class);
+                        data.putExtra("email", email.getText().toString() + "_DOT_" + email2.getText().toString());
                         startActivity(data);
 
                     }
