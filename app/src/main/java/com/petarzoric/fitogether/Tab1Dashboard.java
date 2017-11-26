@@ -1,6 +1,7 @@
 package com.petarzoric.fitogether;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +26,9 @@ public class Tab1Dashboard extends Fragment {
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                intent.putExtra("Signout", true);
+                startActivity(intent);
             }
         });
         return rootView;
