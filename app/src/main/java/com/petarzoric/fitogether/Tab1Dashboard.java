@@ -35,6 +35,7 @@ public class Tab1Dashboard extends Fragment {
     TextView studiotext;
     String level;
     String studio;
+    Button editprofile;
 
 
 
@@ -51,6 +52,26 @@ public class Tab1Dashboard extends Fragment {
         agetext = rootView.findViewById(R.id.agetext);
         studiotext = rootView.findViewById(R.id.studiotext);
         logout = rootView.findViewById(R.id.logout);
+        editprofile = rootView.findViewById(R.id.editprofile);
+        final Intent data = getActivity().getIntent();
+        final String key = data.getStringExtra("key");
+
+        editprofile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent userdata = new Intent(getActivity(), EditProfile.class);
+                userdata.putExtra("email", profile.getEmail());
+                userdata.putExtra("name", profile.getName());
+                userdata.putExtra("age", profile.getAge());
+                userdata.putExtra("level", profile.getUserlevel());
+                userdata.putExtra("location", profile.getLocation());
+                userdata.putExtra("studio", profile.getStudio());
+                userdata.putExtra("studios", studio);
+                userdata.putExtra("key", key );
+                startActivity(userdata);
+
+            }
+        });
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -63,10 +84,8 @@ public class Tab1Dashboard extends Fragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                Iterable<DataSnapshot> children = dataSnapshot.getChildren();
-               Intent data = getActivity().getIntent();
-               String email = data.getStringExtra("key");
                for(DataSnapshot child : children){
-                   if (child.getKey().equals(email)){
+                   if (child.getKey().equals(key)){
                        profile = child.getValue(UserProfile.class);
                    }
                }

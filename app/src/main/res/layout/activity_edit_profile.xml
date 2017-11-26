@@ -4,41 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.petarzoric.fitogether.MainScreen">
+    tools:context="com.petarzoric.fitogether.EditProfile">
 
     <TextView
-        android:id="@+id/acc"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <Button
-        android:id="@+id/logout"
-        android:layout_width="80dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="Logout"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <TextView
-        android:id="@+id/emaillabel"
+        android:id="@+id/emaillabel2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -54,7 +23,7 @@
         app:layout_constraintVertical_bias="0.110000014" />
 
     <TextView
-        android:id="@+id/emailtext"
+        android:id="@+id/emailtext2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -69,7 +38,7 @@
         app:layout_constraintVertical_bias="0.110000014" />
 
     <TextView
-        android:id="@+id/namelabel"
+        android:id="@+id/namelabel2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -81,11 +50,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/emaillabel"
+        app:layout_constraintTop_toBottomOf="@+id/emaillabel2"
         app:layout_constraintVertical_bias="0.050000012" />
 
     <TextView
-        android:id="@+id/agelabel"
+        android:id="@+id/agelabel2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -97,11 +66,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/namelabel"
+        app:layout_constraintTop_toBottomOf="@+id/namelabel2"
         app:layout_constraintVertical_bias="0.050000012" />
 
     <TextView
-        android:id="@+id/levellabel"
+        android:id="@+id/levellabel2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -113,11 +82,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/agelabel"
-        app:layout_constraintVertical_bias="0.050000012" />
+        app:layout_constraintTop_toBottomOf="@+id/agelabel2"
+        app:layout_constraintVertical_bias="0.089999974" />
 
     <TextView
-        android:id="@+id/studioLabel"
+        android:id="@+id/studioLabel2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -129,10 +98,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/levellabel"
+        app:layout_constraintTop_toBottomOf="@+id/levellabel2"
         app:layout_constraintVertical_bias="0.050000012" />
 
-    <TextView
+    <EditText
         android:id="@+id/nametext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -140,42 +109,48 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="TextView"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.61"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/emailtext"
-        app:layout_constraintVertical_bias="0.050000012" />
+        app:layout_constraintTop_toBottomOf="@+id/emailtext2"
+        app:layout_constraintVertical_bias="0.01999998" />
 
-    <TextView
+    <EditText
         android:id="@+id/agetext"
         android:layout_width="wrap_content"
-        android:layout_height="15dp"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="TextView"
+        android:ems="10"
+        android:inputType="numberSigned"
+        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.61"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nametext"
-        app:layout_constraintVertical_bias="0.050000012" />
+        app:layout_constraintVertical_bias="0.00999999" />
 
-    <TextView
-        android:id="@+id/leveltext"
+    <Spinner
+        android:id="@+id/levelspinner"
         android:layout_width="wrap_content"
-        android:layout_height="19dp"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="TextView"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.8"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/agetext"
-        app:layout_constraintVertical_bias="0.050000012" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/studiotext"
@@ -189,23 +164,22 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/leveltext"
-        app:layout_constraintVertical_bias="0.050000012" />
+        app:layout_constraintTop_toBottomOf="@+id/levelspinner"
+        app:layout_constraintVertical_bias="0.029999971" />
 
     <Button
-        android:id="@+id/editprofile"
+        android:id="@+id/savechanges"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="Bearbeiten"
+        android:text="Änderungen Speichern"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.77" />
 
 </android.support.constraint.ConstraintLayout>

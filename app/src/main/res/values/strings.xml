@@ -39,10 +39,10 @@
 
     </string-array>
     <string-array name="Training">
-    <item>Ganzkörper</item>
-    <item>Oberkörper</item>
-    <item>Unterkörper</item>
-    <item>Cardio</item>
+        <item>Ganzkörper</item>
+        <item>Oberkörper</item>
+        <item>Unterkörper</item>
+        <item>Cardio</item>
     </string-array>
 
     <string name="title_activity_studio_screen2">StudioScreen2</string>
