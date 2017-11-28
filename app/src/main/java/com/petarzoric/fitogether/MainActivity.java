@@ -22,7 +22,6 @@ public class MainActivity extends AppCompatActivity {
     EditText email;
     EditText email2;
     EditText password;
-    DatabaseReference databaseReference;
     FirebaseAuth auth;
     FirebaseAuth.AuthStateListener authListener;
     Button signup;
@@ -42,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(MainActivity.this, "Signed Out", Toast.LENGTH_LONG).show();
 
         }
-        databaseReference = FirebaseDatabase.getInstance().getReference("Log In");
         email =  findViewById(R.id.email);
         email2 =  findViewById(R.id.email2);
         password =  findViewById(R.id.password);
