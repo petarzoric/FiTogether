@@ -15,23 +15,44 @@
         <item>Andere</item>
     </string-array>
     <string-array name="LocationFITSTAR">
-        <item>A </item>
+        <item>Berg am Laim</item>
+        <item>Giesin</item>
+        <item>Neuhausen</item>
+        <item>Pasing</item>
+        <item>Perlach</item>
+        <item>Sendling</item>
     </string-array>
 
     <string-array name="LocationFitnessFirst">
-        <item> B</item>
+        <item>Haidhausen</item>
+        <item>Laim</item>
+        <item>Marienplatz</item>
+        <item>Schwabing</item>
 
     </string-array>
     <string-array name="LocationBodyandSoul">
-        <item> C</item>
+        <item>Englischer Garten</item>
+        <item>Erding</item>
+        <item>München Mitte</item>
+        <item>München Nord</item>
+        <item>Sendling</item>
+        <item>Tudering</item>
 
     </string-array>
     <string-array name="LocationMcFit">
-        <item> D</item>
+        <item>Laim</item>
+        <item>Obergiesing</item>
+        <item>Obersendling</item>
+        <item>Schwabing</item>
 
     </string-array>
     <string-array name="LocationCleverFit">
-        <item> E</item>
+        <item>Aubing</item>
+        <item>Berg am Laim</item>
+        <item>Giesing</item>
+        <item>München Mitte</item>
+        <item>München Nord</item>
+        <item>München West</item>
 
     </string-array>
     <string-array name="LocationAndere">
