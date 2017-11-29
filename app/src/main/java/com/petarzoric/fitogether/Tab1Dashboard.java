@@ -118,7 +118,7 @@ public class Tab1Dashboard extends Fragment {
                 leveltext.setText(level);
                 gendertext.setText(gender);
                 String[] studios = getResources().getStringArray(R.array.Studio);
-                String[] location = getResources().getStringArray(R.array.LocationFITSTAR);
+                String[] location;
                 if (profile.getStudio() == 0){
                         location = getResources().getStringArray(R.array.LocationFITSTAR);
                         studio = studios[profile.getStudio()] +" "+location[profile.getLocation()];
