@@ -19,12 +19,14 @@ public class EditProfile extends AppCompatActivity {
     EditText age;
     Spinner level;
     TextView studio;
+    TextView gendertext;
     Button savechanges;
     DatabaseReference databaseReference;
     UserProfile profile;
     String key;
     int intentstudio;
     int intentlocation;
+    int genderint;
 
 
 
@@ -38,11 +40,13 @@ public class EditProfile extends AppCompatActivity {
         level = findViewById(R.id.levelspinner);
         studio = findViewById(R.id.studiotext);
         savechanges = findViewById(R.id.savechanges);
+        gendertext = findViewById(R.id.gendertext);
 
         Intent intent = getIntent();
 
         emailtext.setText(intent.getStringExtra("email"));
         name.setText(intent.getStringExtra("name"));
+        gendertext.setText(intent.getStringExtra("gender"));
         age.setText(String.valueOf(intent.getIntExtra("age", 0)));
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.Level, R.layout.support_simple_spinner_dropdown_item);
         level.setAdapter(adapter);
@@ -51,6 +55,7 @@ public class EditProfile extends AppCompatActivity {
         databaseReference = FirebaseDatabase.getInstance().getReference("UserData");
         intentlocation= intent.getIntExtra("location",0);
         intentstudio= intent.getIntExtra("studio",0);
+        genderint = intent.getIntExtra("genderint", 0);
         key = intent.getStringExtra("key");
         savechanges.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,7 +68,7 @@ public class EditProfile extends AppCompatActivity {
 
     }
     public void saveChanges(){
-        profile = new UserProfile(emailtext.getText().toString(), name.getText().toString(), Integer.parseInt(age.getText().toString()), level.getSelectedItemPosition() , intentstudio, intentlocation);
+        profile = new UserProfile(emailtext.getText().toString(), name.getText().toString(), Integer.parseInt(age.getText().toString()), level.getSelectedItemPosition() , intentstudio, intentlocation, genderint);
         databaseReference.child(key).setValue(profile);
         Intent data = new Intent(EditProfile.this, MainScreen.class);
         data.putExtra("key", key);

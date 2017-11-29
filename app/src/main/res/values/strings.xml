@@ -6,6 +6,11 @@
         <item>Profi</item>
         <item>Arnold</item>
     </string-array>
+    <string-array name="Geschlecht">
+        <item>Männlich</item>
+        <item>Weiblich</item>
+        <item>Anderes</item>
+    </string-array>
     <string-array name="Studio">
         <item>FIT STAR</item>
         <item>Fitness First</item>

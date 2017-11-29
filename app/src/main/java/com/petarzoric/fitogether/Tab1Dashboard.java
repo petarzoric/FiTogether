@@ -33,8 +33,10 @@ public class Tab1Dashboard extends Fragment {
     TextView leveltext;
     TextView agetext;
     TextView studiotext;
+    TextView gendertext;
     String level;
     String studio;
+    String gender;
     Button editprofile;
 
 
@@ -53,6 +55,7 @@ public class Tab1Dashboard extends Fragment {
         studiotext = rootView.findViewById(R.id.studiotext);
         logout = rootView.findViewById(R.id.logout);
         editprofile = rootView.findViewById(R.id.editprofile);
+        gendertext = rootView.findViewById(R.id.gendertext);
         final Intent data = getActivity().getIntent();
         final String key = data.getStringExtra("key");
 
@@ -66,7 +69,9 @@ public class Tab1Dashboard extends Fragment {
                 userdata.putExtra("level", profile.getUserlevel());
                 userdata.putExtra("location", profile.getLocation());
                 userdata.putExtra("studio", profile.getStudio());
+                userdata.putExtra("gender", gender);
                 userdata.putExtra("studios", studio);
+                userdata.putExtra("genderint", profile.getGender());
                 userdata.putExtra("key", key );
                 startActivity(userdata);
 
@@ -94,14 +99,24 @@ public class Tab1Dashboard extends Fragment {
                 agetext.setText(String.valueOf(profile.getAge()));
                 if (profile.getUserlevel() == 0){
                     level = "Anfänger";
-                }else if (profile.getUserlevel() == 1){
-                    level = "Fortgeschritten";
-                }else if (profile.getUserlevel() == 2){
-                    level = "Profi";
                 }else if (profile.getUserlevel() == 0){
+                    level = "Fortgeschritten";
+                }else if (profile.getUserlevel() == 1){
+                    level = "Profi";
+                }else if (profile.getUserlevel() == 2){
                     level = "Arnold";
                 }
+
+                if (profile.getGender() == 0){
+                    gender = "Männlich";
+                }else if (profile.getGender() == 1){
+                    gender = "Weiblich";
+                }else if (profile.getGender() == 2){
+                    gender = "Anderes";
+                }
+
                 leveltext.setText(level);
+                gendertext.setText(gender);
                 String[] studios = getResources().getStringArray(R.array.Studio);
                 String[] location = getResources().getStringArray(R.array.LocationFITSTAR);
                 if (profile.getStudio() == 0){

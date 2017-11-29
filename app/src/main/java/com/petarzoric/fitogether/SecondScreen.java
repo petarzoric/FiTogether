@@ -17,9 +17,11 @@ public class SecondScreen extends AppCompatActivity {
     EditText name;
     EditText age;
     Spinner level;
+    Spinner gender;
     int userage;
     String username;
     int userlevel;
+    int usergender;
     String usermail;
     String key;
 
@@ -44,8 +46,11 @@ public class SecondScreen extends AppCompatActivity {
         name =  findViewById(R.id.name);
         age = findViewById(R.id.age);
         level = findViewById(R.id.level);
+        gender = findViewById(R.id.gender);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.Level, R.layout.support_simple_spinner_dropdown_item);
         level.setAdapter(adapter);
+        ArrayAdapter<CharSequence> genderadapter = ArrayAdapter.createFromResource(this, R.array.Geschlecht, R.layout.support_simple_spinner_dropdown_item);
+        gender.setAdapter(genderadapter);
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -61,6 +66,7 @@ public class SecondScreen extends AppCompatActivity {
             username = name.getText().toString();
             userage = Integer.parseInt(age.getText().toString());
             userlevel = level.getSelectedItemPosition();
+            usergender = gender.getSelectedItemPosition();
             Intent intent = getIntent();
             usermail = intent.getStringExtra("email");
             key = intent. getStringExtra("key");
@@ -70,6 +76,7 @@ public class SecondScreen extends AppCompatActivity {
             user.putExtra("age", userage);
             user.putExtra("level", userlevel);
             user.putExtra("name", username);
+            user.putExtra("gender", usergender);
             startActivity(user);
 
         }

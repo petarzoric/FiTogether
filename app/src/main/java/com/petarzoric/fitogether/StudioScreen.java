@@ -26,6 +26,7 @@ public class StudioScreen extends AppCompatActivity {
     Spinner location;
     int userstudio;
     int userlocation;
+    int usergender;
 
 
 
@@ -99,9 +100,10 @@ public class StudioScreen extends AppCompatActivity {
         userage = intent.getIntExtra("age", 0);
         usermail = intent.getStringExtra("mail");
         username = intent.getStringExtra("name");
+        usergender = intent.getIntExtra("gender", 0);
         key = intent.getStringExtra("key");
 
-        profile = new UserProfile(usermail, username, userage, userlevel, userstudio, userlocation);
+        profile = new UserProfile(usermail, username, userage, userlevel, userstudio, userlocation, usergender);
         databaseReference.child(key).setValue(profile);
         Intent data = new Intent(StudioScreen.this, MainScreen.class);
         data.putExtra("key", key);

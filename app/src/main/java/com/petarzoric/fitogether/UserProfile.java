@@ -11,14 +11,16 @@ public class UserProfile {
     int userlevel;
     int studio;
     int location;
+    int gender;
 
-    public UserProfile(String email,String name,int age,   int userlevel, int studio, int location) {
+    public UserProfile(String email,String name,int age,   int userlevel, int studio, int location, int gender) {
         this.email = email;
         this.name = name;
         this.age = age;
         this.userlevel = userlevel;
         this.studio = studio;
         this.location = location;
+        this.gender = gender;
     }
 
     public UserProfile() {
@@ -71,6 +73,11 @@ public class UserProfile {
         this.location = location;
     }
 
+    public int getGender() {
+        return gender;
+    }
 
-
+    public void setGender(int gender) {
+        this.gender = gender;
+    }
 }
