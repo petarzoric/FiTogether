@@ -10,11 +10,13 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 /**
  * Created by Alex on 26.11.2017.
@@ -26,9 +28,12 @@ public class Tab2Calender extends Fragment {
     CalendarView calendar;
     String selectedDate;
     String key;
-    DatabaseReference databaseReference;
+    DatabaseReference databaseReferencecalender;
+    FirebaseDatabase database;
+    DatabaseReference databaseReferenceprofile;
     String trainingType;
     Training trainingProfile;
+    UserProfile profile;
 
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -38,12 +43,14 @@ public class Tab2Calender extends Fragment {
         ArrayAdapter<CharSequence> trainingadapter = ArrayAdapter.createFromResource(getActivity(), R.array.Training, R.layout.support_simple_spinner_dropdown_item);
         training.setAdapter(trainingadapter);
         saveTraining = rootView.findViewById(R.id.savetraining);
+
         saveTraining.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
             }
         });
+
         Intent intent = getActivity().getIntent();
         key = intent.getStringExtra("key");
         calendar = rootView.findViewById(R.id.calendarView);
@@ -66,14 +73,37 @@ public class Tab2Calender extends Fragment {
             }
         });
 
+
+        database = FirebaseDatabase.getInstance();
+        databaseReferenceprofile = database.getReference();
+        databaseReferenceprofile.child("UserData").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Iterable<DataSnapshot> children = dataSnapshot.getChildren();
+                for(DataSnapshot child : children){
+                    if (child.getKey().equals(key)){
+                        profile = child.getValue(UserProfile.class);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
         return rootView;
     }
-    public void saveTraining(){
+
+
+
+            public void saveTraining(){
         if (selectedDate != null) {
-            databaseReference = FirebaseDatabase.getInstance().getReference(selectedDate);
+            databaseReferencecalender = FirebaseDatabase.getInstance().getReference(selectedDate);
             trainingType = training.getSelectedItem().toString();
-            trainingProfile = new Training(trainingType);
-            databaseReference.child(key).setValue(trainingType);
+            trainingProfile = new Training(trainingType, profile.getUserlevel(), profile.getStudio(), profile.getLocation());
+            databaseReferencecalender.child(key).setValue(trainingProfile);
         }else{
             Toast.makeText(getActivity(), "Please Select a Date", Toast.LENGTH_SHORT).show();
         }

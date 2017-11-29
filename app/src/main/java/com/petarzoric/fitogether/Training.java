@@ -3,21 +3,50 @@ package com.petarzoric.fitogether;
 
 
 public class Training {
-    String trainingType;
+    String trainingstype;
+    int level;
+    int studio;
+    int location;
+
+    public Training(String trainingstype, int level, int studio, int location) {
+        this.trainingstype = trainingstype;
+        this.level = level;
+        this.studio = studio;
+        this.location = location;
+    }
 
     public Training() {
     }
 
-    public Training(String trainingType) {
-        this.trainingType = trainingType;
+    public String getTrainingstype() {
+        return trainingstype;
     }
 
-    public String getTrainingType() {
-        return trainingType;
+    public void setTrainingstype(String trainingstype) {
+        this.trainingstype = trainingstype;
     }
 
-    public void setTrainingType(String trainingType) {
-        this.trainingType = trainingType;
+    public int getLevel() {
+        return level;
     }
 
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
+    public int getStudio() {
+        return studio;
+    }
+
+    public void setStudio(int studio) {
+        this.studio = studio;
+    }
+
+    public int getLocation() {
+        return location;
+    }
+
+    public void setLocation(int location) {
+        this.location = location;
+    }
 }
