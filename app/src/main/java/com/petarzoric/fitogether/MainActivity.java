@@ -15,8 +15,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
     EditText email;
@@ -28,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
     Button login;
     String emailtext;
     String key;
+    DatabaseReference databaseReference;
+    FirebaseDatabase database;
 
 
 
@@ -47,6 +52,8 @@ public class MainActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         signup = findViewById(R.id.signup);
         login =  findViewById(R.id.login);
+        database = FirebaseDatabase.getInstance();
+        databaseReference = database.getReference();
 
 
 
@@ -111,9 +118,36 @@ public class MainActivity extends AppCompatActivity {
                     }else {
                         emailtext = email.getText().toString() + "." + email2.getText().toString();
                         key = email.getText().toString() + "_DOT_" + email2.getText().toString();
-                        Intent data = new Intent(MainActivity.this, MainScreen.class);
-                        data.putExtra("key", key);
-                        startActivity(data);
+                        databaseReference.child("UserData").addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                Iterable<DataSnapshot> children = dataSnapshot.getChildren();
+                                boolean exists = false;
+                                for (DataSnapshot child : children) {
+                                    if (child.getKey().equals(key)) {
+                                        exists = true;
+                                    }
+                                }
+                                    if (exists){
+                                        Intent data = new Intent(MainActivity.this, MainScreen.class);
+                                        data.putExtra("key", key);
+                                        startActivity(data);
+                                    }
+                                    else{
+                                        Intent data = new Intent(MainActivity.this, SecondScreen.class);
+                                        data.putExtra("key", key);
+                                        data.putExtra("email", emailtext);
+                                        startActivity(data);
+                                    }
+                                }
+
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+
 
                     }
                 }
