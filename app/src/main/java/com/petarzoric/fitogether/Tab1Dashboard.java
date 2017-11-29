@@ -121,18 +121,29 @@ public class Tab1Dashboard extends Fragment {
                 String[] location = getResources().getStringArray(R.array.LocationFITSTAR);
                 if (profile.getStudio() == 0){
                         location = getResources().getStringArray(R.array.LocationFITSTAR);
+                        studio = studios[profile.getStudio()] +" "+location[profile.getLocation()];
+
                 }else if (profile.getStudio() == 1){
                         location = getResources().getStringArray(R.array.LocationFitnessFirst);
+                        studio = studios[profile.getStudio()] +" "+location[profile.getLocation()];
+
                 }else if (profile.getStudio() == 2){
                         location = getResources().getStringArray(R.array.LocationBodyandSoul);
+                        studio = studios[profile.getStudio()] +" "+location[profile.getLocation()];
+
                 }else if (profile.getStudio() == 3){
                         location = getResources().getStringArray(R.array.LocationMcFit);
+                        studio = studios[profile.getStudio()] +" "+location[profile.getLocation()];
+
                 }else if (profile.getStudio() == 4){
                         location = getResources().getStringArray(R.array.LocationCleverFit);
+                        studio = studios[profile.getStudio()] +" "+location[profile.getLocation()];
+
                 }else if (profile.getStudio() == 5){
                         location = getResources().getStringArray(R.array.LocationAndere);
+                        studio = location[profile.getLocation()];
+
                 }
-                studio = studios[profile.getStudio()] +" "+location[profile.getLocation()];
                 studiotext.setText(studio);
 
 
