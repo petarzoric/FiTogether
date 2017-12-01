@@ -99,11 +99,11 @@ public class Tab1Dashboard extends Fragment {
                 agetext.setText(String.valueOf(profile.getAge()));
                 if (profile.getUserlevel() == 0){
                     level = "Anfänger";
-                }else if (profile.getUserlevel() == 0){
-                    level = "Fortgeschritten";
                 }else if (profile.getUserlevel() == 1){
-                    level = "Profi";
+                    level = "Fortgeschritten";
                 }else if (profile.getUserlevel() == 2){
+                    level = "Profi";
+                }else if (profile.getUserlevel() == 3){
                     level = "Arnold";
                 }
 
