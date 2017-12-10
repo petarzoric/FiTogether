@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     String key;
     DatabaseReference databaseReference;
     FirebaseDatabase database;
+    FirebaseUser currentUser;
 
 
 
@@ -62,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
         authListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
+                currentUser = firebaseAuth.getCurrentUser();
                 if (user != null) {
 
                     Toast.makeText(MainActivity.this, "Welcome", Toast.LENGTH_LONG).show();
@@ -73,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
 
 
                     // User is signed out
+                    Toast.makeText(MainActivity.this, "user is signed in", Toast.LENGTH_LONG).show();
                 }
                 // ...
             }
@@ -96,6 +98,8 @@ public class MainActivity extends AppCompatActivity {
     public void onStart() {
         super.onStart();
         auth.addAuthStateListener(authListener);
+
+
     }
     @Override
     public void onStop() {
