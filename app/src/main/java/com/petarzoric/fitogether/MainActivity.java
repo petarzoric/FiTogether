@@ -67,17 +67,16 @@ public class MainActivity extends AppCompatActivity {
                 if (currentUser != null) {
 
                     Toast.makeText(MainActivity.this, "Welcome", Toast.LENGTH_LONG).show();
-
+                    Toast.makeText(MainActivity.this, "user is signed in", Toast.LENGTH_LONG).show();
+                    // Falls der User bereits einen Account hat, wird er automatisch eingeloggt
+                    startLogIn();
 
                     // User is signed in
                 } else {
 
 
                     // User is signed out
-                    Toast.makeText(MainActivity.this, "user is signed in", Toast.LENGTH_LONG).show();
-                    Intent startIntent = new Intent(MainActivity.this, MainScreen.class);
-                    startActivity(startIntent);
-                    finish();
+
                 }
                 // ...
             }
@@ -101,6 +100,7 @@ public class MainActivity extends AppCompatActivity {
     public void onStart() {
         super.onStart();
         auth.addAuthStateListener(authListener);
+
 
 
 
