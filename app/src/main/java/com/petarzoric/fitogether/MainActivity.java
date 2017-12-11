@@ -272,7 +272,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void checkButtons(){
-        if (!(TextUtils.isEmpty(email.getText().toString()) || TextUtils.isEmpty(password.getText().toString()) || TextUtils.isEmpty(email2.getText().toString()))){
+        if (!(TextUtils.isEmpty(email.getText().toString()) || password.getText().toString().length() < 6 || TextUtils.isEmpty(email2.getText().toString()))){
             login.setEnabled(true);
             signup.setEnabled(true);
         }
