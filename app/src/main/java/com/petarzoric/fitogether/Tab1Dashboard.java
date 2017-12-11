@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -83,6 +84,7 @@ public class Tab1Dashboard extends Fragment {
                 Intent intent = new Intent(getActivity(), MainActivity.class);
                 intent.putExtra("Signout", true);
                 startActivity(intent);
+                FirebaseAuth.getInstance().signOut();
             }
         });
         databaseReference.child("UserData").addValueEventListener(new ValueEventListener() {

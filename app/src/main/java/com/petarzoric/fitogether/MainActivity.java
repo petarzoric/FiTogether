@@ -30,6 +30,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import org.w3c.dom.Text;
 
+import java.util.HashMap;
+
 
 public class MainActivity extends AppCompatActivity {
     EditText email;
@@ -46,6 +48,8 @@ public class MainActivity extends AppCompatActivity {
     FirebaseUser currentUser;
     SharedPreferences settings;
     private ProgressDialog progressDialog;
+    private String emailString;
+    private String passwordString;
 
 
 
@@ -66,8 +70,8 @@ public class MainActivity extends AppCompatActivity {
         login =  findViewById(R.id.login);
         database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference();
-        final String emailString = email.getEditableText().toString()+"."+email2.getEditableText().toString();
-        final String passwordString = password.getEditableText().toString();
+        emailString = email.getEditableText().toString()+"."+email2.getEditableText().toString();
+        passwordString = password.getEditableText().toString();
         login.setEnabled(false);
         signup.setEnabled(false);
         progressDialog = new ProgressDialog(this);
@@ -159,6 +163,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
                     Toast.makeText(MainActivity.this, currentUser.getEmail(), Toast.LENGTH_LONG).show();
                     Toast.makeText(MainActivity.this, "Welcome", Toast.LENGTH_LONG).show();
 
@@ -191,8 +196,10 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 progressDialog.setTitle("Registering User");
                 progressDialog.setMessage("Please wait while we create your account");
-                progressDialog.setCanceledOnTouchOutside(false);
+                // progressDialog.setCanceledOnTouchOutside(false);
                 progressDialog.show();
+                String emailString = email.getEditableText().toString()+"."+email2.getEditableText().toString();
+                String passwordString = password.getEditableText().toString();s
                 startSignIn(emailString, passwordString);
             }
         });
@@ -326,13 +333,24 @@ public class MainActivity extends AppCompatActivity {
     
     public void startSignIn(String emailStr, String passwordStr){
 
-        String mail = emailStr;
+        final String mail = emailStr;
         String pw = passwordStr;
         if (!TextUtils.isEmpty(mail) && !TextUtils.isEmpty(pw)){
             auth.createUserWithEmailAndPassword(mail, pw).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (!task.isSuccessful()){
+
+
+                        currentUser = FirebaseAuth.getInstance().getCurrentUser();
+                        String uid = currentUser.getUid();
+                        databaseReference = FirebaseDatabase.getInstance().getReference().child("Users2").child(uid);
+
+                        HashMap<String, String> userMap = new HashMap<>();
+                        userMap.put("email", mail);
+                        userMap.put("image", "default");
+                        userMap.put("thumb_image", "default");
+                        databaseReference.setValue(userMap);
                         progressDialog.dismiss();
                         Toast.makeText(MainActivity.this, "this email is already used", Toast.LENGTH_LONG).show();
                     }else {
@@ -350,7 +368,7 @@ public class MainActivity extends AppCompatActivity {
             });
 
         }else {
-            Toast.makeText(MainActivity.this, "Please enter correct values", Toast.LENGTH_LONG).show();
+            // Toast.makeText(MainActivity.this, "Please enter correct values", Toast.LENGTH_LONG).show();
         }
     }
 

@@ -12,6 +12,7 @@ import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 
 
 public class MainScreen extends AppCompatActivity {
@@ -20,6 +21,7 @@ public class MainScreen extends AppCompatActivity {
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
     private Toolbar toolbar;
+    private Button logOutButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
