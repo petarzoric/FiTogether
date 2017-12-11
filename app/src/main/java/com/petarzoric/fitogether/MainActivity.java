@@ -343,6 +343,10 @@ public class MainActivity extends AppCompatActivity {
                     if (!task.isSuccessful()){
 
 
+
+                        progressDialog.hide();
+                        Toast.makeText(MainActivity.this, "this email is already used", Toast.LENGTH_LONG).show();
+                    }else {
                         currentUser = FirebaseAuth.getInstance().getCurrentUser();
                         String uid = currentUser.getUid();
                         databaseReference = FirebaseDatabase.getInstance().getReference().child("Users2").child(uid);
@@ -352,10 +356,8 @@ public class MainActivity extends AppCompatActivity {
                         userMap.put("image", "default");
                         userMap.put("thumb_image", "default");
                         databaseReference.setValue(userMap);
+
                         progressDialog.dismiss();
-                        Toast.makeText(MainActivity.this, "this email is already used", Toast.LENGTH_LONG).show();
-                    }else {
-                        progressDialog.hide();
                         emailtext = email.getText().toString() + "." + email2.getText().toString();
                         key = email.getText().toString() + "_DOT_" + email2.getText().toString();
                         Toast.makeText(MainActivity.this, "Created Account", Toast.LENGTH_LONG).show();
