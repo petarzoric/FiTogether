@@ -55,10 +55,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Intent intent = getIntent();
 
-
-        settings = getSharedPreferences("mySharedPref", 0);
         email =  findViewById(R.id.email);
         email2 =  findViewById(R.id.email2);
         password =  findViewById(R.id.password);
@@ -154,14 +151,13 @@ public class MainActivity extends AppCompatActivity {
                     //eigentlich sollte man logged bleiben, klappt aber nicht
                     //intent sorgt für nullpointer
                     //aufrufen von startLogin() bringt auch nichts
+                    autoLogin();
 
 
 
-                    Toast.makeText(MainActivity.this, currentUser.getEmail().toString(), Toast.LENGTH_LONG).show();
+
+                    Toast.makeText(MainActivity.this, currentUser.getEmail(), Toast.LENGTH_LONG).show();
                     Toast.makeText(MainActivity.this, "Welcome", Toast.LENGTH_LONG).show();
-                    Toast.makeText(MainActivity.this, "user is signed in", Toast.LENGTH_LONG).show();
-                    startLogIn();
-                    // User is signed in
 
                 } else {
 
@@ -241,6 +237,11 @@ public class MainActivity extends AppCompatActivity {
                                     if (exists){
                                         Intent data = new Intent(MainActivity.this, MainScreen.class);
                                         data.putExtra("key", key);
+                                        getIntent().putExtra("key", key);
+                                        SharedPreferences sharedPreferences = getSharedPreferences("User", 0);
+                                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                                        editor.putString("key", key);
+                                        editor.commit();
                                         startActivity(data);
                                     }
                                     else{
@@ -267,7 +268,33 @@ public class MainActivity extends AppCompatActivity {
 
     public void autoLogin(){
 
+        databaseReference.child("UserData").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Iterable<DataSnapshot> children = dataSnapshot.getChildren();
+                SharedPreferences settings = getSharedPreferences("User", 0);
+                String key = settings.getString("key", "");
+                boolean exists = false;
+                for (DataSnapshot child : children) {
+                    if (child.getKey().equals(key)) {
+                        exists = true;
 
+                    }
+                }
+                if (exists) {
+                    Intent data = new Intent(MainActivity.this, MainScreen.class);
+                    data.putExtra("key", key);
+                    getIntent().putExtra("key", key);
+                    startActivity(data);
+                }
+            }
+
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
 
