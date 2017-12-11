@@ -1,5 +1,6 @@
 package com.petarzoric.fitogether;
 
+import android.content.ClipData;
 import android.support.design.widget.TabLayout;
 
 import android.support.v7.app.AppCompatActivity;
@@ -22,6 +23,9 @@ public class MainScreen extends AppCompatActivity {
     private ViewPager mViewPager;
     private Toolbar toolbar;
     private Button logOutButton;
+    ClipData.Item allUsers;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +34,6 @@ public class MainScreen extends AppCompatActivity {
 
         toolbar =  findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        tool
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -40,6 +43,7 @@ public class MainScreen extends AppCompatActivity {
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
         TabLayout tabLayout = findViewById(R.id.tabs);
+       // allUsers = (ClipData.Item) findViewById(R.id.allUsers);
 
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
