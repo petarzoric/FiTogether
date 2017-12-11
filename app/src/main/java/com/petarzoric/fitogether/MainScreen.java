@@ -30,13 +30,14 @@ public class MainScreen extends AppCompatActivity {
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mainscreen);
 
-        Toolbar toolbar =  findViewById(R.id.toolbar);
+        toolbar =  findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -57,6 +58,7 @@ public class MainScreen extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
+        super.onCreateOptionsMenu(menu);
         getMenuInflater().inflate(R.menu.menu_studio_screen2, menu);
         return true;
     }

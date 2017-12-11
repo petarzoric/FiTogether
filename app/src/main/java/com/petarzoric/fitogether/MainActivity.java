@@ -5,7 +5,9 @@ import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -18,11 +20,14 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.OAuthProvider;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import org.w3c.dom.Text;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -62,17 +67,80 @@ public class MainActivity extends AppCompatActivity {
         login =  findViewById(R.id.login);
         database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference();
+        final String emailString = email.getEditableText().toString()+"."+email2.getEditableText().toString();
+        final String passwordString = password.getEditableText().toString();
+        login.setEnabled(false);
+        signup.setEnabled(false);
+        email.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+            }
 
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                checkButtons();
+            }
 
+            @Override
+            public void afterTextChanged(Editable s) {
+                checkButtons();
 
+            }
+        });
+        email2.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+            }
 
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                checkButtons();
+            }
 
+            @Override
+            public void afterTextChanged(Editable s) {
+                checkButtons();
 
+            }
+        });
 
+        password.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+            }
 
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                checkButtons();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                checkButtons();
+
+            }
+        });
+
+        email.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                checkButtons();
+
+            }
+        });
 
 
 
@@ -89,12 +157,11 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
+                    Toast.makeText(MainActivity.this, currentUser.getEmail().toString(), Toast.LENGTH_LONG).show();
                     Toast.makeText(MainActivity.this, "Welcome", Toast.LENGTH_LONG).show();
                     Toast.makeText(MainActivity.this, "user is signed in", Toast.LENGTH_LONG).show();
                     startLogIn();
                     // User is signed in
-                   startLogIn();
 
                 } else {
 
@@ -110,13 +177,17 @@ public class MainActivity extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startLogIn();
-            }
+
+
+
+                    startLogIn();
+                }
+
         });
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startSignIn();
+                startSignIn(emailString, passwordString);
             }
         });
 
@@ -126,6 +197,7 @@ public class MainActivity extends AppCompatActivity {
     public void onStart() {
         super.onStart();
         auth.addAuthStateListener(authListener);
+
 
 
 
@@ -141,6 +213,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     public void startLogIn() {
+
+
 
         String mail = email.getText().toString()+"." + email2.getText().toString();
         String pw = password.getText().toString();
@@ -195,12 +269,26 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-    
-    
-    public void startSignIn(){
 
-        String mail = email.getText().toString() + "." + email2.getText().toString();
-        String pw = password.getText().toString();
+
+    public void checkButtons(){
+        if (!(TextUtils.isEmpty(email.getText().toString()) || TextUtils.isEmpty(password.getText().toString()) || TextUtils.isEmpty(email2.getText().toString()))){
+            login.setEnabled(true);
+            signup.setEnabled(true);
+        }
+        else{
+            login.setEnabled(false);
+            signup.setEnabled(false);
+
+        }
+
+    }
+    
+    
+    public void startSignIn(String emailStr, String passwordStr){
+
+        String mail = emailStr;
+        String pw = passwordStr;
         if (!TextUtils.isEmpty(mail) && !TextUtils.isEmpty(pw)){
             auth.createUserWithEmailAndPassword(mail, pw).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
@@ -215,6 +303,7 @@ public class MainActivity extends AppCompatActivity {
                         data.putExtra("key", key);
                         data.putExtra("email", emailtext);
                         startActivity(data);
+                        finish();
                     }
                 }
             });
