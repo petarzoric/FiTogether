@@ -1,6 +1,7 @@
 package com.petarzoric.fitogether;
 
 import android.content.ClipData;
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 
 import android.support.v7.app.AppCompatActivity;
@@ -68,6 +69,8 @@ public class MainScreen extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Intent settingsIntent = new Intent(MainScreen.this, SettingsActivity.class);
+            startActivity(settingsIntent);
             return true;
         }
 
