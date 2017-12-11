@@ -158,7 +158,7 @@ public class MainActivity extends AppCompatActivity {
                     //eigentlich sollte man logged bleiben, klappt aber nicht
                     //intent sorgt für nullpointer
                     //aufrufen von startLogin() bringt auch nichts
-                    autoLogin();
+                        autoLogin();
 
 
 
@@ -304,7 +304,6 @@ public class MainActivity extends AppCompatActivity {
                 if (exists) {
                     Intent data = new Intent(MainActivity.this, MainScreen.class);
                     data.putExtra("key", key);
-                    getIntent().putExtra("key", key);
                     startActivity(data);
                 }
             }
@@ -360,6 +359,10 @@ public class MainActivity extends AppCompatActivity {
                         progressDialog.dismiss();
                         emailtext = email.getText().toString() + "." + email2.getText().toString();
                         key = email.getText().toString() + "_DOT_" + email2.getText().toString();
+                        SharedPreferences sharedPreferences = getSharedPreferences("User", 0);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString("key", key);
+                        editor.commit();
                         Toast.makeText(MainActivity.this, "Created Account", Toast.LENGTH_LONG).show();
                         Intent data = new Intent(MainActivity.this, SecondScreen.class);
                         data.putExtra("key", key);
