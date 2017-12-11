@@ -11,6 +11,13 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.HashMap;
+
 public class SecondScreen extends AppCompatActivity {
     Button signout;
     Button save;
@@ -77,6 +84,18 @@ public class SecondScreen extends AppCompatActivity {
             user.putExtra("level", userlevel);
             user.putExtra("name", username);
             user.putExtra("gender", usergender);
+            //DB-Umstellung, Tests
+            FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+            String uid = currentUser.getUid();
+            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Users2").child(uid);
+
+            HashMap<String, Object> userMap = new HashMap<String, Object>();
+            userMap.put("age", userage);
+            userMap.put("name", username);
+            userMap.put("level", userlevel);
+            databaseReference.setValue(userMap);
+
+
             startActivity(user);
 
         }
