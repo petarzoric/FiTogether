@@ -177,7 +177,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-
+                progressDialog.setTitle("Logging in");
+                progressDialog.setMessage("Please wait while we check your credentials. ");
+                progressDialog.setCanceledOnTouchOutside(false);
+                progressDialog.show();
 
                     startLogIn();
                 }
@@ -226,8 +229,10 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (!task.isSuccessful()){
+                        progressDialog.dismiss();
                         Toast.makeText(MainActivity.this, "Try Again", Toast.LENGTH_LONG).show();
                     }else {
+                        progressDialog.hide();
                         emailtext = email.getText().toString() + "." + email2.getText().toString();
                         key = email.getText().toString() + "_DOT_" + email2.getText().toString();
                         databaseReference.child("UserData").addValueEventListener(new ValueEventListener() {
