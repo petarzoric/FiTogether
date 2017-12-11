@@ -199,7 +199,7 @@ public class MainActivity extends AppCompatActivity {
                 // progressDialog.setCanceledOnTouchOutside(false);
                 progressDialog.show();
                 String emailString = email.getEditableText().toString()+"."+email2.getEditableText().toString();
-                String passwordString = password.getEditableText().toString();s
+                String passwordString = password.getEditableText().toString();
                 startSignIn(emailString, passwordString);
             }
         });
@@ -210,6 +210,7 @@ public class MainActivity extends AppCompatActivity {
     public void onStart() {
         super.onStart();
         auth.addAuthStateListener(authListener);
+        //
 
 
 
