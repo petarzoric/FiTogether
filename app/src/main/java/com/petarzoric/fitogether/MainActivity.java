@@ -1,5 +1,6 @@
 package com.petarzoric.fitogether;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
@@ -44,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
     FirebaseDatabase database;
     FirebaseUser currentUser;
     SharedPreferences settings;
+    private ProgressDialog progressDialog;
 
 
 
@@ -68,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
         final String passwordString = password.getEditableText().toString();
         login.setEnabled(false);
         signup.setEnabled(false);
+        progressDialog = new ProgressDialog(this);
         email.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -183,6 +186,10 @@ public class MainActivity extends AppCompatActivity {
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                progressDialog.setTitle("Registering User");
+                progressDialog.setMessage("Please wait while we create your account");
+                progressDialog.setCanceledOnTouchOutside(false);
+                progressDialog.show();
                 startSignIn(emailString, passwordString);
             }
         });
@@ -321,8 +328,10 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (!task.isSuccessful()){
+                        progressDialog.dismiss();
                         Toast.makeText(MainActivity.this, "this email is already used", Toast.LENGTH_LONG).show();
                     }else {
+                        progressDialog.hide();
                         emailtext = email.getText().toString() + "." + email2.getText().toString();
                         key = email.getText().toString() + "_DOT_" + email2.getText().toString();
                         Toast.makeText(MainActivity.this, "Created Account", Toast.LENGTH_LONG).show();
