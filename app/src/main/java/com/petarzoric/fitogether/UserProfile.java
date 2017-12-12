@@ -5,21 +5,24 @@ package com.petarzoric.fitogether;
  */
 
 public class UserProfile {
+    String uid;
     String email;
     String name;
     int age;
-    int userlevel;
+    Level level;
     int studio;
     int location;
-    int gender;
+    Gender gender;
     String imageURL;
     String thumbURL;
 
-    public UserProfile(String email,String name,int age,   int userlevel, int studio, int location, int gender, String iurl, String turl ) {
+
+    public UserProfile(String uid,String email,String name,int age,   Level userlevel, int studio, int location, Gender gender, String iurl, String turl ) {
+        this.uid = uid;
         this.email = email;
         this.name = name;
         this.age = age;
-        this.userlevel = userlevel;
+        this.level = userlevel;
         this.studio = studio;
         this.location = location;
         this.gender = gender;
@@ -27,18 +30,29 @@ public class UserProfile {
         this.thumbURL = turl;
     }
 
-    public UserProfile(){
+    public UserProfile(String uid){
+        this.uid = uid;
         this.email = "default";
         this.name = "default";
         this.age = -1;
-        this.userlevel = -1;
+        this.level = Level.ANFÄNGER;
         this.location = -1;
-        this.gender = -1;
+        this.gender = Gender.NOTDEFINED;
         this.imageURL = "default";
         this.thumbURL = "default";
 
     }
 
+    //GETTER UND SETTER
+
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
 
     public String getEmail() {
         return email;
@@ -47,6 +61,7 @@ public class UserProfile {
     public void setEmail(String email) {
         this.email = email;
     }
+
     public String getName() {
         return name;
     }
@@ -63,53 +78,48 @@ public class UserProfile {
         this.age = age;
     }
 
-    //GETTER
+    public Level getLevel() {
+        return level;
+    }
 
-    public int getUserlevel() {
-        return userlevel;
+    public void setLevel(Level level) {
+        this.level = level;
     }
 
     public int getStudio() {
         return studio;
     }
 
-    public int getLocation() {
-        return location;
-    }
-
-    public int getGender() {
-        return gender;
-    }
-
-    public String getImageURL() {
-        return imageURL;
-    }
-
-    public String getThumbURL() {
-        return thumbURL;
-    }
-
-    //SETTER
-
-
-    public void setUserlevel(int userlevel) {
-        this.userlevel = userlevel;
-    }
-
     public void setStudio(int studio) {
         this.studio = studio;
+    }
+
+    public int getLocation() {
+        return location;
     }
 
     public void setLocation(int location) {
         this.location = location;
     }
 
-    public void setGender(int gender) {
+    public Gender getGender() {
+        return gender;
+    }
+
+    public void setGender(Gender gender) {
         this.gender = gender;
+    }
+
+    public String getImageURL() {
+        return imageURL;
     }
 
     public void setImageURL(String imageURL) {
         this.imageURL = imageURL;
+    }
+
+    public String getThumbURL() {
+        return thumbURL;
     }
 
     public void setThumbURL(String thumbURL) {

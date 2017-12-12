@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -348,6 +349,11 @@ public class MainActivity extends AppCompatActivity {
                     }else {
                         currentUser = FirebaseAuth.getInstance().getCurrentUser();
                         String uid = currentUser.getUid();
+                        //Hier beginnen wir, das Profil anzulegen und langsam zu befüllen
+                        UserProfile currentProfile = new UserProfile(uid);
+
+                        currentProfile.setEmail(mail);
+
                         databaseReference = FirebaseDatabase.getInstance().getReference().child("Users2").child(uid);
 
                         HashMap<String, String> userMap = new HashMap<>();
@@ -364,10 +370,13 @@ public class MainActivity extends AppCompatActivity {
                         editor.putString("key", key);
                         editor.commit();
                         Toast.makeText(MainActivity.this, "Created Account", Toast.LENGTH_LONG).show();
-                        Intent data = new Intent(MainActivity.this, SecondScreen.class);
-                        data.putExtra("key", key);
-                        data.putExtra("email", emailtext);
-                        startActivity(data);
+                        Intent dataFirstScreen = new Intent(MainActivity.this, SecondScreen.class);
+                        dataFirstScreen.putExtra("key", key);
+                        dataFirstScreen.putExtra("email", emailtext);
+                        //neuer ansatz
+                        dataFirstScreen.putExtra("userMail", mail);
+                        dataFirstScreen.putExtra("userID", uid);
+                        startActivity(dataFirstScreen);
                         finish();
                     }
                 }

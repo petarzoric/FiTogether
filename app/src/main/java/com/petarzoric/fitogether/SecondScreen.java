@@ -77,14 +77,27 @@ public class SecondScreen extends AppCompatActivity {
             Intent intent = getIntent();
             usermail = intent.getStringExtra("email");
             key = intent. getStringExtra("key");
-            Intent user = new Intent(SecondScreen.this, StudioScreen.class);
-            user.putExtra("mail", usermail);
-            user.putExtra("key", key);
-            user.putExtra("age", userage);
-            user.putExtra("level", userlevel);
-            user.putExtra("name", username);
-            user.putExtra("gender", usergender);
+            //DB, neuer Ansatz
+            String userID = getIntent().getStringExtra("userID");
+            String userMail = getIntent().getStringExtra("userMail");
+
+            Intent dataSecondScreen = new Intent(SecondScreen.this, StudioScreen.class);
+            dataSecondScreen.putExtra("mail", usermail);
+            dataSecondScreen.putExtra("key", key);
+            dataSecondScreen.putExtra("age", userage);
+            dataSecondScreen.putExtra("level", userlevel);
+            dataSecondScreen.putExtra("name", username);
+            dataSecondScreen.putExtra("gender", usergender);
+
+            //
             //DB-Umstellung, Tests
+            dataSecondScreen.putExtra("userMail", userMail);
+            dataSecondScreen.putExtra("userID", userID);
+            dataSecondScreen.putExtra("userLevel", userlevel);
+            dataSecondScreen.putExtra("userGender", usergender);
+            dataSecondScreen.putExtra("userAge", userage);
+
+
             FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
             String uid = currentUser.getUid();
             DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Users2").child(uid);
@@ -92,11 +105,12 @@ public class SecondScreen extends AppCompatActivity {
             HashMap<String, Object> userMap = new HashMap<String, Object>();
             userMap.put("age", userage);
             userMap.put("name", username);
-            userMap.put("level", userlevel);
+            userMap.put("level", Level.valueOf(level.toString()));
+
             databaseReference.setValue(userMap);
 
 
-            startActivity(user);
+            startActivity(dataSecondScreen);
 
         }
         else {
