@@ -14,6 +14,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.HashMap;
+
 public class StudioScreen extends AppCompatActivity {
 
     int userlevel;
@@ -132,6 +134,7 @@ public class StudioScreen extends AppCompatActivity {
 
 
         UserProfile profileData = new UserProfile(userID, userMail, userName, userAge, Level.parseToEnum(userLevel), userStudio, userStudioLocation, Gender.parseToEnum(userGender), "default", "default");
+        HashMap<String, Object> profileDBO;
         databaseReference.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(profileData);
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Users2").child(FirebaseAuth.getInstance().getCurrentUser().getUid());

@@ -159,7 +159,7 @@ public class MainActivity extends AppCompatActivity {
                     //eigentlich sollte man logged bleiben, klappt aber nicht
                     //intent sorgt für nullpointer
                     //aufrufen von startLogin() bringt auch nichts
-                        autoLogin();
+                        //autoLogin();
 
 
 
