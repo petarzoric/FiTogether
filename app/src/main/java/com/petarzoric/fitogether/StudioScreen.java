@@ -3,12 +3,14 @@ package com.petarzoric.fitogether;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -102,12 +104,43 @@ public class StudioScreen extends AppCompatActivity {
         username = intent.getStringExtra("name");
         usergender = intent.getIntExtra("gender", 0);
         key = intent.getStringExtra("key");
+        //neues db modell
+        String userID = getIntent().getStringExtra("userID");
+        String userMail = getIntent().getStringExtra("userMail");
+        int userLevel = getIntent().getIntExtra("userLevel", -1);
+        int userGender = getIntent().getIntExtra("userGender", -1);
+        int userAge = getIntent().getIntExtra("userAge", -1);
+        String userName = getIntent().getStringExtra("userName");
+        int userStudio = studio.getSelectedItemPosition();
+        int userStudioLocation = location.getSelectedItemPosition();
 
-        profile = new UserProfile(usermail, username, userage, userlevel, userstudio, userlocation, usergender);
-        databaseReference.child(key).setValue(profile);
-        Intent data = new Intent(StudioScreen.this, MainScreen.class);
-        data.putExtra("key", key);
-        startActivity(data);
+
+        Log.i("-------------------", "test");
+        Log.i("-------------------", "test");
+        Log.i("-------------------", "test");
+        System.out.println(userID);
+        System.out.println(userMail);
+        System.out.println(userLevel);
+        System.out.println(userGender);
+        System.out.println(userAge);
+        System.out.println(userName);
+        System.out.println(userStudio);
+        System.out.println(userStudioLocation);
+        Log.i("-------------------", "test");
+        Log.i("-------------------", "test");
+        Log.i("-------------------", "test");
+
+
+        UserProfile profileData = new UserProfile(userID, userMail, userName, userAge, Level.parseToEnum(userLevel), userStudio, userStudioLocation, Gender.parseToEnum(userGender), "default", "default");
+        databaseReference.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(profileData);
+
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Users2").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        databaseReference.setValue(profileData);
+
+
+        Intent dataThirdScreen = new Intent(StudioScreen.this, MainScreen.class);
+        dataThirdScreen.putExtra("key", key);
+        startActivity(dataThirdScreen);
 
     }
 }

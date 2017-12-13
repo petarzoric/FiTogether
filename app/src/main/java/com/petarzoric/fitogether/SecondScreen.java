@@ -72,6 +72,7 @@ public class SecondScreen extends AppCompatActivity {
         if (!TextUtils.isEmpty(name.getText().toString()) && !TextUtils.isEmpty(age.getText().toString()) && Integer.parseInt(age.getText().toString()) > 0 && Integer.parseInt(age.getText().toString()) < 100) {
             username = name.getText().toString();
             userage = Integer.parseInt(age.getText().toString());
+
             userlevel = level.getSelectedItemPosition();
             usergender = gender.getSelectedItemPosition();
             Intent intent = getIntent();
@@ -80,6 +81,7 @@ public class SecondScreen extends AppCompatActivity {
             //DB, neuer Ansatz
             String userID = getIntent().getStringExtra("userID");
             String userMail = getIntent().getStringExtra("userMail");
+
 
             Intent dataSecondScreen = new Intent(SecondScreen.this, StudioScreen.class);
             dataSecondScreen.putExtra("mail", usermail);
@@ -96,18 +98,12 @@ public class SecondScreen extends AppCompatActivity {
             dataSecondScreen.putExtra("userLevel", userlevel);
             dataSecondScreen.putExtra("userGender", usergender);
             dataSecondScreen.putExtra("userAge", userage);
+            dataSecondScreen.putExtra("userName", username);
 
 
             FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
             String uid = currentUser.getUid();
-            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Users2").child(uid);
 
-            HashMap<String, Object> userMap = new HashMap<String, Object>();
-            userMap.put("age", userage);
-            userMap.put("name", username);
-            userMap.put("level", Level.valueOf(level.toString()));
-
-            databaseReference.setValue(userMap);
 
 
             startActivity(dataSecondScreen);

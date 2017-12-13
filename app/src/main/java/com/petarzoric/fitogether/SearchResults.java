@@ -39,7 +39,7 @@ public class SearchResults extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Iterable<DataSnapshot> children = dataSnapshot.getChildren();
                 for (DataSnapshot child : children) {
-                    if (!child.getKey().equals(key) && child.getValue(UserProfile.class).getUserlevel() == level) {
+                    if (!child.getKey().equals(key) && Level.parseToInt(child.getValue(UserProfile.class).getLevel()) == level) {
                         matches.add(child.getValue(UserProfile.class));
                     }
                 }

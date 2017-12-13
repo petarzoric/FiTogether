@@ -102,7 +102,7 @@ public class Tab2Calender extends Fragment {
         if (selectedDate != null) {
             databaseReferencecalender = FirebaseDatabase.getInstance().getReference(selectedDate);
             trainingType = training.getSelectedItem().toString();
-            trainingProfile = new Training(trainingType, profile.getUserlevel(), profile.getStudio(), profile.getLocation());
+            trainingProfile = new Training(trainingType, Level.parseToInt(profile.getLevel()), profile.getStudio(), profile.getLocation());
             databaseReferencecalender.child(key).setValue(trainingProfile);
         }else{
             Toast.makeText(getActivity(), "Please Select a Date", Toast.LENGTH_SHORT).show();

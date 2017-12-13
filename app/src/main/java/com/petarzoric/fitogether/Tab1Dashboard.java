@@ -67,7 +67,7 @@ public class Tab1Dashboard extends Fragment {
                 userdata.putExtra("email", profile.getEmail());
                 userdata.putExtra("name", profile.getName());
                 userdata.putExtra("age", profile.getAge());
-                userdata.putExtra("level", profile.getUserlevel());
+                userdata.putExtra("level", profile.getLevel());
                 userdata.putExtra("location", profile.getLocation());
                 userdata.putExtra("studio", profile.getStudio());
                 userdata.putExtra("gender", gender);
@@ -99,21 +99,21 @@ public class Tab1Dashboard extends Fragment {
                 emailtext.setText(profile.getEmail());
                 nametext.setText(profile.getName());
                 agetext.setText(String.valueOf(profile.getAge()));
-                if (profile.getUserlevel() == 0){
+                if (profile.getLevel() == Level.ANFÄNGER){
                     level = "Anfänger";
-                }else if (profile.getUserlevel() == 1){
+                }else if (profile.getLevel() == Level.FORTGESCHRITTEN){
                     level = "Fortgeschritten";
-                }else if (profile.getUserlevel() == 2){
+                }else if (profile.getLevel() == Level.PROFI){
                     level = "Profi";
-                }else if (profile.getUserlevel() == 3){
+                }else if (profile.getLevel() == Level.ARNOLD){
                     level = "Arnold";
                 }
 
-                if (profile.getGender() == 0){
+                if (profile.getGender() == Gender.MÄNNLICH){
                     gender = "Männlich";
-                }else if (profile.getGender() == 1){
+                }else if (profile.getGender() == Gender.WEIBLICH){
                     gender = "Weiblich";
-                }else if (profile.getGender() == 2){
+                }else if (profile.getGender() == Gender.NOTDEFINED){
                     gender = "Anderes";
                 }
 

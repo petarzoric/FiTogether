@@ -41,5 +41,41 @@ public enum Level {
 
         }
 
+
+    }
+
+    public static int parseToInt(Level level) {
+        switch (level) {
+            case ANFÄNGER:
+                return 0;
+            case FORTGESCHRITTEN:
+                return 1;
+            case PROFI:
+                return 2;
+            case ARNOLD:
+                return 3;
+
+
+
+        }
+        return 0;
+    }
+
+    public static Level parseToEnum(int input){
+        switch (input){
+            case 0:
+                return Level.ARNOLD;
+
+            case 1:
+                return Level.FORTGESCHRITTEN;
+
+            case 2:
+                return Level.PROFI;
+
+            case 3:
+                return Level.ARNOLD;
+        }
+        return Level.ANFÄNGER;
+
     }
 }

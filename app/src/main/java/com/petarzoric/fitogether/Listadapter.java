@@ -39,13 +39,13 @@ public class Listadapter extends ArrayAdapter<String> {
         TextView txt1 = convertView.findViewById(R.id.uname);
         TextView txt2 = convertView.findViewById(R.id.ulevel);
         ImageView img = convertView.findViewById(R.id.icon);
-        if (matches.get(position).getUserlevel() == 0){
+        if (matches.get(position).getLevel() == Level.ANFÄNGER){
             level = "Anfänger";
-        }else if (matches.get(position).getUserlevel() == 1){
+        }else if (matches.get(position).getLevel() == Level.FORTGESCHRITTEN){
             level = "Fortgeschritten";
-        }else if (matches.get(position).getUserlevel() == 2){
+        }else if (matches.get(position).getLevel() == Level.PROFI){
             level = "Profi";
-        }else if (matches.get(position).getUserlevel() == 3){
+        }else if (matches.get(position).getLevel() == Level.ARNOLD){
             level = "Arnold";
         }
         txt1.setText(matches.get(position).getName());
