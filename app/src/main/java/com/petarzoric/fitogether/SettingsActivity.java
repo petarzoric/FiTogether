@@ -1,7 +1,10 @@
 package com.petarzoric.fitogether;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -16,12 +19,17 @@ public class SettingsActivity extends AppCompatActivity {
 
     private DatabaseReference mUserDatabase;
     private FirebaseUser currentUser;
+    private Button changeStatusButton;
+    private Button changeImageButton;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+        changeStatusButton = (Button) findViewById(R.id.changeStatus);
+        changeImageButton = (Button) findViewById(R.id.changeImage);
 
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
         String current_uid = currentUser.getUid();
@@ -39,5 +47,17 @@ public class SettingsActivity extends AppCompatActivity {
 
             }
         });
+
+
+        changeStatusButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                Intent statusIntent = new Intent(SettingsActivity.this, StatusActivity.class);
+                startActivity(statusIntent);
+            }
+        });
+
     }
 }

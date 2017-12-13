@@ -26,7 +26,9 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".EditProfile" />
         <activity android:name=".SearchResults" />
-        <activity android:name=".SettingsActivity"></activity>
+        <activity android:name=".SettingsActivity" />
+        <activity android:name=".StatusActivity"
+            android:parentActivityName=".SettingsActivity">-</activity>
     </application>
 
 </manifest>

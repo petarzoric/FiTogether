@@ -187,7 +187,7 @@ public class MainActivity extends AppCompatActivity {
                 progressDialog.setMessage("Please wait while we check your credentials. ");
                 progressDialog.setCanceledOnTouchOutside(false);
                 progressDialog.show();
-s
+
                     startLogIn();
                 }
 
@@ -295,6 +295,7 @@ s
                 Iterable<DataSnapshot> children = dataSnapshot.getChildren();
                 SharedPreferences settings = getSharedPreferences("User", 0);
                 String key = settings.getString("key", "");
+                //  String key2 = FirebaseAuth.getInstance().getCurrentUser().getUid();
                 boolean exists = false;
                 for (DataSnapshot child : children) {
                     if (child.getKey().equals(key)) {
