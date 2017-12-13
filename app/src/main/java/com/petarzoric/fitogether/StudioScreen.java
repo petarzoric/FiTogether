@@ -134,16 +134,35 @@ public class StudioScreen extends AppCompatActivity {
 
 
         UserProfile profileData = new UserProfile(userID, userMail, userName, userAge, Level.parseToEnum(userLevel), userStudio, userStudioLocation, Gender.parseToEnum(userGender), "default", "default");
-        HashMap<String, Object> profileDBO;
-        databaseReference.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(profileData);
+        HashMap<String, Object> profileDBO = ProfileParser.parse(profileData);
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Users2").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
-        databaseReference.setValue(profileData);
+        databaseReference.setValue(profileDBO);
+
 
 
         Intent dataThirdScreen = new Intent(StudioScreen.this, MainScreen.class);
         dataThirdScreen.putExtra("key", key);
         startActivity(dataThirdScreen);
 
+    }
+}
+
+class ProfileParser {
+
+    public static HashMap<String, Object> parse(UserProfile profile){
+        HashMap<String, Object> dataBaseObject= new HashMap<>();
+        dataBaseObject.put("UID", profile.getUid());
+        dataBaseObject.put("eMail", profile.getEmail());
+        dataBaseObject.put("name", profile.getEmail());
+        dataBaseObject.put("age", profile.getAge());
+        dataBaseObject.put("level", profile.getLevel().toString());
+        dataBaseObject.put("studio", profile.getStudio());
+        dataBaseObject.put("studio location", profile.getLocation());
+        dataBaseObject.put("gender", profile.getGender().toString());
+        dataBaseObject.put("image", profile.getImageURL());
+        dataBaseObject.put("thumbnail", profile.getThumbURL());
+
+        return dataBaseObject;
     }
 }
