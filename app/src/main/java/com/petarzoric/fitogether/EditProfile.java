@@ -60,13 +60,14 @@ public class EditProfile extends AppCompatActivity {
         savechanges.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                saveChanges();
+               // saveChanges();
             }
         });
 
 
 
     }
+    /*
     public void saveChanges(){
         profile = new UserProfile(emailtext.getText().toString(), name.getText().toString(), Integer.parseInt(age.getText().toString()), level.getSelectedItemPosition() , intentstudio, intentlocation, genderint);
         databaseReference.child(key).setValue(profile);
@@ -75,6 +76,7 @@ public class EditProfile extends AppCompatActivity {
         startActivity(data);
 
     }
+    */
 
 
 }

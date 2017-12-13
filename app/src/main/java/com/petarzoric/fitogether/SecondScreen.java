@@ -11,6 +11,13 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.HashMap;
+
 public class SecondScreen extends AppCompatActivity {
     Button signout;
     Button save;
@@ -65,19 +72,41 @@ public class SecondScreen extends AppCompatActivity {
         if (!TextUtils.isEmpty(name.getText().toString()) && !TextUtils.isEmpty(age.getText().toString()) && Integer.parseInt(age.getText().toString()) > 0 && Integer.parseInt(age.getText().toString()) < 100) {
             username = name.getText().toString();
             userage = Integer.parseInt(age.getText().toString());
+
             userlevel = level.getSelectedItemPosition();
             usergender = gender.getSelectedItemPosition();
             Intent intent = getIntent();
             usermail = intent.getStringExtra("email");
             key = intent. getStringExtra("key");
-            Intent user = new Intent(SecondScreen.this, StudioScreen.class);
-            user.putExtra("mail", usermail);
-            user.putExtra("key", key);
-            user.putExtra("age", userage);
-            user.putExtra("level", userlevel);
-            user.putExtra("name", username);
-            user.putExtra("gender", usergender);
-            startActivity(user);
+            //DB, neuer Ansatz
+            String userID = getIntent().getStringExtra("userID");
+            String userMail = getIntent().getStringExtra("userMail");
+
+
+            Intent dataSecondScreen = new Intent(SecondScreen.this, StudioScreen.class);
+            dataSecondScreen.putExtra("mail", usermail);
+            dataSecondScreen.putExtra("key", key);
+            dataSecondScreen.putExtra("age", userage);
+            dataSecondScreen.putExtra("level", userlevel);
+            dataSecondScreen.putExtra("name", username);
+            dataSecondScreen.putExtra("gender", usergender);
+
+            //
+            //DB-Umstellung, Tests
+            dataSecondScreen.putExtra("userMail", userMail);
+            dataSecondScreen.putExtra("userID", userID);
+            dataSecondScreen.putExtra("userLevel", userlevel);
+            dataSecondScreen.putExtra("userGender", usergender);
+            dataSecondScreen.putExtra("userAge", userage);
+            dataSecondScreen.putExtra("userName", username);
+
+
+            FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+            String uid = currentUser.getUid();
+
+
+
+            startActivity(dataSecondScreen);
 
         }
         else {

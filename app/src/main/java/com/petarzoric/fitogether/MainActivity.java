@@ -1,25 +1,37 @@
 package com.petarzoric.fitogether;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.OAuthProvider;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import org.w3c.dom.Text;
+
+import java.util.HashMap;
+
 
 public class MainActivity extends AppCompatActivity {
     EditText email;
@@ -33,6 +45,16 @@ public class MainActivity extends AppCompatActivity {
     String key;
     DatabaseReference databaseReference;
     FirebaseDatabase database;
+    FirebaseUser currentUser;
+    SharedPreferences settings;
+    private ProgressDialog progressDialog;
+    private String emailString;
+    private String passwordString;
+
+
+
+
+
 
 
 
@@ -40,12 +62,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Intent intent = getIntent();
-        if (intent.getBooleanExtra("Signout", true)){
-            FirebaseAuth.getInstance().signOut();
-            Toast.makeText(MainActivity.this, "Signed Out", Toast.LENGTH_LONG).show();
 
-        }
         email =  findViewById(R.id.email);
         email2 =  findViewById(R.id.email2);
         password =  findViewById(R.id.password);
@@ -54,7 +71,81 @@ public class MainActivity extends AppCompatActivity {
         login =  findViewById(R.id.login);
         database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference();
+        emailString = email.getEditableText().toString()+"."+email2.getEditableText().toString();
+        passwordString = password.getEditableText().toString();
+        login.setEnabled(false);
+        signup.setEnabled(false);
+        progressDialog = new ProgressDialog(this);
+        email.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                checkButtons();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                checkButtons();
+
+            }
+        });
+        email2.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                checkButtons();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                checkButtons();
+
+            }
+        });
+
+        password.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                checkButtons();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                checkButtons();
+
+            }
+        });
+
+        email.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                checkButtons();
+
+            }
+        });
 
 
 
@@ -62,31 +153,57 @@ public class MainActivity extends AppCompatActivity {
         authListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user != null) {
+                currentUser = firebaseAuth.getCurrentUser();
+                if (currentUser != null) {
+                    //TODO
+                    //eigentlich sollte man logged bleiben, klappt aber nicht
+                    //intent sorgt für nullpointer
+                    //aufrufen von startLogin() bringt auch nichts
+                        autoLogin();
 
+
+
+
+
+                    Toast.makeText(MainActivity.this, currentUser.getEmail(), Toast.LENGTH_LONG).show();
                     Toast.makeText(MainActivity.this, "Welcome", Toast.LENGTH_LONG).show();
 
-
-                    // User is signed in
                 } else {
 
 
                     // User is signed out
+
                 }
                 // ...
             }
         };
+
+
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startLogIn();
-            }
+
+                progressDialog.setTitle("Logging in");
+                progressDialog.setMessage("Please wait while we check your credentials. ");
+                progressDialog.setCanceledOnTouchOutside(false);
+                progressDialog.show();
+
+                String emailString = email.getEditableText().toString()+"."+email2.getEditableText().toString();
+                String passwordString = password.getEditableText().toString();
+                    startLogIn(emailString, passwordString);
+                }
+
         });
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startSignIn();
+                progressDialog.setTitle("Registering User");
+                progressDialog.setMessage("Please wait while we create your account");
+                // progressDialog.setCanceledOnTouchOutside(false);
+                progressDialog.show();
+                String emailString = email.getEditableText().toString()+"."+email2.getEditableText().toString();
+                String passwordString = password.getEditableText().toString();
+                startSignIn(emailString, passwordString);
             }
         });
 
@@ -96,6 +213,12 @@ public class MainActivity extends AppCompatActivity {
     public void onStart() {
         super.onStart();
         auth.addAuthStateListener(authListener);
+        //
+
+
+
+
+
     }
     @Override
     public void onStop() {
@@ -106,38 +229,77 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(MainActivity.this, "Please enter correct values", Toast.LENGTH_LONG).show();
         }
     }
-    public void startLogIn() {
-        String mail = email.getText().toString()+"." + email2.getText().toString();
-        String pw = password.getText().toString();
+    public void startLogIn(String emailStr, String passwordStr) {
+
+
+        final String mail = emailStr;
+        String pw = passwordStr;
+        //String mail = email.getText().toString()+"." + email2.getText().toString();
+       // String pw = password.getText().toString();
         if (!TextUtils.isEmpty(mail) && !TextUtils.isEmpty(pw)){
             auth.signInWithEmailAndPassword(mail, pw).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (!task.isSuccessful()){
+                        progressDialog.dismiss();
                         Toast.makeText(MainActivity.this, "Try Again", Toast.LENGTH_LONG).show();
                     }else {
+                        progressDialog.hide();
                         emailtext = email.getText().toString() + "." + email2.getText().toString();
-                        key = email.getText().toString() + "_DOT_" + email2.getText().toString();
-                        databaseReference.child("UserData").addValueEventListener(new ValueEventListener() {
+                        //key = email.getText().toString() + "_DOT_" + email2.getText().toString();
+                        key = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                        databaseReference.child("Users2").addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
                                 Iterable<DataSnapshot> children = dataSnapshot.getChildren();
                                 boolean exists = false;
+                                SharedPreferences settings = getSharedPreferences("User", 0);
+                                boolean finished = settings.getBoolean("finished", true);
                                 for (DataSnapshot child : children) {
                                     if (child.getKey().equals(key)) {
                                         exists = true;
+
                                     }
                                 }
-                                    if (exists){
+                                    if (exists && finished){
                                         Intent data = new Intent(MainActivity.this, MainScreen.class);
                                         data.putExtra("key", key);
+                                        getIntent().putExtra("key", key);
                                         startActivity(data);
                                     }
                                     else{
-                                        Intent data = new Intent(MainActivity.this, SecondScreen.class);
+
+                                        currentUser = FirebaseAuth.getInstance().getCurrentUser();
+                                        String uid = currentUser.getUid();
+                                        //Hier beginnen wir, das Profil anzulegen und langsam zu befüllen
+                                        UserProfile currentProfile = new UserProfile(uid);
+
+                                        currentProfile.setEmail(mail);
+
+                                        databaseReference = FirebaseDatabase.getInstance().getReference().child("Users2").child(uid);
+
+                                        HashMap<String, String> userMap = new HashMap<>();
+                                        userMap.put("email", mail);
+                                        userMap.put("image", "default");
+                                        userMap.put("thumb_image", "default");
+                                        databaseReference.setValue(userMap);
+
+                                        progressDialog.dismiss();
+                                        emailtext = email.getText().toString() + "." + email2.getText().toString();
+                                        key = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                                        Toast.makeText(MainActivity.this, "Created Account", Toast.LENGTH_LONG).show();
+                                        Intent dataFirstScreen = new Intent(MainActivity.this, SecondScreen.class);
+                                        dataFirstScreen.putExtra("key", key);
+                                        dataFirstScreen.putExtra("email", emailtext);
+                                        //neuer ansatz
+                                        dataFirstScreen.putExtra("userMail", mail);
+                                        dataFirstScreen.putExtra("userID", uid);
+                                        startActivity(dataFirstScreen);
+                                        finish();
+                                        /*Intent data = new Intent(MainActivity.this, SecondScreen.class);
                                         data.putExtra("key", key);
                                         data.putExtra("email", emailtext);
-                                        startActivity(data);
+                                        startActivity(data);*/
                                     }
                                 }
 
@@ -154,29 +316,105 @@ public class MainActivity extends AppCompatActivity {
             });
         }
     }
-    public void startSignIn(){
-        String mail = email.getText().toString() + "." + email2.getText().toString();
-        String pw = password.getText().toString();
+
+    public void autoLogin(){
+
+        databaseReference.child("Users2").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Iterable<DataSnapshot> children = dataSnapshot.getChildren();
+                SharedPreferences settings = getSharedPreferences("User", 0);
+                boolean finished = settings.getBoolean("finished", true);
+                String key = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                boolean exists = false;
+                for (DataSnapshot child : children) {
+                    if (child.getKey().equals(key)) {
+                        exists = true;
+
+                    }
+                }
+                if (exists && finished) {
+                    Intent data = new Intent(MainActivity.this, MainScreen.class);
+                    data.putExtra("key", key);
+                    startActivity(data);
+                }
+            }
+
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+
+    public void checkButtons(){
+        if (!(TextUtils.isEmpty(email.getText().toString()) || password.getText().toString().length() < 6 || TextUtils.isEmpty(email2.getText().toString()))){
+            login.setEnabled(true);
+            signup.setEnabled(true);
+        }
+        else{
+            login.setEnabled(false);
+            signup.setEnabled(false);
+
+        }
+
+    }
+    
+    
+    public void startSignIn(String emailStr, String passwordStr){
+
+        final String mail = emailStr;
+        String pw = passwordStr;
         if (!TextUtils.isEmpty(mail) && !TextUtils.isEmpty(pw)){
             auth.createUserWithEmailAndPassword(mail, pw).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (!task.isSuccessful()){
+
+
+
+                        progressDialog.hide();
                         Toast.makeText(MainActivity.this, "this email is already used", Toast.LENGTH_LONG).show();
                     }else {
+                        currentUser = FirebaseAuth.getInstance().getCurrentUser();
+                        String uid = currentUser.getUid();
+                        //Hier beginnen wir, das Profil anzulegen und langsam zu befüllen
+                        UserProfile currentProfile = new UserProfile(uid);
+
+                        currentProfile.setEmail(mail);
+
+                        databaseReference = FirebaseDatabase.getInstance().getReference().child("Users2").child(uid);
+
+                        HashMap<String, String> userMap = new HashMap<>();
+                        userMap.put("email", mail);
+                        userMap.put("image", "default");
+                        userMap.put("thumb_image", "default");
+                        databaseReference.setValue(userMap);
+
+                        progressDialog.dismiss();
                         emailtext = email.getText().toString() + "." + email2.getText().toString();
-                        key = email.getText().toString() + "_DOT_" + email2.getText().toString();
+                        key = FirebaseAuth.getInstance().getCurrentUser().getUid();
                         Toast.makeText(MainActivity.this, "Created Account", Toast.LENGTH_LONG).show();
-                        Intent data = new Intent(MainActivity.this, SecondScreen.class);
-                        data.putExtra("key", key);
-                        data.putExtra("email", emailtext);
-                        startActivity(data);
+                        Intent dataFirstScreen = new Intent(MainActivity.this, SecondScreen.class);
+                        dataFirstScreen.putExtra("key", key);
+                        dataFirstScreen.putExtra("email", emailtext);
+                        //neuer ansatz
+                        dataFirstScreen.putExtra("userMail", mail);
+                        dataFirstScreen.putExtra("userID", uid);
+                        SharedPreferences sharedPreferences = getSharedPreferences("User", 0);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putBoolean("finished", false);
+                        editor.commit();
+                        startActivity(dataFirstScreen);
+                        finish();
                     }
                 }
             });
 
         }else {
-            Toast.makeText(MainActivity.this, "Please enter correct values", Toast.LENGTH_LONG).show();
+            // Toast.makeText(MainActivity.this, "Please enter correct values", Toast.LENGTH_LONG).show();
         }
     }
 
