@@ -25,7 +25,6 @@ public class StudioScreen extends AppCompatActivity {
     String username;
     String usermail;
     String key;
-    UserProfile profile;
     DatabaseReference databaseReference;
     Button save;
     Spinner studio;
@@ -99,15 +98,17 @@ public class StudioScreen extends AppCompatActivity {
         });
     }
     void saveProfile() {
+        Intent intent = getIntent();
+
         userstudio = studio.getSelectedItemPosition();
         userlocation = location.getSelectedItemPosition();
-        Intent intent = getIntent();
+
         userlevel = intent.getIntExtra("level", 0);
         userage = intent.getIntExtra("age", 0);
         usermail = intent.getStringExtra("mail");
         username = intent.getStringExtra("name");
         usergender = intent.getIntExtra("gender", 0);
-        key = intent.getStringExtra("key");
+        key = FirebaseAuth.getInstance().getCurrentUser().getUid();
         //neues db modell
         String userID = getIntent().getStringExtra("userID");
         String userMail = getIntent().getStringExtra("userMail");
@@ -117,11 +118,6 @@ public class StudioScreen extends AppCompatActivity {
         String userName = getIntent().getStringExtra("userName");
         int userStudio = studio.getSelectedItemPosition();
         int userStudioLocation = location.getSelectedItemPosition();
-        System.out.println("-------------");
-        System.out.println("-------------");
-        System.out.println("LOCATION: "+userStudioLocation);
-        System.out.println("-------------");
-        System.out.println("-------------");
 
 
         Log.i("-------------------", "test");
@@ -140,7 +136,7 @@ public class StudioScreen extends AppCompatActivity {
         Log.i("-------------------", "test");
 
 
-        UserProfile profileData = new UserProfile(userID, userMail, userName, userAge, Level.parseToEnum(userLevel), userStudio, userStudioLocation, Gender.parseToEnum(userGender), "default", "default");
+        UserProfile profileData = new UserProfile(userID, userMail, userName, userAge, Level.parseToEnum(userLevel), userStudio, userStudioLocation, Gender.parseToEnum(userGender), "default", "default","Hi, I am using FiTogether");
         HashMap<String, Object> profileDBO = ProfileParser.parse(profileData);
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Users2").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
@@ -149,11 +145,7 @@ public class StudioScreen extends AppCompatActivity {
 
 
         Intent dataThirdScreen = new Intent(StudioScreen.this, MainScreen.class);
-        dataThirdScreen.putExtra("key", key);
-        SharedPreferences sharedPreferences = getSharedPreferences("User", 0);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putBoolean("finished", true);
-        editor.commit();
+
         startActivity(dataThirdScreen);
 
     }
@@ -173,6 +165,7 @@ class ProfileParser {
         dataBaseObject.put("gender", profile.getGender().toString());
         dataBaseObject.put("image", profile.getImageURL());
         dataBaseObject.put("thumbnail", profile.getThumbURL());
+        dataBaseObject.put("status", profile.getStatus());
 
         return dataBaseObject;
     }

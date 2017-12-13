@@ -12,6 +12,7 @@ import android.widget.CalendarView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -51,8 +52,7 @@ public class Tab2Calender extends Fragment {
             }
         });
 
-        Intent intent = getActivity().getIntent();
-        key = intent.getStringExtra("key");
+        key = FirebaseAuth.getInstance().getCurrentUser().getUid();
         calendar = rootView.findViewById(R.id.calendarView);
         calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
 
@@ -76,7 +76,7 @@ public class Tab2Calender extends Fragment {
 
         database = FirebaseDatabase.getInstance();
         databaseReferenceprofile = database.getReference();
-        databaseReferenceprofile.child("UserData").addValueEventListener(new ValueEventListener() {
+        databaseReferenceprofile.child("Users2").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Iterable<DataSnapshot> children = dataSnapshot.getChildren();

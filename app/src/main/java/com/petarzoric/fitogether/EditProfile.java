@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -23,10 +24,10 @@ public class EditProfile extends AppCompatActivity {
     Button savechanges;
     DatabaseReference databaseReference;
     UserProfile profile;
-    String key;
     int intentstudio;
     int intentlocation;
     int genderint;
+    String UID;
 
 
 
@@ -52,31 +53,30 @@ public class EditProfile extends AppCompatActivity {
         level.setAdapter(adapter);
         level.setSelection(intent.getIntExtra("level", 0));
         studio.setText(intent.getStringExtra("studios"));
-        databaseReference = FirebaseDatabase.getInstance().getReference("UserData");
+        databaseReference = FirebaseDatabase.getInstance().getReference("Users2");
         intentlocation= intent.getIntExtra("location",0);
         intentstudio= intent.getIntExtra("studio",0);
         genderint = intent.getIntExtra("genderint", 0);
-        key = intent.getStringExtra("key");
         savechanges.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               // saveChanges();
+                saveChanges();
             }
         });
+        UID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
 
 
     }
-    /*
+
     public void saveChanges(){
-        profile = new UserProfile(emailtext.getText().toString(), name.getText().toString(), Integer.parseInt(age.getText().toString()), level.getSelectedItemPosition() , intentstudio, intentlocation, genderint);
-        databaseReference.child(key).setValue(profile);
+        profile = new UserProfile(UID, emailtext.getText().toString(), name.getText().toString(), Integer.parseInt(age.getText().toString()), Level.parseToEnum(level.getSelectedItemPosition()) , intentstudio, intentlocation, Gender.parseToEnum(genderint), "default", "default", "Hi I am using FiTogether");
+        databaseReference.child(UID).setValue(profile);
         Intent data = new Intent(EditProfile.this, MainScreen.class);
-        data.putExtra("key", key);
         startActivity(data);
 
     }
-    */
+
 
 
 }

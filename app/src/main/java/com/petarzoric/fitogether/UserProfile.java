@@ -15,9 +15,10 @@ public class UserProfile {
     Gender gender;
     String imageURL;
     String thumbURL;
+    String status;
 
 
-    public UserProfile(String uid,String email,String name,int age,   Level userlevel, int studio, int location, Gender gender, String iurl, String turl ) {
+    public UserProfile(String uid,String email,String name,int age,   Level userlevel, int studio, int location, Gender gender, String iurl, String turl, String status ) {
         this.uid = uid;
         this.email = email;
         this.name = name;
@@ -28,6 +29,7 @@ public class UserProfile {
         this.gender = gender;
         this.imageURL = iurl;
         this.thumbURL = turl;
+        this.status = status;
     }
 
     public UserProfile(String uid){
@@ -41,6 +43,7 @@ public class UserProfile {
         this.gender = Gender.NOTDEFINED;
         this.imageURL = "default";
         this.thumbURL = "default";
+        this.status = "Hi, I am using FiTogether";
 
     }
 
@@ -50,6 +53,14 @@ public class UserProfile {
 
     //GETTER UND SETTER
 
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     public String getUid() {
         return uid;
