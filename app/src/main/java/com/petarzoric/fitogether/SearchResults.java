@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -32,14 +33,13 @@ public class SearchResults extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference();
         final Intent data = getIntent();
-        final String key = data.getStringExtra("key");
         final int level = data.getIntExtra("level", 0);
-        databaseReference.child("UserData").addValueEventListener(new ValueEventListener() {
+        databaseReference.child("Users2").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Iterable<DataSnapshot> children = dataSnapshot.getChildren();
                 for (DataSnapshot child : children) {
-                    if (!child.getKey().equals(key) && Level.parseToInt(child.getValue(UserProfile.class).getLevel()) == level) {
+                    if (!child.getKey().equals(FirebaseAuth.getInstance().getCurrentUser().getUid()) && Level.parseToInt(child.getValue(UserProfile.class).getLevel()) == level) {
                         matches.add(child.getValue(UserProfile.class));
                     }
                 }

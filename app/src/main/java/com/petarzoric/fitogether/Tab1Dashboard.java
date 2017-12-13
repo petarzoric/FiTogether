@@ -59,12 +59,7 @@ public class Tab1Dashboard extends Fragment {
         logout = rootView.findViewById(R.id.logout);
         editprofile = rootView.findViewById(R.id.editprofile);
         gendertext = rootView.findViewById(R.id.gendertext);
-        final Intent data = getActivity().getIntent();
-        final String key = data.getStringExtra("key");
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("User", 0);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putBoolean("finished", true);
-        editor.commit();
+        final String key = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
 
 
@@ -81,7 +76,6 @@ public class Tab1Dashboard extends Fragment {
                 userdata.putExtra("gender", gender);
                 userdata.putExtra("studios", studio);
                 userdata.putExtra("genderint", profile.getGender().parseToInt(profile.getGender()));
-                userdata.putExtra("key", key );
                 startActivity(userdata);
 
             }
@@ -90,10 +84,7 @@ public class Tab1Dashboard extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), MainActivity.class);
-                SharedPreferences sharedPreferences = getActivity().getSharedPreferences("User", 0);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putBoolean("finished", false);
-                editor.commit();
+
                 startActivity(intent);
                 FirebaseAuth.getInstance().signOut();
             }

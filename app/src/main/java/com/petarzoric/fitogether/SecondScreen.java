@@ -30,7 +30,6 @@ public class SecondScreen extends AppCompatActivity {
     int userlevel;
     int usergender;
     String usermail;
-    String key;
 
 
     @Override
@@ -44,8 +43,9 @@ public class SecondScreen extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent data = new Intent(SecondScreen.this, MainActivity.class);
-                data.putExtra("Signout", true);
                 startActivity(data);
+                FirebaseAuth.getInstance().signOut();
+
 
             }
         });
@@ -77,19 +77,12 @@ public class SecondScreen extends AppCompatActivity {
             usergender = gender.getSelectedItemPosition();
             Intent intent = getIntent();
             usermail = intent.getStringExtra("email");
-            key = intent. getStringExtra("key");
             //DB, neuer Ansatz
             String userID = getIntent().getStringExtra("userID");
             String userMail = getIntent().getStringExtra("userMail");
 
 
             Intent dataSecondScreen = new Intent(SecondScreen.this, StudioScreen.class);
-            dataSecondScreen.putExtra("mail", usermail);
-            dataSecondScreen.putExtra("key", key);
-            dataSecondScreen.putExtra("age", userage);
-            dataSecondScreen.putExtra("level", userlevel);
-            dataSecondScreen.putExtra("name", username);
-            dataSecondScreen.putExtra("gender", usergender);
 
             //
             //DB-Umstellung, Tests
@@ -101,8 +94,6 @@ public class SecondScreen extends AppCompatActivity {
             dataSecondScreen.putExtra("userName", username);
 
 
-            FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-            String uid = currentUser.getUid();
 
 
 
