@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -21,6 +22,9 @@ public class SettingsActivity extends AppCompatActivity {
     private FirebaseUser currentUser;
     private Button changeStatusButton;
     private Button changeImageButton;
+    private TextView displayName;
+    private TextView displayStatus;
+
 
 
 
@@ -30,6 +34,9 @@ public class SettingsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
         changeStatusButton = (Button) findViewById(R.id.changeStatus);
         changeImageButton = (Button) findViewById(R.id.changeImage);
+        displayName = (TextView) findViewById(R.id.displayName);
+        displayStatus = (TextView) findViewById(R.id.hiThere);
+        currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
         String current_uid = currentUser.getUid();
@@ -39,7 +46,8 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                //String name = dataSnapshot.child()
+                displayName.setText((String) dataSnapshot.child("name").getValue());
+                displayStatus.setText((String) dataSnapshot.child("status").getValue());
             }
 
             @Override

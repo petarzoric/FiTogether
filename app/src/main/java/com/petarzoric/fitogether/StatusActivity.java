@@ -1,6 +1,7 @@
 package com.petarzoric.fitogether;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -14,8 +15,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class StatusActivity extends AppCompatActivity {
 
@@ -35,6 +39,7 @@ public class StatusActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_status);
+        progressDialog = new ProgressDialog(getApplicationContext());
         /*
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -45,7 +50,19 @@ public class StatusActivity extends AppCompatActivity {
         //FIREBASE
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
         String current_uid = currentUser.getUid();
-        statusDatabase = FirebaseDatabase.getInstance().getReference().child("Users2").child(current_uid);
+        statusDatabase = FirebaseDatabase.getInstance().getReference().child("Users2").child(current_uid).child("status");
+
+        statusDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                statusInput.getEditText().setText((String) dataSnapshot.getValue());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
 
 
@@ -57,18 +74,23 @@ public class StatusActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //PROGRESS
-                progressDialog = new ProgressDialog(getApplicationContext());
+                /*
                 progressDialog.setTitle("Saving Changes");
                 progressDialog.setMessage("Please wait while we save the changes");
                 progressDialog.show();
+                */
 
 
                 String status = statusInput.getEditText().getText().toString();
-                statusDatabase.child("status").setValue(status).addOnCompleteListener(new OnCompleteListener<Void>() {
+                Toast.makeText(getApplicationContext(), status, Toast.LENGTH_LONG).show();
+
+                statusDatabase.setValue(status).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if(task.isSuccessful()){
-                            progressDialog.dismiss();
+                            Toast.makeText(getApplicationContext(), "Successfully updated your status", Toast.LENGTH_LONG).show();
+                            Intent backToSettings = new Intent(StatusActivity.this, SettingsActivity.class);
+                            startActivity(backToSettings);
                         } else {
 
                             Toast.makeText(getApplicationContext(), "Error in savong changes", Toast.LENGTH_LONG);
@@ -79,7 +101,6 @@ public class StatusActivity extends AppCompatActivity {
 
             }
         });
-
 
 
 

@@ -137,7 +137,7 @@ public class StudioScreen extends AppCompatActivity {
 
 
         UserProfile profileData = new UserProfile(userID, userMail, userName, userAge, Level.parseToEnum(userLevel), userStudio, userStudioLocation, Gender.parseToEnum(userGender), "default", "default","Hi, I am using FiTogether");
-        HashMap<String, Object> profileDBO = ProfileParser.parse(profileData);
+        HashMap<String, Object> profileDBO = ProfileParser.parseToHashmap(profileData);
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Users2").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
         databaseReference.setValue(profileDBO);
@@ -151,22 +151,4 @@ public class StudioScreen extends AppCompatActivity {
     }
 }
 
-class ProfileParser {
 
-    public static HashMap<String, Object> parse(UserProfile profile){
-        HashMap<String, Object> dataBaseObject= new HashMap<>();
-        dataBaseObject.put("UID", profile.getUid());
-        dataBaseObject.put("email", profile.getEmail());
-        dataBaseObject.put("name", profile.getName());
-        dataBaseObject.put("age", profile.getAge());
-        dataBaseObject.put("level", profile.getLevel().toString());
-        dataBaseObject.put("studio", profile.getStudio());
-        dataBaseObject.put("location", profile.getLocation());
-        dataBaseObject.put("gender", profile.getGender().toString());
-        dataBaseObject.put("image", profile.getImageURL());
-        dataBaseObject.put("thumbnail", profile.getThumbURL());
-        dataBaseObject.put("status", profile.getStatus());
-
-        return dataBaseObject;
-    }
-}
