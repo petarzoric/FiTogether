@@ -2,6 +2,7 @@ package com.petarzoric.fitogether;
 
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -60,6 +61,10 @@ public class Tab1Dashboard extends Fragment {
         gendertext = rootView.findViewById(R.id.gendertext);
         final Intent data = getActivity().getIntent();
         final String key = data.getStringExtra("key");
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("User", 0);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean("finished", true);
+        editor.commit();
 
 
 
@@ -85,6 +90,10 @@ public class Tab1Dashboard extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), MainActivity.class);
+                SharedPreferences sharedPreferences = getActivity().getSharedPreferences("User", 0);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putBoolean("finished", false);
+                editor.commit();
                 startActivity(intent);
                 FirebaseAuth.getInstance().signOut();
             }

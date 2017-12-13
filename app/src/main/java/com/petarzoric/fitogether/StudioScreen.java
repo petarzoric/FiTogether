@@ -146,10 +146,6 @@ public class StudioScreen extends AppCompatActivity {
 
         Intent dataThirdScreen = new Intent(StudioScreen.this, MainScreen.class);
         dataThirdScreen.putExtra("key", key);
-        SharedPreferences sharedPreferences = getSharedPreferences("User", 0);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putBoolean("finished", true);
-        editor.commit();
         startActivity(dataThirdScreen);
 
     }
