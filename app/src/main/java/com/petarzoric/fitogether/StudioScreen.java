@@ -9,6 +9,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
@@ -115,6 +116,7 @@ public class StudioScreen extends AppCompatActivity {
         String userName = getIntent().getStringExtra("userName");
         int userStudio = studio.getSelectedItemPosition();
         int userStudioLocation = location.getSelectedItemPosition();
+       // Toast.makeText(userStudioLocation, "LOL", Toast.LENGTH_LONG);
 
 
         Log.i("-------------------", "test");
