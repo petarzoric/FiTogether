@@ -86,12 +86,12 @@ public class Tab1Dashboard extends Fragment {
                 FirebaseAuth.getInstance().signOut();
             }
         });
-        databaseReference.child("UserData").addValueEventListener(new ValueEventListener() {
+        databaseReference.child("Users2").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                Iterable<DataSnapshot> children = dataSnapshot.getChildren();
                for(DataSnapshot child : children){
-                   if (child.getKey().equals(key)){
+                   if (child.getKey().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
                        profile = child.getValue(UserProfile.class);
                    }
                }

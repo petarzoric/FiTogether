@@ -43,6 +43,10 @@ public class UserProfile {
 
     }
 
+    public UserProfile(){
+
+    }
+
     //GETTER UND SETTER
 
 
