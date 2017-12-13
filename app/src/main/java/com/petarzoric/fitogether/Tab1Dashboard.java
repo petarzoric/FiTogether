@@ -43,6 +43,7 @@ public class Tab1Dashboard extends Fragment {
 
 
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -60,6 +61,8 @@ public class Tab1Dashboard extends Fragment {
         final Intent data = getActivity().getIntent();
         final String key = data.getStringExtra("key");
 
+
+
         editprofile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -67,12 +70,12 @@ public class Tab1Dashboard extends Fragment {
                 userdata.putExtra("email", profile.getEmail());
                 userdata.putExtra("name", profile.getName());
                 userdata.putExtra("age", profile.getAge());
-                userdata.putExtra("level", profile.getLevel());
+                userdata.putExtra("level", profile.getLevel().parseToInt(profile.getLevel()));
                 userdata.putExtra("location", profile.getLocation());
                 userdata.putExtra("studio", profile.getStudio());
                 userdata.putExtra("gender", gender);
                 userdata.putExtra("studios", studio);
-                userdata.putExtra("genderint", profile.getGender());
+                userdata.putExtra("genderint", profile.getGender().parseToInt(profile.getGender()));
                 userdata.putExtra("key", key );
                 startActivity(userdata);
 

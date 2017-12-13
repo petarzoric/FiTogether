@@ -36,6 +36,7 @@ public class UserProfile {
         this.name = "default";
         this.age = -1;
         this.level = Level.ANFÄNGER;
+        this.studio = -1;
         this.location = -1;
         this.gender = Gender.NOTDEFINED;
         this.imageURL = "default";

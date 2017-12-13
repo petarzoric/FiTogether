@@ -1,6 +1,7 @@
 package com.petarzoric.fitogether;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -145,6 +146,10 @@ public class StudioScreen extends AppCompatActivity {
 
         Intent dataThirdScreen = new Intent(StudioScreen.this, MainScreen.class);
         dataThirdScreen.putExtra("key", key);
+        SharedPreferences sharedPreferences = getSharedPreferences("User", 0);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean("finished", true);
+        editor.commit();
         startActivity(dataThirdScreen);
 
     }
@@ -155,12 +160,12 @@ class ProfileParser {
     public static HashMap<String, Object> parse(UserProfile profile){
         HashMap<String, Object> dataBaseObject= new HashMap<>();
         dataBaseObject.put("UID", profile.getUid());
-        dataBaseObject.put("eMail", profile.getEmail());
-        dataBaseObject.put("name", profile.getEmail());
+        dataBaseObject.put("email", profile.getEmail());
+        dataBaseObject.put("name", profile.getName());
         dataBaseObject.put("age", profile.getAge());
         dataBaseObject.put("level", profile.getLevel().toString());
         dataBaseObject.put("studio", profile.getStudio());
-        dataBaseObject.put("studio location", profile.getLocation());
+        dataBaseObject.put("location", profile.getLocation());
         dataBaseObject.put("gender", profile.getGender().toString());
         dataBaseObject.put("image", profile.getImageURL());
         dataBaseObject.put("thumbnail", profile.getThumbURL());

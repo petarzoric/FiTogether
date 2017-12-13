@@ -188,7 +188,9 @@ public class MainActivity extends AppCompatActivity {
                 progressDialog.setCanceledOnTouchOutside(false);
                 progressDialog.show();
 
-                    startLogIn();
+                String emailString = email.getEditableText().toString()+"."+email2.getEditableText().toString();
+                String passwordString = password.getEditableText().toString();
+                    startLogIn(emailString, passwordString);
                 }
 
         });
@@ -227,12 +229,13 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(MainActivity.this, "Please enter correct values", Toast.LENGTH_LONG).show();
         }
     }
-    public void startLogIn() {
+    public void startLogIn(String emailStr, String passwordStr) {
 
 
-
-        String mail = email.getText().toString()+"." + email2.getText().toString();
-        String pw = password.getText().toString();
+        final String mail = emailStr;
+        String pw = passwordStr;
+        //String mail = email.getText().toString()+"." + email2.getText().toString();
+       // String pw = password.getText().toString();
         if (!TextUtils.isEmpty(mail) && !TextUtils.isEmpty(pw)){
             auth.signInWithEmailAndPassword(mail, pw).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
@@ -245,32 +248,58 @@ public class MainActivity extends AppCompatActivity {
                         emailtext = email.getText().toString() + "." + email2.getText().toString();
                         //key = email.getText().toString() + "_DOT_" + email2.getText().toString();
                         key = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                        databaseReference.child("UserData").addValueEventListener(new ValueEventListener() {
+                        databaseReference.child("Users2").addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
                                 Iterable<DataSnapshot> children = dataSnapshot.getChildren();
                                 boolean exists = false;
+                                SharedPreferences settings = getSharedPreferences("User", 0);
+                                boolean finished = settings.getBoolean("finished", true);
                                 for (DataSnapshot child : children) {
                                     if (child.getKey().equals(key)) {
                                         exists = true;
 
                                     }
                                 }
-                                    if (exists){
+                                    if (exists && finished){
                                         Intent data = new Intent(MainActivity.this, MainScreen.class);
                                         data.putExtra("key", key);
                                         getIntent().putExtra("key", key);
-                                        SharedPreferences sharedPreferences = getSharedPreferences("User", 0);
-                                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                                        editor.putString("key", key);
-                                        editor.commit();
                                         startActivity(data);
                                     }
                                     else{
-                                        Intent data = new Intent(MainActivity.this, SecondScreen.class);
+
+                                        currentUser = FirebaseAuth.getInstance().getCurrentUser();
+                                        String uid = currentUser.getUid();
+                                        //Hier beginnen wir, das Profil anzulegen und langsam zu befüllen
+                                        UserProfile currentProfile = new UserProfile(uid);
+
+                                        currentProfile.setEmail(mail);
+
+                                        databaseReference = FirebaseDatabase.getInstance().getReference().child("Users2").child(uid);
+
+                                        HashMap<String, String> userMap = new HashMap<>();
+                                        userMap.put("email", mail);
+                                        userMap.put("image", "default");
+                                        userMap.put("thumb_image", "default");
+                                        databaseReference.setValue(userMap);
+
+                                        progressDialog.dismiss();
+                                        emailtext = email.getText().toString() + "." + email2.getText().toString();
+                                        key = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                                        Toast.makeText(MainActivity.this, "Created Account", Toast.LENGTH_LONG).show();
+                                        Intent dataFirstScreen = new Intent(MainActivity.this, SecondScreen.class);
+                                        dataFirstScreen.putExtra("key", key);
+                                        dataFirstScreen.putExtra("email", emailtext);
+                                        //neuer ansatz
+                                        dataFirstScreen.putExtra("userMail", mail);
+                                        dataFirstScreen.putExtra("userID", uid);
+                                        startActivity(dataFirstScreen);
+                                        finish();
+                                        /*Intent data = new Intent(MainActivity.this, SecondScreen.class);
                                         data.putExtra("key", key);
                                         data.putExtra("email", emailtext);
-                                        startActivity(data);
+                                        startActivity(data);*/
                                     }
                                 }
 
@@ -295,7 +324,7 @@ public class MainActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Iterable<DataSnapshot> children = dataSnapshot.getChildren();
                 SharedPreferences settings = getSharedPreferences("User", 0);
-                //String key = settings.getString("key", "");
+                boolean finished = settings.getBoolean("finished", true);
                 String key = FirebaseAuth.getInstance().getCurrentUser().getUid();
                 boolean exists = false;
                 for (DataSnapshot child : children) {
@@ -304,7 +333,7 @@ public class MainActivity extends AppCompatActivity {
 
                     }
                 }
-                if (exists) {
+                if (exists && finished) {
                     Intent data = new Intent(MainActivity.this, MainScreen.class);
                     data.putExtra("key", key);
                     startActivity(data);
@@ -367,10 +396,6 @@ public class MainActivity extends AppCompatActivity {
                         progressDialog.dismiss();
                         emailtext = email.getText().toString() + "." + email2.getText().toString();
                         key = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                        SharedPreferences sharedPreferences = getSharedPreferences("User", 0);
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putString("key", key);
-                        editor.commit();
                         Toast.makeText(MainActivity.this, "Created Account", Toast.LENGTH_LONG).show();
                         Intent dataFirstScreen = new Intent(MainActivity.this, SecondScreen.class);
                         dataFirstScreen.putExtra("key", key);
@@ -378,6 +403,10 @@ public class MainActivity extends AppCompatActivity {
                         //neuer ansatz
                         dataFirstScreen.putExtra("userMail", mail);
                         dataFirstScreen.putExtra("userID", uid);
+                        SharedPreferences sharedPreferences = getSharedPreferences("User", 0);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putBoolean("finished", false);
+                        editor.commit();
                         startActivity(dataFirstScreen);
                         finish();
                     }
