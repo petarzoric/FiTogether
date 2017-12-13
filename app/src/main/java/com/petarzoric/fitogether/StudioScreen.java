@@ -117,7 +117,11 @@ public class StudioScreen extends AppCompatActivity {
         String userName = getIntent().getStringExtra("userName");
         int userStudio = studio.getSelectedItemPosition();
         int userStudioLocation = location.getSelectedItemPosition();
-       // Toast.makeText(userStudioLocation, "LOL", Toast.LENGTH_LONG);
+        System.out.println("-------------");
+        System.out.println("-------------");
+        System.out.println("LOCATION: "+userStudioLocation);
+        System.out.println("-------------");
+        System.out.println("-------------");
 
 
         Log.i("-------------------", "test");
