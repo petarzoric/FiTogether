@@ -159,7 +159,7 @@ public class MainActivity extends AppCompatActivity {
                     //eigentlich sollte man logged bleiben, klappt aber nicht
                     //intent sorgt für nullpointer
                     //aufrufen von startLogin() bringt auch nichts
-                        //autoLogin();
+                        autoLogin();
 
 
 
@@ -243,7 +243,8 @@ public class MainActivity extends AppCompatActivity {
                     }else {
                         progressDialog.hide();
                         emailtext = email.getText().toString() + "." + email2.getText().toString();
-                        key = email.getText().toString() + "_DOT_" + email2.getText().toString();
+                        //key = email.getText().toString() + "_DOT_" + email2.getText().toString();
+                        key = FirebaseAuth.getInstance().getCurrentUser().getUid();
                         databaseReference.child("UserData").addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -289,12 +290,13 @@ public class MainActivity extends AppCompatActivity {
 
     public void autoLogin(){
 
-        databaseReference.child("UserData").addValueEventListener(new ValueEventListener() {
+        databaseReference.child("Users2").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Iterable<DataSnapshot> children = dataSnapshot.getChildren();
                 SharedPreferences settings = getSharedPreferences("User", 0);
-                String key = settings.getString("key", "");
+                //String key = settings.getString("key", "");
+                String key = FirebaseAuth.getInstance().getCurrentUser().getUid();
                 boolean exists = false;
                 for (DataSnapshot child : children) {
                     if (child.getKey().equals(key)) {
@@ -364,7 +366,7 @@ public class MainActivity extends AppCompatActivity {
 
                         progressDialog.dismiss();
                         emailtext = email.getText().toString() + "." + email2.getText().toString();
-                        key = email.getText().toString() + "_DOT_" + email2.getText().toString();
+                        key = FirebaseAuth.getInstance().getCurrentUser().getUid();
                         SharedPreferences sharedPreferences = getSharedPreferences("User", 0);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.putString("key", key);
