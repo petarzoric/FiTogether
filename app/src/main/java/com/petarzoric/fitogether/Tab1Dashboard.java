@@ -82,7 +82,6 @@ public class Tab1Dashboard extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), MainActivity.class);
-                intent.putExtra("Signout", true);
                 startActivity(intent);
                 FirebaseAuth.getInstance().signOut();
             }
