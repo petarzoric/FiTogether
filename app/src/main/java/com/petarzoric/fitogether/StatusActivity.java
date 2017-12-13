@@ -39,7 +39,7 @@ public class StatusActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_status);
-        progressDialog = new ProgressDialog(getApplicationContext());
+        progressDialog = new ProgressDialog(this);
         /*
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -74,11 +74,11 @@ public class StatusActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //PROGRESS
-                /*
+
                 progressDialog.setTitle("Saving Changes");
                 progressDialog.setMessage("Please wait while we save the changes");
                 progressDialog.show();
-                */
+
 
 
                 String status = statusInput.getEditText().getText().toString();
@@ -90,6 +90,7 @@ public class StatusActivity extends AppCompatActivity {
                         if(task.isSuccessful()){
                             Toast.makeText(getApplicationContext(), "Successfully updated your status", Toast.LENGTH_LONG).show();
                             Intent backToSettings = new Intent(StatusActivity.this, SettingsActivity.class);
+                            progressDialog.dismiss();
                             startActivity(backToSettings);
                         } else {
 

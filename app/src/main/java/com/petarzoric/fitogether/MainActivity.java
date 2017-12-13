@@ -152,6 +152,9 @@ public class MainActivity extends AppCompatActivity {
                     //eigentlich sollte man logged bleiben, klappt aber nicht
                     //intent sorgt für nullpointer
                     //aufrufen von startLogin() bringt auch nichts
+                    progressDialog.setTitle("Auto Login");
+                    progressDialog.setMessage("Please wait while we log you in");
+                    progressDialog.show();
                         autoLogin();
 
 
@@ -301,6 +304,7 @@ public class MainActivity extends AppCompatActivity {
         databaseReference.child("Users2").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+
                 Iterable<DataSnapshot> children = dataSnapshot.getChildren();
 
                 String key = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -312,6 +316,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
                 if (exists ) {
+                    progressDialog.dismiss();
                     Intent data = new Intent(MainActivity.this, MainScreen.class);
                     startActivity(data);
                 }
