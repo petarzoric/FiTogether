@@ -73,9 +73,14 @@ public class SettingsActivity extends AppCompatActivity {
 
                 displayName.setText((String) dataSnapshot.child("name").getValue());
                 displayStatus.setText((String) dataSnapshot.child("status").getValue());
-                String image = dataSnapshot.child("imageURL").getValue().toString();
 
-                Picasso.with(SettingsActivity.this).load(image).into(displayImage);
+                String image = dataSnapshot.child("image").getValue().toString();
+                System.out.println(image);
+                if(image == "default.png"){
+                    Picasso.with(SettingsActivity.this).load(R.drawable.image_preview);
+                }
+
+
 
             }
 
@@ -164,7 +169,7 @@ public class SettingsActivity extends AppCompatActivity {
 
                             String downloadUrl = task.getResult().getDownloadUrl().toString();
 
-                            mUserDatabase.child("imageURL").setValue(downloadUrl).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            mUserDatabase.child("image").setValue(downloadUrl).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if(task.isSuccessful()){

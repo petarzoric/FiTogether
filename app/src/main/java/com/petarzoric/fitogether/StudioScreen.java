@@ -136,7 +136,8 @@ public class StudioScreen extends AppCompatActivity {
         Log.i("-------------------", "test");
 
 
-        UserProfile profileData = new UserProfile(userID, userMail, userName, userAge, Level.parseToEnum(userLevel), userStudio, userStudioLocation, Gender.parseToEnum(userGender), "default", "default","Hi, I am using FiTogether");
+        UserProfile profileData = new UserProfile(userID, userMail, userName, userAge, Level.parseToEnum(userLevel),
+                userStudio, userStudioLocation, Gender.parseToEnum(userGender), "default.jpg", "default","Hi, I am using FiTogether");
         HashMap<String, Object> profileDBO = ProfileParser.parseToHashmap(profileData);
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Users2").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
