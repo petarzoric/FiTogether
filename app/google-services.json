@@ -103,6 +103,30 @@
       },
       "oauth_client": [
         {
+          "client_id": "775381425842-m8e2kkp6ou5qf0jn5c6418eos99em7fa.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.petarzoric.fitogether",
+            "certificate_hash": "e8c27bca67d26919b5e85a42d9f20962f37b2ef1"
+          }
+        },
+        {
+          "client_id": "775381425842-i77k3c03v6anr41e9cb2u3de8qovebu0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.petarzoric.fitogether",
+            "certificate_hash": "cb217157e20da579028b55983cf86bf7117afad2"
+          }
+        },
+        {
+          "client_id": "775381425842-b57rppvv2g6n194cviildmue3pkg6cpg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.petarzoric.fitogether",
+            "certificate_hash": "bf0e2f483239f638e6b0b8a062083b6e593af811"
+          }
+        },
+        {
           "client_id": "775381425842-6u4svij5ahhq74pqrq7cjp5d6q5vcbj4.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
