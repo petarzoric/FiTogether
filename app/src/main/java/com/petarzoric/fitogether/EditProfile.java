@@ -71,7 +71,14 @@ public class EditProfile extends AppCompatActivity {
 
     public void saveChanges(){
         profile = new UserProfile(UID, emailtext.getText().toString(), name.getText().toString(), Integer.parseInt(age.getText().toString()), Level.parseToEnum(level.getSelectedItemPosition()) , intentstudio, intentlocation, Gender.parseToEnum(genderint), "default", "default", "Hi I am using FiTogether");
-        databaseReference.child(UID).setValue(profile);
+        DatabaseReference ref = databaseReference.child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        ref.child("uid").setValue(UID);
+        ref.child("email").setValue(emailtext.getText().toString());
+        ref.child("name").setValue(name.getText().toString());
+        ref.child("age").setValue( Integer.parseInt(age.getText().toString()));
+        ref.child("level").setValue(Level.parseToEnum(level.getSelectedItemPosition()));
+
+
         Intent data = new Intent(EditProfile.this, MainScreen.class);
         startActivity(data);
 
