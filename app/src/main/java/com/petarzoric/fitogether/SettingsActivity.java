@@ -1,5 +1,6 @@
 package com.petarzoric.fitogether;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
@@ -22,9 +23,15 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
+
+import java.util.Random;
+import java.util.Set;
 import java.util.UUID;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -35,8 +42,11 @@ public class SettingsActivity extends AppCompatActivity {
     private TextView displayName;
     private TextView displayStatus;
     private static final int GALLERY_PICK = 1;
+    private CircleImageView displayImage;
 
     private StorageReference imageStorage;
+
+    private ProgressDialog progressDialog;
 
 
 
@@ -51,6 +61,7 @@ public class SettingsActivity extends AppCompatActivity {
         displayStatus = (TextView) findViewById(R.id.hiThere);
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
         imageStorage = FirebaseStorage.getInstance().getReference();
+        displayImage = findViewById(R.id.settingsImage);
 
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
         String current_uid = currentUser.getUid();
@@ -62,6 +73,10 @@ public class SettingsActivity extends AppCompatActivity {
 
                 displayName.setText((String) dataSnapshot.child("name").getValue());
                 displayStatus.setText((String) dataSnapshot.child("status").getValue());
+                String image = dataSnapshot.child("imageURL").getValue().toString();
+
+                Picasso.with(SettingsActivity.this).load(image).into(displayImage);
+
             }
 
             @Override
@@ -129,18 +144,42 @@ public class SettingsActivity extends AppCompatActivity {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             if (resultCode == RESULT_OK) {
 
+                progressDialog = new ProgressDialog(SettingsActivity.this);
+                progressDialog.setTitle("uploading image...");
+                progressDialog.setMessage("please wait while we upload your image");
+                progressDialog.setCanceledOnTouchOutside(false);
+                progressDialog.show();
+
+
 
                 Uri resultUri = result.getUri();
 
-                StorageReference  filepath = imageStorage.child("profile_images").child(UUID.randomUUID().toString().substring(0,8));
+                String currentUserID = currentUser.getUid();
+
+                StorageReference  filepath = imageStorage.child("profile_images").child(currentUserID + ".jpg");
                 filepath.putFile(resultUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
                         if(task.isSuccessful()){
-                            Toast.makeText(SettingsActivity.this, "SUCCESSFUL", Toast.LENGTH_LONG).show();
+
+                            String downloadUrl = task.getResult().getDownloadUrl().toString();
+
+                            mUserDatabase.child("imageURL").setValue(downloadUrl).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if(task.isSuccessful()){
+
+                                        progressDialog.dismiss();
+                                        Toast.makeText(SettingsActivity.this, "Success uploading jawooohl aller", Toast.LENGTH_LONG).show();
+
+
+                                    }
+                                }
+                            });
 
                         } else {
                             Toast.makeText(SettingsActivity.this, "error in uploading", Toast.LENGTH_LONG).show();
+                            progressDialog.dismiss();
                         }
                     }
                 });
@@ -150,6 +189,8 @@ public class SettingsActivity extends AppCompatActivity {
             }
         }
     }
+
+
 
 
 }
