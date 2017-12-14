@@ -321,6 +321,7 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(data);
                 }else{
                     progressDialog.dismiss();
+                    Toast.makeText(MainActivity.this, "Please Login and finish your account creation", Toast.LENGTH_LONG).show();
                 }
             }
 
