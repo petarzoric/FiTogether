@@ -315,10 +315,12 @@ public class MainActivity extends AppCompatActivity {
 
                     }
                 }
-                if (exists ) {
+                if (exists) {
                     progressDialog.dismiss();
                     Intent data = new Intent(MainActivity.this, MainScreen.class);
                     startActivity(data);
+                }else{
+                    progressDialog.dismiss();
                 }
             }
 
