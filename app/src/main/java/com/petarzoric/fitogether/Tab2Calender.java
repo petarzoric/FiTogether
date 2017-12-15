@@ -60,7 +60,7 @@ public class Tab2Calender extends Fragment {
             public void onSelectedDayChange(CalendarView view, int year, int month,
                                             int dayOfMonth) {
                 int d = dayOfMonth;
-                int m = month;
+                int m = month + 1;
                 selectedDate = String.valueOf(d)+ "_" + String.valueOf(m) + "_" + String.valueOf(year);
             }
         });
