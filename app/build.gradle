@@ -34,9 +34,12 @@ dependencies {
     compile 'com.google.code.gson:gson:2.8.0'
     compile 'com.theartofdev.edmodo:android-image-cropper:2.6.+'
     compile 'com.squareup.picasso:picasso:2.5.2'
+    implementation 'com.firebaseui:firebase-ui-database:2.3.0'
+    compile 'com.iceteck.silicompressorr:silicompressor:2.1'
 
 
 }
+
 
 
 

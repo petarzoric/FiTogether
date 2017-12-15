@@ -77,12 +77,11 @@ public class SettingsActivity extends AppCompatActivity {
                 String image = dataSnapshot.child("image").getValue().toString();
 
 
-                if(image.equals("default.jpg")  ){
-                    Picasso.with(SettingsActivity.this).load(R.drawable.image_preview).into(displayImage);
+                if(!image.equals("default.jpg")  ){
+                    // Picasso.with(SettingsActivity.this).load(R.drawable.image_preview).into(displayImage);
                     //displayImage.setImageResource(R.drawable.image_preview);
-
-                } else {
                     Picasso.with(SettingsActivity.this).load(image).into(displayImage);
+
                 }
 
 
