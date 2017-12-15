@@ -2,6 +2,7 @@ package com.petarzoric.fitogether;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -27,11 +28,16 @@ import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 import java.util.UUID;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import id.zelory.compressor.Compressor;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -80,7 +86,7 @@ public class SettingsActivity extends AppCompatActivity {
                 if(!image.equals("default.jpg")  ){
                     // Picasso.with(SettingsActivity.this).load(R.drawable.image_preview).into(displayImage);
                     //displayImage.setImageResource(R.drawable.image_preview);
-                    Picasso.with(SettingsActivity.this).load(image).into(displayImage);
+                    Picasso.with(SettingsActivity.this).load(image).placeholder(R.drawable.image_preview).into(displayImage);
 
                 }
 
@@ -141,6 +147,7 @@ public class SettingsActivity extends AppCompatActivity {
 
             CropImage.activity(imageUrl)
                     .setAspectRatio(1, 1)
+                    .setMinCropWindowSize(500, 500)
                     .start(this);
 
             //Toast.makeText(SettingsActivity.this, imageUrl, Toast.LENGTH_LONG).show();
@@ -162,28 +169,73 @@ public class SettingsActivity extends AppCompatActivity {
 
                 Uri resultUri = result.getUri();
 
+                File thumb_filePath = new File(resultUri.getPath());
+
                 String currentUserID = currentUser.getUid();
 
+
+                final Bitmap thumb_bitmap = new Compressor(this)
+                        .setMaxWidth(200)
+                        .setMaxHeight(200)
+                        .setQuality(75)
+                        .compressToBitmap(thumb_filePath);
+
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                thumb_bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                final byte[] thumb_byte = baos.toByteArray();
+
+
+
                 StorageReference  filepath = imageStorage.child("profile_images").child(currentUserID + ".jpg");
+
+                final StorageReference thumbFilepath = imageStorage.child("profile_images").child("thumbs").child(currentUserID+".jpg");
+
                 filepath.putFile(resultUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
                         if(task.isSuccessful()){
 
-                            String downloadUrl = task.getResult().getDownloadUrl().toString();
+                            final String downloadUrl = task.getResult().getDownloadUrl().toString();
 
-                            mUserDatabase.child("image").setValue(downloadUrl).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            UploadTask uploadTask = thumbFilepath.putBytes(thumb_byte);
+                            uploadTask.addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                                 @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    if(task.isSuccessful()){
+                                public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> thumb_task) {
 
+                                    String thumb_downloadURL = thumb_task.getResult().getDownloadUrl().toString();
+
+
+
+                                    if(thumb_task.isSuccessful()){
+
+                                        Map update_hashMap = new HashMap<>();
+                                        update_hashMap.put("image", downloadUrl);
+                                        update_hashMap.put("thumbnail", thumb_downloadURL);
+
+
+                                        mUserDatabase.updateChildren(update_hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                if(task.isSuccessful()){
+
+                                                    progressDialog.dismiss();
+                                                    Toast.makeText(SettingsActivity.this, "Success uploading jawooohl aller", Toast.LENGTH_LONG).show();
+
+
+                                                }
+                                            }
+                                        });
+
+                                    } else {
+
+                                        Toast.makeText(SettingsActivity.this, "error in uploading thumbnail", Toast.LENGTH_LONG).show();
                                         progressDialog.dismiss();
-                                        Toast.makeText(SettingsActivity.this, "Success uploading jawooohl aller", Toast.LENGTH_LONG).show();
-
 
                                     }
                                 }
                             });
+
+
 
                         } else {
                             Toast.makeText(SettingsActivity.this, "error in uploading", Toast.LENGTH_LONG).show();

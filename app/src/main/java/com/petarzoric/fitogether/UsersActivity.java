@@ -1,5 +1,7 @@
 package com.petarzoric.fitogether;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -46,6 +48,20 @@ public class UsersActivity extends AppCompatActivity {
 
                 viewHolder.setName(model.getName());
                 viewHolder.setStatus(model.getStatus());
+                viewHolder.setImage(model.getThumbnail(), getApplicationContext());
+
+                final String user_id = getRef(position).getKey();
+
+                viewHolder.view.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        Intent profileIntent = new Intent(UsersActivity.this, ProfileActivity.class);
+                        profileIntent.putExtra("user_id", user_id);
+                        startActivity(profileIntent);
+
+                    }
+                });
 
             }
         };
@@ -75,11 +91,12 @@ public class UsersActivity extends AppCompatActivity {
             userStatusView.setText(status);
         }
 
-        public void setImage(String image){
+        public void setImage(String image, Context context){
             CircleImageView userImageView = view.findViewById(R.id.user_single_image);
-           // Picasso.with(UsersActivity.).load(image).into(userImageView);
-
+            Picasso.with(context).load(image).placeholder(R.drawable.image_preview).into(userImageView);
         }
+
+
 
     }
 }
