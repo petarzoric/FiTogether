@@ -117,25 +117,8 @@ public class Tab2Calender extends Fragment {
                 level = Level.parseToInt(profile.getLevel());
                 times = time.getText().toString();
                 trainingProfile = new UserTraining(selectedDate, trainingType, key, level, studio, location, times);
-                databaseReferencecalender.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        if (dataSnapshot.child(monthToString(m)).getValue() == null) {
-                            databaseReferencecalender.setValue(monthToString(m));
-                        }
-                        if (dataSnapshot.child(monthToString(m)).child(String.valueOf(d)).getValue() == null) {
-                            databaseReferencecalender.child(monthToString(m)).setValue(d);
-                        }
+                databaseReferencecalender.child(monthToString(1)).child(String.valueOf(d)).child(key).setValue(trainingProfile);
 
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
-                databaseReferencecalender.child(monthToString(m)).child(String.valueOf(d)).setValue(key);
-                databaseReferencecalender.child(monthToString(m)).child(String.valueOf(d)).child(key).setValue(trainingProfile);
             }else{
                 Toast.makeText(getActivity(), "Please Select a Time", Toast.LENGTH_SHORT).show();
             }
