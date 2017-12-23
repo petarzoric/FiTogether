@@ -15,11 +15,11 @@ import java.util.ArrayList;
 
 
 public class Listadapter extends ArrayAdapter<String> {
-    public ArrayList <UserProfile> matches;
+    public UserProfile[] matches;
     Activity context;
     String level;
 
-    public Listadapter(Activity context, ArrayList <UserProfile> matches) {
+    public Listadapter(Activity context, UserProfile[] matches) {
         super(context, R.layout.listviewitems);
         this.context = context;
         this.matches = matches;
@@ -28,7 +28,7 @@ public class Listadapter extends ArrayAdapter<String> {
 
     @Override
     public int getCount() {
-        return matches.size();
+        return matches.length;
     }
 
     @NonNull
@@ -39,16 +39,16 @@ public class Listadapter extends ArrayAdapter<String> {
         TextView txt1 = convertView.findViewById(R.id.uname);
         TextView txt2 = convertView.findViewById(R.id.ulevel);
         ImageView img = convertView.findViewById(R.id.icon);
-        if (matches.get(position).getLevel() == Level.ANFÄNGER){
+        if (matches[position].getLevel() == Level.ANFÄNGER){
             level = "Anfänger";
-        }else if (matches.get(position).getLevel() == Level.FORTGESCHRITTEN){
+        }else if (matches[position].getLevel() == Level.FORTGESCHRITTEN){
             level = "Fortgeschritten";
-        }else if (matches.get(position).getLevel() == Level.PROFI){
+        }else if (matches[position].getLevel() == Level.PROFI){
             level = "Profi";
-        }else if (matches.get(position).getLevel() == Level.ARNOLD){
+        }else if (matches[position].getLevel() == Level.ARNOLD){
             level = "Arnold";
         }
-        txt1.setText(matches.get(position).getName());
+        txt1.setText(matches[position].getName());
         txt2.setText(level);
         return convertView;
     }

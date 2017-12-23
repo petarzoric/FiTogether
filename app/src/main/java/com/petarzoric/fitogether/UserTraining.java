@@ -12,8 +12,9 @@ public class UserTraining {
     int studio;
     int location;
     String time;
+    String key;
 
-    public UserTraining(String date, int trainingstype, String user, int level, int studio, int location, String time) {
+    public UserTraining(String date, int trainingstype, String user, int level, int studio, int location, String time, String key) {
         this.date = date;
         this.trainingstype = trainingstype;
         this.user = user;
@@ -21,9 +22,18 @@ public class UserTraining {
         this.studio = studio;
         this.location = location;
         this.time = time;
+        this.key = key;
     }
 
     public UserTraining() {
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 
     public String getDate() {
