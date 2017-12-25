@@ -20,7 +20,7 @@ public class SearchResults extends AppCompatActivity {
 
 
     ListView listView;
-    ArrayList <UserTraining> matches;
+    ArrayList <UserTraining> matches = new ArrayList<UserTraining>();
     FirebaseDatabase database;
     DatabaseReference databaseReference;
 
@@ -40,15 +40,15 @@ public class SearchResults extends AppCompatActivity {
         final String month = data.getStringExtra("month");
         final String day = data.getStringExtra("day");
 
-                if (databaseReference.child("Trainingsdate").child(month).child(day) != null){
-                    databaseReference.child("Trainingsdate").child(month).child(day).addValueEventListener(new ValueEventListener() {
+        if ( databaseReference.child("TrainingsDate").child(month).child(day)!= null){
+                    databaseReference.child("TrainingsDate").child(month).orderByChild(day).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Iterable<DataSnapshot> children = dataSnapshot.getChildren();
                 for (DataSnapshot child : children) {
-                    if (!child.getKey().equals(FirebaseAuth.getInstance().getCurrentUser().getUid()) && (child.getValue(UserTraining.class).getLevel() == level) && child.getValue(UserTraining.class).getTrainingstype() == muscle) {
+                    if ((!child.getKey().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) && (child.getValue(UserTraining.class).getLevel() == level) && (child.getValue(UserTraining.class).getTrainingstype() == muscle)) {
                         matches.add(child.getValue(UserTraining.class));
-                    }
+                   }
                 }
             }
                 @Override
@@ -74,7 +74,7 @@ public class SearchResults extends AppCompatActivity {
                 int count = 0;
                 for (DataSnapshot child : children) {
                     for (int i = 0; i <match.size() ; i++) {
-                     if (child.getKey().equals(match.get(i).getKey())){
+                     if (child.getKey().equals(match.get(i).getUser())){
                          userProfiles[count] = child.getValue(UserProfile.class);
                          count++;
                      }

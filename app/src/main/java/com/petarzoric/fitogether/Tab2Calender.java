@@ -116,7 +116,7 @@ public class Tab2Calender extends Fragment {
                 location = profile.getLocation();
                 level = Level.parseToInt(profile.getLevel());
                 times = time.getText().toString();
-                trainingProfile = new UserTraining(selectedDate, trainingType, key, level, studio, location, times, key);
+                trainingProfile = new UserTraining(selectedDate, trainingType, key, level, studio, location, times);
                 databaseReferencecalender.child(monthToString(m)).child(String.valueOf(d)).child(key).setValue(trainingProfile);
 
             }else{
