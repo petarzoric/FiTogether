@@ -23,6 +23,7 @@ public class SearchResults extends AppCompatActivity {
     ArrayList <UserTraining> matches = new ArrayList<UserTraining>();
     FirebaseDatabase database;
     DatabaseReference databaseReference;
+    UserProfile[] userProfiles;
 
 
 
@@ -47,15 +48,13 @@ public class SearchResults extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Iterable<DataSnapshot> children = dataSnapshot.getChildren();
                 for (DataSnapshot child : children) {
-                    System.out.println("------------------------------------------------------------------------------------------------------------------");
                     if ((!child.getKey().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) && (child.getValue(UserTraining.class).getLevel() == level) && (child.getValue(UserTraining.class).getTrainingstype() == muscle)) {
                         matches.add(child.getValue(UserTraining.class));
 
                    }
                 }
-                System.out.println("-------------------------------------------------------"+matches.size()+"--------------------------------------------");
-                ListAdapter adapter = new Listadapter(SearchResults.this,matchesToProfile(matches));
-                listView.setAdapter(adapter);
+                matchesToProfile(matches);
+
             }
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
@@ -68,15 +67,18 @@ public class SearchResults extends AppCompatActivity {
 
     }
     public UserProfile[] matchesToProfile(final ArrayList<UserTraining> match){
-        final UserProfile[] userProfiles = new UserProfile[match.size()];
+        userProfiles = new UserProfile[match.size()];
         database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference();
         databaseReference.child("Users2").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                ArrayList<UserProfile> profiles = new ArrayList<>();
+
                 Iterable<DataSnapshot> children = dataSnapshot.getChildren();
                 int count = 0;
                 for (DataSnapshot child : children) {
+                    profiles.add(child.getValue(UserProfile.class));
                     for (int i = 0; i <match.size() ; i++) {
                      if (child.getKey().equals(match.get(i).getUser())){
                          userProfiles[count] = child.getValue(UserProfile.class);
@@ -84,6 +86,8 @@ public class SearchResults extends AppCompatActivity {
                      }
                     }
                     }
+                ListAdapter adapter = new Listadapter(SearchResults.this,userProfiles);
+                listView.setAdapter(adapter);
                 }
 
             @Override
