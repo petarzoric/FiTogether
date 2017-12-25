@@ -33,6 +33,7 @@ public class SearchResults extends AppCompatActivity {
 
         database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference();
+        listView = findViewById(R.id.userlist);
         final Intent data = getIntent();
         final int level = data.getIntExtra("level", 0);
         final int gender = data.getIntExtra("gender", 0);
@@ -41,15 +42,20 @@ public class SearchResults extends AppCompatActivity {
         final String day = data.getStringExtra("day");
 
         if ( databaseReference.child("TrainingsDate").child(month).child(day)!= null){
-                    databaseReference.child("TrainingsDate").child(month).orderByChild(day).addValueEventListener(new ValueEventListener() {
+                    databaseReference.child("TrainingsDate").child(month).child(day).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Iterable<DataSnapshot> children = dataSnapshot.getChildren();
                 for (DataSnapshot child : children) {
+                    System.out.println("------------------------------------------------------------------------------------------------------------------");
                     if ((!child.getKey().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) && (child.getValue(UserTraining.class).getLevel() == level) && (child.getValue(UserTraining.class).getTrainingstype() == muscle)) {
                         matches.add(child.getValue(UserTraining.class));
+
                    }
                 }
+                System.out.println("-------------------------------------------------------"+matches.size()+"--------------------------------------------");
+                ListAdapter adapter = new Listadapter(SearchResults.this,matchesToProfile(matches));
+                listView.setAdapter(adapter);
             }
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
@@ -58,9 +64,7 @@ public class SearchResults extends AppCompatActivity {
             });}
 
 
-        listView = findViewById(R.id.userlist);
-        ListAdapter adapter = new Listadapter(SearchResults.this,matchesToProfile(matches));
-        listView.setAdapter(adapter);
+
 
     }
     public UserProfile[] matchesToProfile(final ArrayList<UserTraining> match){
