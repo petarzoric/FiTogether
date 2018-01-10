@@ -29,7 +29,6 @@ import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
     EditText email;
-    EditText email2;
     EditText password;
     FirebaseAuth auth;
     FirebaseAuth.AuthStateListener authListener;
@@ -57,14 +56,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         email =  findViewById(R.id.email);
-        email2 =  findViewById(R.id.email2);
         password =  findViewById(R.id.password);
         auth = FirebaseAuth.getInstance();
         signup = findViewById(R.id.signup);
         login =  findViewById(R.id.login);
         database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference();
-        emailString = email.getEditableText().toString()+"."+email2.getEditableText().toString();
+        emailString = email.getEditableText().toString();
         passwordString = password.getEditableText().toString();
         login.setEnabled(false);
         signup.setEnabled(false);
@@ -86,23 +84,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-        email2.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                checkButtons();
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                checkButtons();
-
-            }
-        });
 
         password.addTextChangedListener(new TextWatcher() {
             @Override
@@ -184,7 +166,7 @@ public class MainActivity extends AppCompatActivity {
                 progressDialog.setCanceledOnTouchOutside(false);
                 progressDialog.show();
 
-                String emailString = email.getEditableText().toString()+"."+email2.getEditableText().toString();
+                String emailString = email.getEditableText().toString();
                 String passwordString = password.getEditableText().toString();
                     startLogIn(emailString, passwordString);
                 }
@@ -197,7 +179,7 @@ public class MainActivity extends AppCompatActivity {
                 progressDialog.setMessage("Please wait while we create your account");
                 // progressDialog.setCanceledOnTouchOutside(false);
                 progressDialog.show();
-                String emailString = email.getEditableText().toString()+"."+email2.getEditableText().toString();
+                String emailString = email.getEditableText().toString();
                 String passwordString = password.getEditableText().toString();
                 startSignIn(emailString, passwordString);
             }
@@ -240,7 +222,7 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(MainActivity.this, "Try Again", Toast.LENGTH_LONG).show();
                     }else {
                         progressDialog.hide();
-                        emailtext = email.getText().toString() + "." + email2.getText().toString();
+                        emailtext = email.getText().toString();
                         key = FirebaseAuth.getInstance().getCurrentUser().getUid();
                         databaseReference.child("Users2").addValueEventListener(new ValueEventListener() {
                             @Override
@@ -270,7 +252,7 @@ public class MainActivity extends AppCompatActivity {
 
 
                                         progressDialog.dismiss();
-                                        emailtext = email.getText().toString() + "." + email2.getText().toString();
+                                        emailtext = email.getText().toString();
                                         key = FirebaseAuth.getInstance().getCurrentUser().getUid();
                                         Toast.makeText(MainActivity.this, "Created Account", Toast.LENGTH_LONG).show();
                                         Intent dataFirstScreen = new Intent(MainActivity.this, SecondScreen.class);
@@ -335,7 +317,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void checkButtons(){
-        if (!(TextUtils.isEmpty(email.getText().toString()) || password.getText().toString().length() < 6 || TextUtils.isEmpty(email2.getText().toString()))){
+        if (!(TextUtils.isEmpty(email.getText().toString()) || password.getText().toString().length() < 6 )){
             login.setEnabled(true);
             signup.setEnabled(true);
         }
@@ -373,7 +355,7 @@ public class MainActivity extends AppCompatActivity {
                         databaseReference = FirebaseDatabase.getInstance().getReference().child("Users2").child(uid);
 
                         progressDialog.dismiss();
-                        emailtext = email.getText().toString() + "." + email2.getText().toString();
+                        emailtext = email.getText().toString();
                         key = FirebaseAuth.getInstance().getCurrentUser().getUid();
                         Toast.makeText(MainActivity.this, "Created Account", Toast.LENGTH_LONG).show();
                         Intent dataFirstScreen = new Intent(MainActivity.this, SecondScreen.class);
