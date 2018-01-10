@@ -10,12 +10,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import com.squareup.picasso.Picasso;
-
 
 import java.util.ArrayList;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class Listadapter extends ArrayAdapter<String> {
@@ -42,8 +38,6 @@ public class Listadapter extends ArrayAdapter<String> {
         TextView txt1 = convertView.findViewById(R.id.uname);
         TextView txt2 = convertView.findViewById(R.id.ulevel);
         ImageView img = convertView.findViewById(R.id.icon);
-        Picasso.with(context).load(matches[position].getThumbURL()).placeholder(R.drawable.image_preview).into(img);
-
 
         txt1.setText(matches[position].getName());
         txt2.setText(levelString(matches[position].getLevel()));
@@ -62,8 +56,6 @@ public class Listadapter extends ArrayAdapter<String> {
         }
         return level;
     }
-
-
 
 
 
