@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CalendarView;
-import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -33,17 +32,9 @@ public class Tab2Calender extends Fragment {
     DatabaseReference databaseReferencecalender;
     FirebaseDatabase database;
     DatabaseReference databaseReferenceprofile;
-    int trainingType;
-    UserTraining trainingProfile;
+    String trainingType;
+    Training trainingProfile;
     UserProfile profile;
-    int level;
-    int studio;
-    int location;
-    int m;
-    int d;
-    EditText time;
-    String times;
-
 
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -52,8 +43,8 @@ public class Tab2Calender extends Fragment {
         training = rootView.findViewById(R.id.training);
         ArrayAdapter<CharSequence> trainingadapter = ArrayAdapter.createFromResource(getActivity(), R.array.Training, R.layout.support_simple_spinner_dropdown_item);
         training.setAdapter(trainingadapter);
-        time = rootView.findViewById(R.id.timestart);
         saveTraining = rootView.findViewById(R.id.savetraining);
+
         saveTraining.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -68,8 +59,8 @@ public class Tab2Calender extends Fragment {
             @Override
             public void onSelectedDayChange(CalendarView view, int year, int month,
                                             int dayOfMonth) {
-                d = dayOfMonth;
-                m = month + 1;
+                int d = dayOfMonth;
+                int m = month;
                 selectedDate = String.valueOf(d)+ "_" + String.valueOf(m) + "_" + String.valueOf(year);
             }
         });
@@ -109,51 +100,13 @@ public class Tab2Calender extends Fragment {
 
             public void saveTraining(){
         if (selectedDate != null) {
-            if (!time.getText().toString().equals("")) {
-                databaseReferencecalender = FirebaseDatabase.getInstance().getReference("TrainingsDate");
-                trainingType = training.getSelectedItemPosition();
-                studio = profile.getStudio();
-                location = profile.getLocation();
-                level = Level.parseToInt(profile.getLevel());
-                times = time.getText().toString();
-                trainingProfile = new UserTraining(selectedDate, trainingType, key, level, studio, location, times);
-                databaseReferencecalender.child(monthToString(m)).child(String.valueOf(d)).child(key).setValue(trainingProfile);
-
-            }else{
-                Toast.makeText(getActivity(), "Please Select a Time", Toast.LENGTH_SHORT).show();
-            }
+            databaseReferencecalender = FirebaseDatabase.getInstance().getReference(selectedDate);
+            trainingType = training.getSelectedItem().toString();
+            trainingProfile = new Training(trainingType, Level.parseToInt(profile.getLevel()), profile.getStudio(), profile.getLocation());
+            databaseReferencecalender.child(key).setValue(trainingProfile);
         }else{
             Toast.makeText(getActivity(), "Please Select a Date", Toast.LENGTH_SHORT).show();
         }
 
-    }
-    public String monthToString(int month){
-                String monthString = "";
-                if (month == 1){
-                    monthString = "Januar";
-                }if (month == 2){
-                    monthString = "Februar";
-                }if (month == 3){
-                    monthString = "März";
-                }if (month == 4){
-                    monthString = "April";
-                }if (month == 5){
-                    monthString = "Mai";
-                }if (month == 6){
-                    monthString = "Juni";
-                }if (month == 7){
-                    monthString = "Juli";
-                }if (month == 8){
-                    monthString = "August";
-                }if (month == 9){
-                    monthString = "September";
-                }if (month == 10){
-                    monthString = "Oktober";
-                }if (month == 11){
-                    monthString = "November";
-                }if (month == 12){
-                    monthString = "Dezember";
-                }
-                return monthString;
     }
 }
