@@ -9,7 +9,7 @@
     <CalendarView
         android:id="@+id/calendarView"
         android:layout_width="wrap_content"
-        android:layout_height="324dp"
+        android:layout_height="338dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
@@ -48,21 +48,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/training"
         app:layout_constraintVertical_bias="0.17000002" />
-
-    <EditText
-        android:id="@+id/timestart"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:hint="00:00"
-        android:inputType="time"
-        app:layout_constraintBottom_toTopOf="@+id/training"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/calendarView" />
 
 </android.support.constraint.ConstraintLayout>

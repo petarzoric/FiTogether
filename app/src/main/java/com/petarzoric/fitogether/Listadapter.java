@@ -10,19 +10,16 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import com.squareup.picasso.Picasso;
-
 
 import java.util.ArrayList;
 
-import de.hdodenhof.circleimageview.CircleImageView;
-
 
 public class Listadapter extends ArrayAdapter<String> {
-    public UserProfile[] matches;
+    public ArrayList <UserProfile> matches;
     Activity context;
+    String level;
 
-    public Listadapter(Activity context, UserProfile[] matches) {
+    public Listadapter(Activity context, ArrayList <UserProfile> matches) {
         super(context, R.layout.listviewitems);
         this.context = context;
         this.matches = matches;
@@ -31,7 +28,7 @@ public class Listadapter extends ArrayAdapter<String> {
 
     @Override
     public int getCount() {
-        return matches.length;
+        return matches.size();
     }
 
     @NonNull
@@ -42,28 +39,19 @@ public class Listadapter extends ArrayAdapter<String> {
         TextView txt1 = convertView.findViewById(R.id.uname);
         TextView txt2 = convertView.findViewById(R.id.ulevel);
         ImageView img = convertView.findViewById(R.id.icon);
-        Picasso.with(context).load(matches[position].getThumbURL()).placeholder(R.drawable.image_preview).into(img);
-
-
-        txt1.setText(matches[position].getName());
-        txt2.setText(levelString(matches[position].getLevel()));
-        return convertView;
-    }
-    public String levelString(Enum lvl){
-        String level = "";
-        if (lvl == Level.ANFÄNGER){
+        if (matches.get(position).getLevel() == Level.ANFÄNGER){
             level = "Anfänger";
-        }else if (lvl == Level.FORTGESCHRITTEN){
+        }else if (matches.get(position).getLevel() == Level.FORTGESCHRITTEN){
             level = "Fortgeschritten";
-        }else if (lvl == Level.PROFI){
+        }else if (matches.get(position).getLevel() == Level.PROFI){
             level = "Profi";
-        }else if (lvl == Level.ARNOLD){
+        }else if (matches.get(position).getLevel() == Level.ARNOLD){
             level = "Arnold";
         }
-        return level;
+        txt1.setText(matches.get(position).getName());
+        txt2.setText(level);
+        return convertView;
     }
-
-
 
 
 
