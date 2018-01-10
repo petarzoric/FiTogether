@@ -81,6 +81,7 @@ public class UsersActivity extends AppCompatActivity {
             view = itemView;
         }
 
+
         public void setName(String name){
             TextView userNameView = (TextView) view.findViewById(R.id.user_single_name);
             userNameView.setText(name);
