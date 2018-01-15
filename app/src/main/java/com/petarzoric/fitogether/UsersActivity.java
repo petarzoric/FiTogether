@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -32,6 +33,7 @@ public class UsersActivity extends AppCompatActivity {
         usersList.setHasFixedSize(true);
         usersList.setLayoutManager(new LinearLayoutManager(this));
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Users2");
+        databaseReference.keepSynced(true);
 
 
 
@@ -93,6 +95,8 @@ public class UsersActivity extends AppCompatActivity {
 
         public void setImage(String image, Context context){
             CircleImageView userImageView = view.findViewById(R.id.user_single_image);
+
+
             Picasso.with(context).load(image).placeholder(R.drawable.image_preview).into(userImageView);
         }
 

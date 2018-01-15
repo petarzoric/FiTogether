@@ -24,6 +24,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
@@ -72,6 +74,7 @@ public class SettingsActivity extends AppCompatActivity {
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
         String current_uid = currentUser.getUid();
         mUserDatabase = FirebaseDatabase.getInstance().getReference().child("Users2").child(current_uid);
+        mUserDatabase.keepSynced(true);
 
         mUserDatabase.addValueEventListener(new ValueEventListener() {
             @Override
@@ -80,13 +83,25 @@ public class SettingsActivity extends AppCompatActivity {
                 displayName.setText((String) dataSnapshot.child("name").getValue());
                 displayStatus.setText((String) dataSnapshot.child("status").getValue());
 
-                String image = dataSnapshot.child("image").getValue().toString();
+               final String image = dataSnapshot.child("image").getValue().toString();
 
 
                 if(!image.equals("default.jpg")  ){
                     // Picasso.with(SettingsActivity.this).load(R.drawable.image_preview).into(displayImage);
                     //displayImage.setImageResource(R.drawable.image_preview);
-                    Picasso.with(SettingsActivity.this).load(image).placeholder(R.drawable.image_preview).into(displayImage);
+                    //Picasso.with(SettingsActivity.this).load(image).placeholder(R.drawable.image_preview).into(displayImage);
+                    Picasso.with(SettingsActivity.this).load(image).networkPolicy(NetworkPolicy.OFFLINE).
+                            placeholder(R.drawable.image_preview).into(displayImage, new Callback() {
+                        @Override
+                        public void onSuccess() {
+
+                        }
+
+                        @Override
+                        public void onError() {
+                           Picasso.with(SettingsActivity.this).load(image).placeholder(R.drawable.image_preview).into(displayImage);
+                        }
+                    });
 
                 }
 
