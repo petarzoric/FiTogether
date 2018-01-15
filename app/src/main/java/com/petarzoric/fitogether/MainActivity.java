@@ -356,6 +356,8 @@ public class MainActivity extends AppCompatActivity {
                         progressDialog.hide();
                         Toast.makeText(MainActivity.this, "this email is already used", Toast.LENGTH_LONG).show();
                     }else {
+
+
                         currentUser = FirebaseAuth.getInstance().getCurrentUser();
                         String uid = currentUser.getUid();
                         //Hier beginnen wir, das Profil anzulegen und langsam zu befüllen

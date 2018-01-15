@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.HashMap;
 
@@ -145,9 +146,14 @@ public class StudioScreen extends AppCompatActivity {
 
 
 
+
         Intent dataThirdScreen = new Intent(StudioScreen.this, MainScreen.class);
 
         startActivity(dataThirdScreen);
+        String deviceToken = FirebaseInstanceId.getInstance().getToken();
+        String currentUID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        databaseReference.child("device_token").setValue(deviceToken);
 
     }
 }
