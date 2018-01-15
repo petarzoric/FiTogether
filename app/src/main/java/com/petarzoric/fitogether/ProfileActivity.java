@@ -95,7 +95,10 @@ public class ProfileActivity extends AppCompatActivity {
         sendRequestButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //if not friends
+
+                sendRequestButton.setEnabled(false);
+
+                //if not friends ------------------------------
                 if(current_state == 0){
 
                     friendRequestDatabase.child(currentUser.getUid()).child(user_id).child("request_type").setValue("sent").addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -106,6 +109,12 @@ public class ProfileActivity extends AppCompatActivity {
                                 friendRequestDatabase.child(user_id).child(currentUser.getUid()).child("request_type").setValue("received").addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
+
+                                        sendRequestButton.setEnabled(true);
+                                        // state = 1 : sent req
+                                        current_state = 1;
+                                        sendRequestButton.setText("Cancel Friend request");
+
                                         Toast.makeText(ProfileActivity.this, "request sent succesfully", Toast.LENGTH_LONG);
                                     }
                                 });
@@ -113,6 +122,26 @@ public class ProfileActivity extends AppCompatActivity {
                             } else {
                                 Toast.makeText(ProfileActivity.this, "failed sending request", Toast.LENGTH_LONG);
                             }
+                        }
+                    });
+
+                }
+                //cancel req state -----------------------------
+                if (current_state == 1){
+                    friendRequestDatabase.child(currentUser.getUid()).child(user_id).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+
+                            friendRequestDatabase.child(user_id).child(currentUser.getUid()).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+
+                                    current_state = 0;
+                                    sendRequestButton.setText("SEND FRIEND REQUEST");
+                                    sendRequestButton.setEnabled(true);
+
+                                }
+                            });
                         }
                     });
 
