@@ -50,7 +50,12 @@
         <activity
             android:name=".UsersActivity"
             android:parentActivityName=".MainScreen" />
-        <activity android:name=".ProfileActivity"></activity>
+        <activity android:name=".ProfileActivity">
+            <intent-filter>
+                <action android:name="com.petarzoric.fitogether_TARGET_NOTIFICATION"></action>
+                <category android:name="android.intent.category.DEFAULT"></category>
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
