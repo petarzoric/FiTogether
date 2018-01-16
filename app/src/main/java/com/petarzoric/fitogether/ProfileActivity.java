@@ -176,30 +176,49 @@ public class ProfileActivity extends AppCompatActivity {
                 //if not friends ------------------------------
                 if(current_state == 0){
 
-                    DatabaseReference newNotificationRef = rootRef.child("notifications").child(user_id).push();
-                    String newNotificationID = newNotificationRef.getKey();
-
-                    HashMap<String, String>  notificationData = new HashMap<>();
-                    notificationData.put("from", currentUser.getUid());
-                    notificationData.put("type", "request");
-
-                    Map requestMap = new HashMap();
-                    requestMap.put("Friend_req/" + currentUser.getUid() + "/" + user_id + "request type", "sent");
-                    requestMap.put("Friend_req/" + user_id + "/" + currentUser.getUid() + "request type", "received");
-                    requestMap.put("notifications/" + user_id + "/" + newNotificationID, notificationData);
-
-                    rootRef.updateChildren(requestMap, new DatabaseReference.CompletionListener() {
+                    friendRequestDatabase.child(currentUser.getUid()).child(user_id).child("request_type").setValue("sent").addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
-                        public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if(task.isSuccessful()){
+
+                                friendRequestDatabase.child(user_id).child(currentUser.getUid()).child("request_type").setValue("received").addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+
+                                        HashMap<String, String>  notificationData = new HashMap<>();
+                                        notificationData.put("from", currentUser.getUid());
+                                        notificationData.put("type", "request");
+
+                                        notificationDatabase.child(user_id).push().setValue(notificationData).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                if(task.isSuccessful()){
+
+                                                    // state = 1 : sent req
+                                                    current_state = 1;
+                                                    sendRequestButton.setText("Cancel Friend request");
+
+                                                    declineButton.setVisibility(View.INVISIBLE);
+                                                    declineButton.setEnabled(false);
 
 
-                            if(databaseError != null){
+                                                }     else {
+                                                    //TODO error überlegen
 
-                                Toast.makeText(ProfileActivity.this, "billaaaaa", Toast.LENGTH_SHORT).show();
+                                                }
+                                            }
+                                        });
 
+
+
+                                        //Toast.makeText(ProfileActivity.this, "request sent succesfully", Toast.LENGTH_LONG);
+                                    }
+                                });
+
+                            } else {
+                                Toast.makeText(ProfileActivity.this, "failed sending request", Toast.LENGTH_LONG);
                             }
-
-
+                            sendRequestButton.setEnabled(true);
                         }
                     });
 
@@ -285,6 +304,8 @@ public class ProfileActivity extends AppCompatActivity {
                     });
 
                 }
+
+
             }
         });
 
