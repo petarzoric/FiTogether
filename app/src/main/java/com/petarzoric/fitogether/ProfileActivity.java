@@ -25,7 +25,6 @@ import com.squareup.picasso.Picasso;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Map;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -34,11 +33,11 @@ public class ProfileActivity extends AppCompatActivity {
     private ImageView displayImage;
     private Button sendRequestButton;
     private Button declineButton;
+    private ProgressDialog dialog;
 
     private DatabaseReference usersDatabase;
     private DatabaseReference friendDatabase;
     private DatabaseReference notificationDatabase;
-    private  DatabaseReference rootRef;
 
     private DatabaseReference friendRequestDatabase;
 
@@ -69,13 +68,16 @@ public class ProfileActivity extends AppCompatActivity {
         current_state = 0;
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
         friendDatabase = FirebaseDatabase.getInstance().getReference().child("Friends");
-        rootRef = FirebaseDatabase.getInstance().getReference();
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setTitle("loading user data");
         progressDialog.setMessage("please wait while we load the user data");
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
+        dialog = new ProgressDialog(this);
+        dialog.setTitle("sending friend request");
+        dialog.setMessage("wait a second...");
+        dialog.setCanceledOnTouchOutside(false);
 
 
 
@@ -175,6 +177,8 @@ public class ProfileActivity extends AppCompatActivity {
 
                 //if not friends ------------------------------
                 if(current_state == 0){
+                    dialog.setTitle("sending friend request");
+                    dialog.show();
 
                     friendRequestDatabase.child(currentUser.getUid()).child(user_id).child("request_type").setValue("sent").addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
@@ -200,6 +204,7 @@ public class ProfileActivity extends AppCompatActivity {
 
                                                     declineButton.setVisibility(View.INVISIBLE);
                                                     declineButton.setEnabled(false);
+                                                    dialog.dismiss();
 
 
                                                 }     else {
@@ -225,6 +230,8 @@ public class ProfileActivity extends AppCompatActivity {
                 }
                 //cancel req state -----------------------------
                 if (current_state == 1){
+                    dialog.setTitle("cancelling your friend request");
+                    dialog.show();
                     friendRequestDatabase.child(currentUser.getUid()).child(user_id).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
@@ -239,6 +246,7 @@ public class ProfileActivity extends AppCompatActivity {
 
                                     declineButton.setVisibility(View.INVISIBLE);
                                     declineButton.setEnabled(false);
+                                    dialog.dismiss();
 
                                 }
                             });
@@ -249,6 +257,8 @@ public class ProfileActivity extends AppCompatActivity {
 
                 // request received state -------------------
                 if(current_state == 2){
+                    dialog.setTitle("accepting...");
+                    dialog.show();
 
                     final String currentDate = DateFormat.getDateInstance().format(new Date());
 
@@ -275,6 +285,7 @@ public class ProfileActivity extends AppCompatActivity {
 
                                                     declineButton.setVisibility(View.INVISIBLE);
                                                     declineButton.setEnabled(false);
+                                                    dialog.dismiss();
 
                                                 }
                                             });
@@ -290,6 +301,8 @@ public class ProfileActivity extends AppCompatActivity {
                 }
                 // friends state
                 if(current_state == 3){
+                    dialog.setTitle("removing from your friends list...");
+                    dialog.show();
                     friendDatabase.child(currentUser.getUid()).child(user_id).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
@@ -298,14 +311,14 @@ public class ProfileActivity extends AppCompatActivity {
                                 public void onSuccess(Void aVoid) {
                                     current_state = 0;
                                     sendRequestButton.setText("SEND FRIEND REQUEST");
+                                    sendRequestButton.setEnabled(true);
+                                    dialog.dismiss();
                                 }
                             });
                         }
                     });
 
                 }
-
-
             }
         });
 
