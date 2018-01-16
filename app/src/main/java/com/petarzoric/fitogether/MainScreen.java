@@ -12,12 +12,15 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 
 public class MainScreen extends AppCompatActivity {
@@ -28,6 +31,8 @@ public class MainScreen extends AppCompatActivity {
     private Toolbar toolbar;
     private Button logOutButton;
     ClipData.Item allUsers;
+    private DatabaseReference usersDatabase;
+    private FirebaseAuth auth;
 
 
 
@@ -35,6 +40,8 @@ public class MainScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mainscreen);
+        auth = FirebaseAuth.getInstance();
+        usersDatabase = FirebaseDatabase.getInstance().getReference().child("Users2").child(auth.getCurrentUser().getUid());
 
         toolbar =  findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -54,6 +61,29 @@ public class MainScreen extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        //Log.i("OnStart", "aufgerufen");
+       // usersDatabase.child("online").setValue(true);
+
+
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+       // Log.i("OnStop", "aufgerufen");
+       // usersDatabase.child("online").setValue(false);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+       // Log.i("OnPause", "aufgerufen");
+        //usersDatabase.child("online").setValue(false);
+
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

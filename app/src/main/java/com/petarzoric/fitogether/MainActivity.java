@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     private ProgressDialog progressDialog;
     private String emailString;
     private String passwordString;
+    private DatabaseReference usersDatabase;
 
 
 
@@ -62,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
         login =  findViewById(R.id.login);
         database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference();
+        usersDatabase = FirebaseDatabase.getInstance().getReference().child("Users2").child(auth.getCurrentUser().getUid());
         emailString = email.getEditableText().toString();
         passwordString = password.getEditableText().toString();
         login.setEnabled(false);
@@ -201,6 +203,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onStop() {
         super.onStop();
+
         if (authListener != null) {
             auth.removeAuthStateListener(authListener);
         }else {
