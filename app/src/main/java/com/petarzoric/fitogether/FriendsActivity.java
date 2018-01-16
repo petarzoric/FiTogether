@@ -1,6 +1,9 @@
 package com.petarzoric.fitogether;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -66,7 +69,7 @@ public class FriendsActivity extends AppCompatActivity {
                 viewHolder.setDate(model.getDate());
 
 
-                String list_user_id = getRef(position).getKey();
+                final String list_user_id = getRef(position).getKey();
 
                 usersDatabase.child(list_user_id).addValueEventListener(new ValueEventListener() {
                     @Override
@@ -85,6 +88,42 @@ public class FriendsActivity extends AppCompatActivity {
                         viewHolder.setName(userName);
                         viewHolder.setImage(userThumb, getApplicationContext());
 
+                        viewHolder.view.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+                                CharSequence options[] = new CharSequence[]{"Open Profile", "Send message"};
+                                AlertDialog.Builder builder = new AlertDialog.Builder(FriendsActivity.this);
+                                builder.setTitle("Select Options");
+                                builder.setItems(options, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+
+                                        if(which == 0){
+
+                                            Intent profileIntent = new Intent(FriendsActivity.this, ProfileActivity.class);
+                                            profileIntent.putExtra("user_id", list_user_id);
+                                            startActivity(profileIntent);
+                                        }
+
+                                        if(which == 1){
+
+                                            Intent profileIntent = new Intent(FriendsActivity.this, ChatActivity.class);
+                                            profileIntent.putExtra("user_id", list_user_id);
+                                            startActivity(profileIntent);
+
+                                        }
+
+
+
+                                    }
+                                });
+
+                                builder.show();
+
+                            }
+                        });
+
                     }
 
                     @Override
@@ -97,6 +136,13 @@ public class FriendsActivity extends AppCompatActivity {
             }
         };
         friendsList.setAdapter(friendsRecycleViewAdapter);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //usersDatabase.child(currentUserId).child("online").setValue(false);
+
     }
 
     @Override
@@ -141,13 +187,7 @@ public class FriendsActivity extends AppCompatActivity {
             } else {
 
                 userOnlineView.setVisibility(View.INVISIBLE);
-                System.out.println(online_status);
-                System.out.println(online_status);
-                System.out.println(online_status);
-                System.out.println(online_status);
-                System.out.println(online_status);
-                System.out.println(online_status);
-                System.out.println(online_status);
+
             }
         }
 

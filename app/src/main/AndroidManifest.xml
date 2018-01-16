@@ -55,7 +55,9 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".FriendsActivity"></activity>
+        <activity android:name=".FriendsActivity" />
+        <activity android:name=".ChatActivity"
+            android:parentActivityName=".MainScreen"></activity>
     </application>
 
 </manifest>
