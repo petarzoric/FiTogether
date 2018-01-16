@@ -22,6 +22,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.sql.Struct;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class FriendsActivity extends AppCompatActivity {
@@ -75,11 +77,11 @@ public class FriendsActivity extends AppCompatActivity {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
 
-                        String userName = dataSnapshot.child("name").getValue().toString();
+                        final String userName = dataSnapshot.child("name").getValue().toString();
                         String userThumb = dataSnapshot.child("thumbnail").getValue().toString();
                         if(dataSnapshot.hasChild("online")){
 
-                            Boolean userOnline = (boolean) dataSnapshot.child("online").getValue();
+                            String userOnline =  dataSnapshot.child("online").getValue().toString();
                             viewHolder.setUserOnline(userOnline);
                         }
 
@@ -110,6 +112,7 @@ public class FriendsActivity extends AppCompatActivity {
 
                                             Intent profileIntent = new Intent(FriendsActivity.this, ChatActivity.class);
                                             profileIntent.putExtra("user_id", list_user_id);
+                                            profileIntent.putExtra("user_name", userName);
                                             startActivity(profileIntent);
 
                                         }
@@ -179,10 +182,10 @@ public class FriendsActivity extends AppCompatActivity {
             Picasso.with(context).load(image).placeholder(R.drawable.image_preview).into(userImageView);
         }
 
-        public void setUserOnline(boolean online_status){
+        public void setUserOnline(String online_status){
 
             ImageView userOnlineView = (ImageView) view.findViewById(R.id.user_single_online_icon);
-            if(online_status == true){
+            if(online_status.equals("true")){
                 userOnlineView.setVisibility(View.VISIBLE);
             } else {
 
