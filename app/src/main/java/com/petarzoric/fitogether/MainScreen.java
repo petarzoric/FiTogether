@@ -14,7 +14,10 @@ import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
+
+import com.google.firebase.auth.FirebaseAuth;
 
 
 public class MainScreen extends AppCompatActivity {
@@ -79,6 +82,17 @@ public class MainScreen extends AppCompatActivity {
             Intent settingsIntent = new Intent(MainScreen.this, UsersActivity.class);
             startActivity(settingsIntent);
         }
+
+
+        if(item.getItemId() == R.id.logout){
+
+
+                    Intent intent = new Intent(MainScreen.this, MainActivity.class);
+                    FirebaseAuth.getInstance().signOut();
+                    startActivity(intent);
+                }
+
+
 
         return super.onOptionsItemSelected(item);
 
