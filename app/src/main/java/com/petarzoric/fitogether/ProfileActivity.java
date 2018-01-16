@@ -25,6 +25,7 @@ import com.squareup.picasso.Picasso;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -261,8 +262,18 @@ public class ProfileActivity extends AppCompatActivity {
                     dialog.show();
 
                     final String currentDate = DateFormat.getDateInstance().format(new Date());
+                    /*
+                    Map friendsMap = new HashMap();
+                    friendsMap.put("Friends/" + currentUser.getUid() + "/" + user_id + "/date", currentDate);
+                    friendsMap.put("Friends/" + user_id + "/" + currentUser.getUid() + "/date", currentDate);
 
-                    friendDatabase.child(currentUser.getUid()).child(user_id).setValue(currentDate).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    friendsMap.put("Friend_req" + currentUser.getUid() +  "/" + user_id, null);
+                    friendsMap.put("Friend_req" + user_id +  "/" + currentUser.getUid(), null);
+                    */
+
+
+
+                    friendDatabase.child(currentUser.getUid()).child(user_id).child(currentDate).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
 
