@@ -9,6 +9,10 @@
         app:showAsAction="never" />
     <item
         android:id="@+id/allUsers"
-        android:orderInCategory="101"
+        android:orderInCategory="102"
         android:title="All Users" />
+    <item
+        android:id="@+id/logout"
+        android:orderInCategory="103"
+        android:title="Logout" />
 </menu>

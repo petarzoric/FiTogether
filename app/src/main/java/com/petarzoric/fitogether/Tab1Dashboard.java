@@ -26,7 +26,6 @@ import com.google.firebase.database.ValueEventListener;
  */
 
 public class Tab1Dashboard extends Fragment {
-    Button logout;
     FirebaseDatabase database;
     DatabaseReference databaseReference;
     UserProfile profile;
@@ -39,7 +38,6 @@ public class Tab1Dashboard extends Fragment {
     String level;
     String studio;
     String gender;
-    Button editprofile;
 
 
 
@@ -56,39 +54,11 @@ public class Tab1Dashboard extends Fragment {
         leveltext = rootView.findViewById(R.id.leveltext);
         agetext = rootView.findViewById(R.id.agetext);
         studiotext = rootView.findViewById(R.id.studiotext);
-        logout = rootView.findViewById(R.id.logout);
-        editprofile = rootView.findViewById(R.id.editprofile);
         gendertext = rootView.findViewById(R.id.gendertext);
         final String key = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
 
 
-        editprofile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent userdata = new Intent(getActivity(), EditProfile.class);
-                userdata.putExtra("email", profile.getEmail());
-                userdata.putExtra("name", profile.getName());
-                userdata.putExtra("age", profile.getAge());
-                userdata.putExtra("level", profile.getLevel().parseToInt(profile.getLevel()));
-                userdata.putExtra("location", profile.getLocation());
-                userdata.putExtra("studio", profile.getStudio());
-                userdata.putExtra("gender", gender);
-                userdata.putExtra("studios", studio);
-                userdata.putExtra("genderint", profile.getGender().parseToInt(profile.getGender()));
-                startActivity(userdata);
-
-            }
-        });
-        logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), MainActivity.class);
-
-                startActivity(intent);
-                FirebaseAuth.getInstance().signOut();
-            }
-        });
         databaseReference.child("Users2").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

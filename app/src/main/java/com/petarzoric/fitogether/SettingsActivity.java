@@ -47,6 +47,7 @@ public class SettingsActivity extends AppCompatActivity {
     private FirebaseUser currentUser;
     private Button changeStatusButton;
     private Button changeImageButton;
+    private Button editProfile;
     private TextView displayName;
     private TextView displayStatus;
     private static final int GALLERY_PICK = 1;
@@ -65,6 +66,7 @@ public class SettingsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
         changeStatusButton = (Button) findViewById(R.id.changeStatus);
         changeImageButton = (Button) findViewById(R.id.changeImage);
+        editProfile = findViewById(R.id.editprofile);
         displayName = (TextView) findViewById(R.id.displayName);
         displayStatus = (TextView) findViewById(R.id.hiThere);
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -124,6 +126,15 @@ public class SettingsActivity extends AppCompatActivity {
                 startActivity(statusIntent);
             }
         });
+        editProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                Intent statusIntent = new Intent(SettingsActivity.this, EditProfile.class);
+                startActivity(statusIntent);
+            }
+        });
 
         changeImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -148,6 +159,7 @@ public class SettingsActivity extends AppCompatActivity {
 
             }
         });
+
 
     }
 
