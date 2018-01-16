@@ -1,6 +1,7 @@
 package com.petarzoric.fitogether;
 
 import android.app.ProgressDialog;
+import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -39,6 +40,7 @@ public class ProfileActivity extends AppCompatActivity {
     private DatabaseReference usersDatabase;
     private DatabaseReference friendDatabase;
     private DatabaseReference notificationDatabase;
+    private DatabaseReference rootref;
 
     private DatabaseReference friendRequestDatabase;
 
@@ -69,6 +71,7 @@ public class ProfileActivity extends AppCompatActivity {
         current_state = 0;
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
         friendDatabase = FirebaseDatabase.getInstance().getReference().child("Friends");
+        rootref = FirebaseDatabase.getInstance().getReference();
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setTitle("loading user data");
@@ -262,52 +265,38 @@ public class ProfileActivity extends AppCompatActivity {
                     dialog.show();
 
                     final String currentDate = DateFormat.getDateInstance().format(new Date());
-                    /*
+
                     Map friendsMap = new HashMap();
                     friendsMap.put("Friends/" + currentUser.getUid() + "/" + user_id + "/date", currentDate);
                     friendsMap.put("Friends/" + user_id + "/" + currentUser.getUid() + "/date", currentDate);
 
                     friendsMap.put("Friend_req" + currentUser.getUid() +  "/" + user_id, null);
                     friendsMap.put("Friend_req" + user_id +  "/" + currentUser.getUid(), null);
-                    */
 
-
-
-                    friendDatabase.child(currentUser.getUid()).child(user_id).child(currentDate).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    rootref.updateChildren(friendsMap, new DatabaseReference.CompletionListener() {
                         @Override
-                        public void onSuccess(Void aVoid) {
+                        public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
 
-                            friendDatabase.child(user_id).child(currentUser.getUid()).setValue(currentDate).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void aVoid) {
+                            if(databaseError == null){
 
-                                    friendRequestDatabase.child(currentUser.getUid()).child(user_id).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void aVoid) {
+                                current_state = 3;
+                                sendRequestButton.setText("UNFRIEND THIS PERSON");
+                                sendRequestButton.setEnabled(true);
 
-                                            friendRequestDatabase.child(user_id).child(currentUser.getUid()).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                @Override
-                                                public void onSuccess(Void aVoid) {
+                                declineButton.setVisibility(View.INVISIBLE);
+                                declineButton.setEnabled(false);
+                                dialog.dismiss();
 
-                                                    //current state = 3: friends
-                                                    current_state = 3;
-                                                    sendRequestButton.setText("UNFRIEND THIS PERSON");
-                                                    sendRequestButton.setEnabled(true);
-
-                                                    declineButton.setVisibility(View.INVISIBLE);
-                                                    declineButton.setEnabled(false);
-                                                    dialog.dismiss();
-
-                                                }
-                                            });
-                                        }
-                                    });
-
-                                }
-                            });
+                            }
 
                         }
                     });
+
+
+
+
+
+
 
                 }
                 // friends state
