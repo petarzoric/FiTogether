@@ -51,6 +51,19 @@ public enum Gender {
         return 2;
 
     }
+    public static String parseToString(Gender gender){
+        switch (gender){
+            case MÄNNLICH:
+                return "MÄNNLICH";
+
+            case WEIBLICH:
+                return "WEIBLICH";
+
+            case NOTDEFINED:
+                return "ANDERES";
+        }
+        return "ANDERES";
+    }
 
     public static Gender parseToEnum(int input){
         switch (input){

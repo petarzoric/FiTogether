@@ -41,27 +41,19 @@ public class Listadapter extends ArrayAdapter<String> {
         convertView = in.inflate(R.layout.listviewitems, parent, false);
         TextView txt1 = convertView.findViewById(R.id.uname);
         TextView txt2 = convertView.findViewById(R.id.ulevel);
+        TextView txt3 = convertView.findViewById(R.id.age);
+        TextView txt4 = convertView.findViewById(R.id.ugender);
         ImageView img = convertView.findViewById(R.id.icon);
         Picasso.with(context).load(matches[position].getThumbURL()).placeholder(R.drawable.image_preview).into(img);
 
 
         txt1.setText(matches[position].getName());
-        txt2.setText(levelString(matches[position].getLevel()));
+        txt2.setText(Level.parseToString(matches[position].getLevel()));
+        txt3.setText(String.valueOf(matches[position].getAge()));
+        txt4.setText(Gender.parseToString(matches[position].getGender()));
         return convertView;
     }
-    public String levelString(Enum lvl){
-        String level = "";
-        if (lvl == Level.ANFÄNGER){
-            level = "Anfänger";
-        }else if (lvl == Level.FORTGESCHRITTEN){
-            level = "Fortgeschritten";
-        }else if (lvl == Level.PROFI){
-            level = "Profi";
-        }else if (lvl == Level.ARNOLD){
-            level = "Arnold";
-        }
-        return level;
-    }
+
 
 
 
