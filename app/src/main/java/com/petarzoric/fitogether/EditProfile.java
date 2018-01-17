@@ -88,7 +88,7 @@ public class EditProfile extends AppCompatActivity {
     }
 
     public void saveChanges(){
-        DatabaseReference ref = childReference.child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        DatabaseReference ref = childReference.child(UID);
         ref.child("uid").setValue(UID);
         ref.child("email").setValue(emailtext.getText().toString());
         ref.child("name").setValue(name.getText().toString());

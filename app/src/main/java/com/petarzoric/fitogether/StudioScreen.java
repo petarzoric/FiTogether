@@ -22,34 +22,20 @@ import java.util.HashMap;
 
 public class StudioScreen extends AppCompatActivity {
 
-    int userlevel;
-    int userage;
-    String username;
-    String usermail;
-    String key;
-    DatabaseReference databaseReference;
-    FirebaseDatabase database;
     Button save;
     Spinner studio;
     Spinner location;
-    int userstudio;
-    int userlocation;
-    int usergender;
-
-
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_studio_screen);
-        databaseReference = FirebaseDatabase.getInstance().getReference("UserData");
         location = findViewById(R.id.Location);
         studio = findViewById(R.id.Studio);
         save =  findViewById(R.id.save);
         ArrayAdapter<CharSequence> studioadapter = ArrayAdapter.createFromResource(this, R.array.Studio, R.layout.support_simple_spinner_dropdown_item);
         studio.setAdapter(studioadapter);
-
 
         studio.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -101,18 +87,7 @@ public class StudioScreen extends AppCompatActivity {
         });
     }
     void saveProfile() {
-        Intent intent = getIntent();
 
-        userstudio = studio.getSelectedItemPosition();
-        userlocation = location.getSelectedItemPosition();
-
-
-        userlevel = intent.getIntExtra("level", 0);
-        userage = intent.getIntExtra("age", 0);
-        usermail = intent.getStringExtra("mail");
-        username = intent.getStringExtra("name");
-        usergender = intent.getIntExtra("gender", 0);
-        key = FirebaseAuth.getInstance().getCurrentUser().getUid();
         //neues db modell
         String userID = getIntent().getStringExtra("userID");
         String userMail = getIntent().getStringExtra("userMail");
@@ -123,23 +98,6 @@ public class StudioScreen extends AppCompatActivity {
         int userStudio = studio.getSelectedItemPosition();
         int userStudioLocation = location.getSelectedItemPosition();
 
-
-        Log.i("-------------------", "test");
-        Log.i("-------------------", "test");
-        Log.i("-------------------", "test");
-        System.out.println(userID);
-        System.out.println(userMail);
-        System.out.println(userLevel);
-        System.out.println(userGender);
-        System.out.println(userAge);
-        System.out.println(userName);
-        System.out.println(userStudio);
-        System.out.println(userStudioLocation);
-        Log.i("-------------------", "test");
-        Log.i("-------------------", "test");
-        Log.i("-------------------", "test");
-
-
         UserProfile profileData = new UserProfile(userID, userMail, userName, userAge, Level.parseToEnum(userLevel),
                 userStudio, userStudioLocation, Gender.parseToEnum(userGender), "default.jpg", "default","Hi, I am using FiTogether");
         HashMap<String, Object> profileDBO = ProfileParser.parseToHashmap(profileData);
@@ -148,7 +106,6 @@ public class StudioScreen extends AppCompatActivity {
         databaseReference.setValue(profileDBO);
 
         String deviceToken = FirebaseInstanceId.getInstance().getToken();
-        String currentUID = FirebaseAuth.getInstance().getCurrentUser().getUid();
         DatabaseReference ref = databaseReference.child(FirebaseAuth.getInstance().getCurrentUser().getUid());
         databaseReference.child("device_token").setValue(deviceToken);
         databaseReference.child("online").setValue("true");

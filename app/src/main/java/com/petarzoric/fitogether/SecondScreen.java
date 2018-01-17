@@ -29,7 +29,6 @@ public class SecondScreen extends AppCompatActivity {
     String username;
     int userlevel;
     int usergender;
-    String usermail;
 
 
     @Override
@@ -76,7 +75,6 @@ public class SecondScreen extends AppCompatActivity {
             userlevel = level.getSelectedItemPosition();
             usergender = gender.getSelectedItemPosition();
             Intent intent = getIntent();
-            usermail = intent.getStringExtra("email");
             //DB, neuer Ansatz
             String userID = getIntent().getStringExtra("userID");
             String userMail = getIntent().getStringExtra("userMail");

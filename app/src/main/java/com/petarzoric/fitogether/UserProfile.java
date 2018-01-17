@@ -32,7 +32,7 @@ public class UserProfile {
         this.status = status;
     }
 
-    public UserProfile(String uid){
+ /*   public UserProfile(String uid){
         this.uid = uid;
         this.email = "default";
         this.name = "default";
@@ -46,7 +46,7 @@ public class UserProfile {
         this.status = "Hi, I am using FiTogether";
 
     }
-
+*/
     public UserProfile(){
 
     }
