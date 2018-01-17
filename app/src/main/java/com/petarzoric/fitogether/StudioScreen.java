@@ -8,7 +8,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -95,7 +94,7 @@ public class StudioScreen extends AppCompatActivity {
                 userStudio, userStudioLocation, Gender.parseToEnum(userGender), "default.jpg", "default","Hi, I am using FiTogether");
         HashMap<String, Object> profileDBO = ProfileParser.parseToHashmap(profileData);
 
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Users2").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Users2").child(userID);
         databaseReference.setValue(profileDBO);
 
         String deviceToken = FirebaseInstanceId.getInstance().getToken();
