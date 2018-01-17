@@ -28,6 +28,7 @@ public class Tab1Dashboard extends Fragment {
     TextView agetext;
     TextView studiotext;
     TextView gendertext;
+    String uid;
 
 
 
@@ -45,16 +46,12 @@ public class Tab1Dashboard extends Fragment {
         agetext = rootView.findViewById(R.id.agetext);
         studiotext = rootView.findViewById(R.id.studiotext);
         gendertext = rootView.findViewById(R.id.gendertext);
+        uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-        databaseReference.child("Users2").addValueEventListener(new ValueEventListener() {
+        databaseReference.child("Users2").child(uid).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-               Iterable<DataSnapshot> children = dataSnapshot.getChildren();
-               for(DataSnapshot child : children){
-                   if (child.getKey().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
-                       profile = child.getValue(UserProfile.class);
-                   }
-               }
+                profile = dataSnapshot.getValue(UserProfile.class);
                 emailtext.setText(profile.getEmail());
                 nametext.setText(profile.getName());
                 agetext.setText(String.valueOf(profile.getAge()));

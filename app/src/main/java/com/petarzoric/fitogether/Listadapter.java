@@ -13,13 +13,9 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
 
-import java.util.ArrayList;
-
-import de.hdodenhof.circleimageview.CircleImageView;
-
 
 public class Listadapter extends ArrayAdapter<String> {
-    public UserProfile[] matches;
+    UserProfile[] matches;
     Activity context;
 
     public Listadapter(Activity context, UserProfile[] matches) {
