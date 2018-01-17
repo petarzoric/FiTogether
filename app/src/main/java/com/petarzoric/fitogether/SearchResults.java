@@ -5,22 +5,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-
 import java.util.ArrayList;
 
 public class SearchResults extends AppCompatActivity {
 
 
     ListView listView;
-    ArrayList <UserTraining> matches = new ArrayList<UserTraining>();
+    ArrayList <UserTraining> matches = new ArrayList<>();
     FirebaseDatabase database;
     DatabaseReference databaseReference;
     UserProfile[] userProfiles;
@@ -48,7 +45,7 @@ public class SearchResults extends AppCompatActivity {
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     Iterable<DataSnapshot> children = dataSnapshot.getChildren();
                     for (DataSnapshot child : children) {
-                        if ((!child.getKey().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) && (child.getValue(UserTraining.class).getLevel() == level) && (child.getValue(UserTraining.class).getTrainingstype() == muscle)) {
+                        if ((!child.getKey().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) && (child.getValue(UserTraining.class).getLevel() == level) && (child.getValue(UserTraining.class).getTrainingstype() == muscle) ) {
                             matches.add(child.getValue(UserTraining.class));
 
                         }

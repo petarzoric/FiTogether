@@ -29,7 +29,7 @@ public class EditProfile extends AppCompatActivity {
     FirebaseDatabase database;
     DatabaseReference databaseReference;
     UserProfile profile;
-    String UID;
+    String uid;
 
 
     @Override
@@ -48,16 +48,12 @@ public class EditProfile extends AppCompatActivity {
         childReference = FirebaseDatabase.getInstance().getReference("Users2");
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.Level, R.layout.support_simple_spinner_dropdown_item);
         level.setAdapter(adapter);
+        uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-        databaseReference.child("Users2").addValueEventListener(new ValueEventListener() {
+        databaseReference.child("Users2").child(uid).addValueEventListener(new ValueEventListener() {
                                                                    @Override
                                                                    public void onDataChange(DataSnapshot dataSnapshot) {
-                                                                       Iterable<DataSnapshot> children = dataSnapshot.getChildren();
-                                                                       for (DataSnapshot child : children) {
-                                                                           if (child.getKey().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
-                                                                               profile = child.getValue(UserProfile.class);
-                                                                           }
-                                                                       }
+                                                                       profile = dataSnapshot.getValue(UserProfile.class);
                                                                        emailtext.setText(profile.getEmail());
                                                                        name.setText(profile.getName());
                                                                        gendertext.setText(Gender.parseToString(profile.getGender()));
@@ -82,14 +78,14 @@ public class EditProfile extends AppCompatActivity {
                 saveChanges();
             }
         });
-        UID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
 
 
     }
 
     public void saveChanges(){
-        DatabaseReference ref = childReference.child(UID);
-        ref.child("uid").setValue(UID);
+        DatabaseReference ref = childReference.child(uid);
+        ref.child("uid").setValue(uid);
         ref.child("email").setValue(emailtext.getText().toString());
         ref.child("name").setValue(name.getText().toString());
         ref.child("age").setValue(Integer.parseInt(age.getText().toString()));
