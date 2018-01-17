@@ -20,6 +20,7 @@ public class FiTogether extends Application {
 
     private DatabaseReference usersDatabase;
     private FirebaseAuth auth;
+    String key;
 
 
     @Override
@@ -42,9 +43,20 @@ public class FiTogether extends Application {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     if (dataSnapshot != null) {
+                        Iterable<DataSnapshot> children = dataSnapshot.getChildren();
+                        boolean exists = false;
+                        key = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                        for (DataSnapshot child : children) {
+                            if (child.getKey().equals(key)) {
+                                exists = true;
 
-                        usersDatabase.child("online").onDisconnect().setValue(ServerValue.TIMESTAMP);
-                        usersDatabase.child("online").setValue("true");
+                            }
+                        }
+                        if (exists) {
+
+                            usersDatabase.child("online").onDisconnect().setValue(ServerValue.TIMESTAMP);
+                            usersDatabase.child("online").setValue("true");
+                        }
                     }
                 }
 

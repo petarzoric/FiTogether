@@ -228,15 +228,7 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(MainActivity.this, "Try Again", Toast.LENGTH_LONG).show();
                     }else {
 
-                        String deviceToken = FirebaseInstanceId.getInstance().getToken();
-                        String currentUID = auth.getCurrentUser().getUid();
 
-                        database.getReference().child("Users2").child(currentUID).child("device_token").setValue(deviceToken).addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-
-                            }
-                        });
 
                         progressDialog.hide();
                         emailtext = email.getText().toString();
@@ -244,6 +236,8 @@ public class MainActivity extends AppCompatActivity {
                         databaseReference.child("Users2").addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
+
+                                String deviceToken = FirebaseInstanceId.getInstance().getToken();
                                 Iterable<DataSnapshot> children = dataSnapshot.getChildren();
                                 boolean exists = false;
                                 for (DataSnapshot child : children) {
@@ -254,6 +248,12 @@ public class MainActivity extends AppCompatActivity {
                                 }
                                 if (exists){
                                     Intent data = new Intent(MainActivity.this, MainScreen.class);
+                                    database.getReference().child("Users2").child(key).child("device_token").setValue(deviceToken).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+
+                                        }
+                                    });
                                     startActivity(data);
                                 }
                                 else{
@@ -264,6 +264,7 @@ public class MainActivity extends AppCompatActivity {
                                     UserProfile currentProfile = new UserProfile(uid);
 
                                     currentProfile.setEmail(mail);
+
 
                                     databaseReference = FirebaseDatabase.getInstance().getReference().child("Users2").child(uid);
 
@@ -278,7 +279,9 @@ public class MainActivity extends AppCompatActivity {
                                     //neuer ansatz
                                     dataFirstScreen.putExtra("userMail", mail);
                                     dataFirstScreen.putExtra("userID", uid);
+
                                     startActivity(dataFirstScreen);
+
                                     finish();
 
                                 }

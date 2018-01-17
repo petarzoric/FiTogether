@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
+
     tools:context="com.petarzoric.fitogether.SecondScreen">
 
     <Button
@@ -21,6 +23,8 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.98"
         android:layout_marginStart="8dp"
+        android:textColor="@color/colorPrimaryDark"
+
         android:layout_marginEnd="8dp" />
 
     <EditText
@@ -39,6 +43,8 @@
         app:layout_constraintLeft_toRightOf="@+id/textView4"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/common_google_signin_btn_text_dark_default"
+
         app:layout_constraintVertical_bias="0.20999998" />
 
     <TextView
@@ -51,6 +57,8 @@
         android:layout_marginTop="8dp"
         android:text="Profil"
         android:textSize="30sp"
+        android:textColor="@color/text"
+
         app:layout_constraintBottom_toTopOf="@+id/email"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -66,6 +74,8 @@
         android:layout_marginTop="8dp"
         android:text="Name"
         android:textSize="24sp"
+        android:textColor="@color/text"
+
         app:layout_constraintBottom_toBottomOf="@+id/name"
         app:layout_constraintTop_toTopOf="@+id/name"
         app:layout_constraintVertical_bias="1.0"
@@ -91,6 +101,8 @@
         app:layout_constraintLeft_toLeftOf="@+id/name"
         app:layout_constraintRight_toRightOf="@+id/name"
         app:layout_constraintTop_toBottomOf="@+id/name"
+        android:background="@color/common_google_signin_btn_text_dark_default"
+
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
@@ -103,6 +115,8 @@
         android:layout_marginTop="8dp"
         android:text="Alter"
         android:textSize="24sp"
+        android:textColor="@color/text"
+
         app:layout_constraintBottom_toBottomOf="@+id/age"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/age"
@@ -115,16 +129,18 @@
     <Spinner
         android:id="@+id/level"
         android:layout_width="198dp"
-        android:layout_height="26dp"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
+        android:background="@color/common_google_signin_btn_text_dark_default"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.85"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/age"
+
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
@@ -137,6 +153,8 @@
         android:layout_marginTop="8dp"
         android:text="Level"
         android:textSize="24sp"
+        android:textColor="@color/text"
+
         app:layout_constraintBottom_toBottomOf="@+id/level"
         app:layout_constraintHorizontal_bias="0.22"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -157,6 +175,8 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/level"
+        android:textColor="@color/colorPrimaryDark"
+
         app:layout_constraintVertical_bias="0.53999996" />
 
     <TextView
@@ -167,22 +187,26 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="Geschlecht"
+        android:textColor="@color/text"
         android:textSize="24sp"
+
         app:layout_constraintBottom_toBottomOf="@+id/gender"
         app:layout_constraintEnd_toStartOf="@+id/gender"
         app:layout_constraintHorizontal_bias="0.22"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/gender"
-        app:layout_constraintVertical_bias="0.85" />
+        app:layout_constraintVertical_bias="0.89" />
 
     <Spinner
         android:id="@+id/gender"
         android:layout_width="198dp"
-        android:layout_height="26dp"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:background="@color/common_google_signin_btn_text_dark_default"
+
         app:layout_constraintBottom_toTopOf="@+id/saveprofile"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.85"

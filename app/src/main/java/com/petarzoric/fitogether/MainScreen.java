@@ -21,6 +21,7 @@ import android.widget.Button;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ServerValue;
 
 
 public class MainScreen extends AppCompatActivity {
@@ -33,6 +34,7 @@ public class MainScreen extends AppCompatActivity {
     ClipData.Item allUsers;
     private DatabaseReference usersDatabase;
     private FirebaseAuth auth;
+
 
 
 
@@ -64,6 +66,8 @@ public class MainScreen extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        usersDatabase.child("online").setValue("true");
+
         //Log.i("OnStart", "aufgerufen");
        // usersDatabase.child("online").setValue(true);
 
@@ -73,7 +77,9 @@ public class MainScreen extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-       // Log.i("OnStop", "aufgerufen");
+        usersDatabase.child("online").onDisconnect().setValue(ServerValue.TIMESTAMP);
+
+        // Log.i("OnStop", "aufgerufen");
        // usersDatabase.child("online").setValue(false);
     }
 

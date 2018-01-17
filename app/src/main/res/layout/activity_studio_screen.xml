@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
+
     tools:context="com.petarzoric.fitogether.StudioScreen">
 
     <Spinner
@@ -20,6 +22,8 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/common_google_signin_btn_text_dark_default"
+
         app:layout_constraintVertical_bias="0.100000024" />
 
     <Spinner
@@ -34,6 +38,8 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/common_google_signin_btn_text_dark_default"
+
         app:layout_constraintVertical_bias="0.32999998" />
 
     <TextView
@@ -48,6 +54,8 @@
         app:layout_constraintBottom_toTopOf="@+id/Studio"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
+        android:textColor="@color/text"
+
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -63,6 +71,8 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Studio"
+        android:textColor="@color/text"
+
         app:layout_constraintVertical_bias="0.53999996" />
 
     <Button
@@ -78,5 +88,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Location"
+        android:textColor="@color/colorPrimaryDark"
+
         app:layout_constraintVertical_bias="0.501" />
 </android.support.constraint.ConstraintLayout>

@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -27,6 +28,7 @@ public class StudioScreen extends AppCompatActivity {
     String usermail;
     String key;
     DatabaseReference databaseReference;
+    FirebaseDatabase database;
     Button save;
     Spinner studio;
     Spinner location;
@@ -104,6 +106,7 @@ public class StudioScreen extends AppCompatActivity {
         userstudio = studio.getSelectedItemPosition();
         userlocation = location.getSelectedItemPosition();
 
+
         userlevel = intent.getIntExtra("level", 0);
         userage = intent.getIntExtra("age", 0);
         usermail = intent.getStringExtra("mail");
@@ -144,16 +147,19 @@ public class StudioScreen extends AppCompatActivity {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Users2").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
         databaseReference.setValue(profileDBO);
 
+        String deviceToken = FirebaseInstanceId.getInstance().getToken();
+        String currentUID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        DatabaseReference ref = databaseReference.child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        databaseReference.child("device_token").setValue(deviceToken);
+        databaseReference.child("online").setValue("true");
+
 
 
 
         Intent dataThirdScreen = new Intent(StudioScreen.this, MainScreen.class);
 
         startActivity(dataThirdScreen);
-        String deviceToken = FirebaseInstanceId.getInstance().getToken();
-        String currentUID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-        databaseReference.child("device_token").setValue(deviceToken);
 
     }
 }
