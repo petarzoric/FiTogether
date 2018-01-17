@@ -40,15 +40,8 @@ public class MainActivity extends AppCompatActivity {
     FirebaseDatabase database;
     FirebaseUser currentUser;
     private ProgressDialog progressDialog;
-    private String emailString;
-    private String passwordString;
+
     private DatabaseReference usersDatabase;
-
-
-
-
-
-
 
 
     @Override
@@ -67,8 +60,7 @@ public class MainActivity extends AppCompatActivity {
             usersDatabase = FirebaseDatabase.getInstance().getReference().child("Users2").child(auth.getCurrentUser().getUid());
         }
 
-        emailString = email.getEditableText().toString();
-        passwordString = password.getEditableText().toString();
+
         login.setEnabled(false);
         signup.setEnabled(false);
         progressDialog = new ProgressDialog(this);
@@ -129,23 +121,16 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
         authListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 currentUser = firebaseAuth.getCurrentUser();
                 if (currentUser != null) {
                     //TODO
-                    //eigentlich sollte man logged bleiben, klappt aber nicht
-                    //intent sorgt für nullpointer
-                    //aufrufen von startLogin() bringt auch nichts
                     progressDialog.setTitle("Auto Login");
                     progressDialog.setMessage("Please wait while we log you in");
                     progressDialog.show();
                     autoLogin();
-
-
-
 
 
                     Toast.makeText(MainActivity.this, currentUser.getEmail(), Toast.LENGTH_LONG).show();
@@ -170,7 +155,6 @@ public class MainActivity extends AppCompatActivity {
                 progressDialog.setMessage("Please wait while we check your credentials. ");
                 progressDialog.setCanceledOnTouchOutside(false);
                 progressDialog.show();
-
                 String emailString = email.getEditableText().toString();
                 String passwordString = password.getEditableText().toString();
                 startLogIn(emailString, passwordString);
@@ -182,7 +166,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 progressDialog.setTitle("Registering User");
                 progressDialog.setMessage("Please wait while we create your account");
-                // progressDialog.setCanceledOnTouchOutside(false);
                 progressDialog.show();
                 String emailString = email.getEditableText().toString();
                 String passwordString = password.getEditableText().toString();
@@ -196,9 +179,6 @@ public class MainActivity extends AppCompatActivity {
     public void onStart() {
         super.onStart();
         auth.addAuthStateListener(authListener);
-        //
-
-
 
 
 
@@ -258,27 +238,13 @@ public class MainActivity extends AppCompatActivity {
                                 }
                                 else{
 
-                                    currentUser = FirebaseAuth.getInstance().getCurrentUser();
-                                    String uid = currentUser.getUid();
-                                    //Hier beginnen wir, das Profil anzulegen und langsam zu befüllen
-                                    UserProfile currentProfile = new UserProfile(uid);
-
-                                    currentProfile.setEmail(mail);
-
-
-                                    databaseReference = FirebaseDatabase.getInstance().getReference().child("Users2").child(uid);
-
-
                                     progressDialog.dismiss();
                                     emailtext = email.getText().toString();
-                                    key = FirebaseAuth.getInstance().getCurrentUser().getUid();
                                     Toast.makeText(MainActivity.this, "Created Account", Toast.LENGTH_LONG).show();
                                     Intent dataFirstScreen = new Intent(MainActivity.this, SecondScreen.class);
-                                    dataFirstScreen.putExtra("key", key);
-                                    dataFirstScreen.putExtra("email", emailtext);
                                     //neuer ansatz
-                                    dataFirstScreen.putExtra("userMail", mail);
-                                    dataFirstScreen.putExtra("userID", uid);
+                                    dataFirstScreen.putExtra("userMail", emailtext);
+                                    dataFirstScreen.putExtra("userID", key);
 
                                     startActivity(dataFirstScreen);
 
@@ -360,32 +326,18 @@ public class MainActivity extends AppCompatActivity {
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (!task.isSuccessful()){
 
-
-
                         progressDialog.hide();
                         Toast.makeText(MainActivity.this, "this email is already used", Toast.LENGTH_LONG).show();
                     }else {
-
-
-                        currentUser = FirebaseAuth.getInstance().getCurrentUser();
-                        String uid = currentUser.getUid();
-                        //Hier beginnen wir, das Profil anzulegen und langsam zu befüllen
-                        UserProfile currentProfile = new UserProfile(uid);
-
-                        currentProfile.setEmail(mail);
-
-                        databaseReference = FirebaseDatabase.getInstance().getReference().child("Users2").child(uid);
 
                         progressDialog.dismiss();
                         emailtext = email.getText().toString();
                         key = FirebaseAuth.getInstance().getCurrentUser().getUid();
                         Toast.makeText(MainActivity.this, "Created Account", Toast.LENGTH_LONG).show();
                         Intent dataFirstScreen = new Intent(MainActivity.this, SecondScreen.class);
-                        dataFirstScreen.putExtra("key", key);
-                        dataFirstScreen.putExtra("email", emailtext);
                         //neuer ansatz
-                        dataFirstScreen.putExtra("userMail", mail);
-                        dataFirstScreen.putExtra("userID", uid);
+                        dataFirstScreen.putExtra("userMail", emailtext);
+                        dataFirstScreen.putExtra("userID", key);
 
                         startActivity(dataFirstScreen);
                         finish();

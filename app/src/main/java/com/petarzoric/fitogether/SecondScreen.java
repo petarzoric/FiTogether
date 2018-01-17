@@ -12,11 +12,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.HashMap;
 
 public class SecondScreen extends AppCompatActivity {
     Button signout;
@@ -29,7 +25,6 @@ public class SecondScreen extends AppCompatActivity {
     String username;
     int userlevel;
     int usergender;
-    String usermail;
 
 
     @Override
@@ -76,7 +71,6 @@ public class SecondScreen extends AppCompatActivity {
             userlevel = level.getSelectedItemPosition();
             usergender = gender.getSelectedItemPosition();
             Intent intent = getIntent();
-            usermail = intent.getStringExtra("email");
             //DB, neuer Ansatz
             String userID = getIntent().getStringExtra("userID");
             String userMail = getIntent().getStringExtra("userMail");

@@ -32,27 +32,11 @@ public class UserProfile {
         this.status = status;
     }
 
-    public UserProfile(String uid){
-        this.uid = uid;
-        this.email = "default";
-        this.name = "default";
-        this.age = -1;
-        this.level = Level.ANFÄNGER;
-        this.studio = -1;
-        this.location = -1;
-        this.gender = Gender.NOTDEFINED;
-        this.imageURL = "default";
-        this.thumbURL = "default";
-        this.status = "Hi, I am using FiTogether";
-
-    }
-
     public UserProfile(){
 
     }
 
     //GETTER UND SETTER
-
 
     public String getStatus() {
         return status;

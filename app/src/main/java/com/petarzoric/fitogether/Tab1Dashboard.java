@@ -1,19 +1,12 @@
 package com.petarzoric.fitogether;
 
-
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.app.Fragment;
-import android.widget.Button;
 import android.widget.TextView;
-
-import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -52,9 +45,6 @@ public class Tab1Dashboard extends Fragment {
         agetext = rootView.findViewById(R.id.agetext);
         studiotext = rootView.findViewById(R.id.studiotext);
         gendertext = rootView.findViewById(R.id.gendertext);
-        final String key = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
-
 
         databaseReference.child("Users2").addValueEventListener(new ValueEventListener() {
             @Override
