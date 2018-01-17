@@ -91,7 +91,7 @@ public class EditProfile extends AppCompatActivity {
         ref.child("age").setValue(Integer.parseInt(age.getText().toString()));
         ref.child("level").setValue(Level.parseToEnum(level.getSelectedItemPosition()));
 
-        Intent data = new Intent(EditProfile.this, MainScreen.class);
+        Intent data = new Intent(EditProfile.this, Tab1Dashboard.class);
         startActivity(data);
 
     }
