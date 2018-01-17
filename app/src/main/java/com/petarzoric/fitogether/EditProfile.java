@@ -51,26 +51,26 @@ public class EditProfile extends AppCompatActivity {
         uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         databaseReference.child("Users2").child(uid).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                profile = dataSnapshot.getValue(UserProfile.class);
-                emailtext.setText(profile.getEmail());
-                name.setText(profile.getName());
-                gendertext.setText(Gender.parseToString(profile.getGender()));
-                age.setText(String.valueOf(profile.getAge()));
-                level.setSelection(Level.parseToInt(profile.getLevel()));
-                studios.setText(Converter.studioString(profile.getStudio(), profile.getLocation(), getResources()));
+                                                                   @Override
+                                                                   public void onDataChange(DataSnapshot dataSnapshot) {
+                                                                       profile = dataSnapshot.getValue(UserProfile.class);
+                                                                       emailtext.setText(profile.getEmail());
+                                                                       name.setText(profile.getName());
+                                                                       gendertext.setText(Gender.parseToString(profile.getGender()));
+                                                                       age.setText(String.valueOf(profile.getAge()));
+                                                                       level.setSelection(Level.parseToInt(profile.getLevel()));
+                                                                       studios.setText(Converter.studioString(profile.getStudio(), profile.getLocation(), getResources()));
 
 
-            }
-            @Override
-            public void onCancelled
-                    (DatabaseError databaseError)
-            {
+                                                                   }
+                                                                       @Override
+                                                                       public void onCancelled
+                                                                       (DatabaseError databaseError)
+                                                                       {
 
-            }
+                                                                       }
 
-        });
+                                                                   });
 
         savechanges.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,7 +91,7 @@ public class EditProfile extends AppCompatActivity {
         ref.child("age").setValue(Integer.parseInt(age.getText().toString()));
         ref.child("level").setValue(Level.parseToEnum(level.getSelectedItemPosition()));
 
-        Intent data = new Intent(EditProfile.this, Tab1Dashboard.class);
+        Intent data = new Intent(EditProfile.this, StatusActivity.class);
         startActivity(data);
 
     }
@@ -99,3 +99,5 @@ public class EditProfile extends AppCompatActivity {
 
 
 }
+
+
