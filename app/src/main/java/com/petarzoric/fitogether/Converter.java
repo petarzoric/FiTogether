@@ -1,6 +1,5 @@
 package com.petarzoric.fitogether;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.content.res.Resources;
 

@@ -127,16 +127,10 @@ public class MainActivity extends AppCompatActivity {
                 currentUser = firebaseAuth.getCurrentUser();
                 if (currentUser != null) {
                     //TODO
-                    //eigentlich sollte man logged bleiben, klappt aber nicht
-                    //intent sorgt für nullpointer
-                    //aufrufen von startLogin() bringt auch nichts
                     progressDialog.setTitle("Auto Login");
                     progressDialog.setMessage("Please wait while we log you in");
                     progressDialog.show();
                     autoLogin();
-
-
-
 
 
                     Toast.makeText(MainActivity.this, currentUser.getEmail(), Toast.LENGTH_LONG).show();
@@ -161,7 +155,6 @@ public class MainActivity extends AppCompatActivity {
                 progressDialog.setMessage("Please wait while we check your credentials. ");
                 progressDialog.setCanceledOnTouchOutside(false);
                 progressDialog.show();
-
                 String emailString = email.getEditableText().toString();
                 String passwordString = password.getEditableText().toString();
                 startLogIn(emailString, passwordString);
@@ -173,7 +166,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 progressDialog.setTitle("Registering User");
                 progressDialog.setMessage("Please wait while we create your account");
-                // progressDialog.setCanceledOnTouchOutside(false);
                 progressDialog.show();
                 String emailString = email.getEditableText().toString();
                 String passwordString = password.getEditableText().toString();
@@ -245,11 +237,6 @@ public class MainActivity extends AppCompatActivity {
                                     startActivity(data);
                                 }
                                 else{
-
-                                    /*  UserProfile currentProfile = new UserProfile(uid);
-                                    currentProfile.setEmail(mail);
-                                    databaseReference = FirebaseDatabase.getInstance().getReference().child("Users2").child(uid);*/
-
 
                                     progressDialog.dismiss();
                                     emailtext = email.getText().toString();
@@ -339,16 +326,9 @@ public class MainActivity extends AppCompatActivity {
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (!task.isSuccessful()){
 
-
-
                         progressDialog.hide();
                         Toast.makeText(MainActivity.this, "this email is already used", Toast.LENGTH_LONG).show();
                     }else {
-
-
-                        /*     UserProfile currentProfile = new UserProfile(uid);
-                        currentProfile.setEmail(mail);
-                        databaseReference = FirebaseDatabase.getInstance().getReference().child("Users2").child(uid);*/
 
                         progressDialog.dismiss();
                         emailtext = email.getText().toString();
