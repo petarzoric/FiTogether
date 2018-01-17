@@ -57,7 +57,7 @@
         </activity>
         <activity android:name=".FriendsActivity" />
         <activity android:name=".ChatActivity"
-            android:parentActivityName=".MainScreen"></activity>
+            android:parentActivityName=".FriendsActivity"></activity>
     </application>
 
 </manifest>
