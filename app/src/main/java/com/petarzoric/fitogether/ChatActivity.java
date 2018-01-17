@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
@@ -44,6 +45,8 @@ public class ChatActivity extends AppCompatActivity {
     private ImageButton chatSendBtn;
     private EditText chatMessageView;
 
+    private RecyclerView messagesList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,6 +86,8 @@ public class ChatActivity extends AppCompatActivity {
         chatAddBtn = (ImageButton) findViewById(R.id.chat_add_button);
         chatSendBtn = (ImageButton) findViewById(R.id.chat_send_button);
         chatMessageView = (EditText) findViewById(R.id.chat_message_view);
+
+        messagesList = (RecyclerView) findViewById(R.id.messages_list);
 
         titleView.setText(userName);
 
