@@ -36,22 +36,25 @@ public class FiTogether extends Application {
         Picasso.setSingletonInstance(built);
 
         auth = FirebaseAuth.getInstance();
-        usersDatabase = FirebaseDatabase.getInstance().getReference().child("Users2").child(auth.getCurrentUser().getUid());
-        usersDatabase.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot != null) {
+        if (auth.getCurrentUser() != null) {
+            usersDatabase = FirebaseDatabase.getInstance().getReference().child("Users2").child(auth.getCurrentUser().getUid());
+            usersDatabase.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if (dataSnapshot != null) {
 
-                    usersDatabase.child("online").onDisconnect().setValue(ServerValue.TIMESTAMP);
-                    usersDatabase.child("online").setValue("true");
+                        usersDatabase.child("online").onDisconnect().setValue(ServerValue.TIMESTAMP);
+                        usersDatabase.child("online").setValue("true");
+                    }
                 }
-            }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
 
-            }
-        });
+                }
+            });
+        }
+
     }
 
 

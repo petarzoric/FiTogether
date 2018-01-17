@@ -63,7 +63,10 @@ public class MainActivity extends AppCompatActivity {
         login =  findViewById(R.id.login);
         database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference();
-        usersDatabase = FirebaseDatabase.getInstance().getReference().child("Users2").child(auth.getCurrentUser().getUid());
+        if(auth.getCurrentUser() != null){
+            usersDatabase = FirebaseDatabase.getInstance().getReference().child("Users2").child(auth.getCurrentUser().getUid());
+        }
+
         emailString = email.getEditableText().toString();
         passwordString = password.getEditableText().toString();
         login.setEnabled(false);
