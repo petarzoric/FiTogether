@@ -32,7 +32,6 @@ public class EditProfile extends AppCompatActivity {
     String UID;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,8 +66,6 @@ public class EditProfile extends AppCompatActivity {
                                                                        studios.setText(Converter.studioString(profile.getStudio(), profile.getLocation(), getResources()));
 
 
-
-
                                                                    }
                                                                        @Override
                                                                        public void onCancelled
@@ -86,8 +83,6 @@ public class EditProfile extends AppCompatActivity {
             }
         });
         UID = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
-
 
 
     }
