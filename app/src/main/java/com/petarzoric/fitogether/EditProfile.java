@@ -17,6 +17,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
+
 public class EditProfile extends AppCompatActivity {
     TextView emailtext;
     EditText name;
@@ -29,7 +31,8 @@ public class EditProfile extends AppCompatActivity {
     FirebaseDatabase database;
     DatabaseReference databaseReference;
     UserProfile profile;
-    String uid;
+    String UID;
+
 
 
     @Override
@@ -40,6 +43,10 @@ public class EditProfile extends AppCompatActivity {
         databaseReference = database.getReference();
         emailtext = findViewById(R.id.emailtext2);
         name = findViewById(R.id.nametext);
+        if(FirebaseAuth.getInstance().getCurrentUser() != null){
+            UID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        }
         age = findViewById(R.id.agetext);
         level = findViewById(R.id.levelspinner);
         studios = findViewById(R.id.studiotext);
@@ -48,12 +55,12 @@ public class EditProfile extends AppCompatActivity {
         childReference = FirebaseDatabase.getInstance().getReference("Users2");
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.Level, R.layout.support_simple_spinner_dropdown_item);
         level.setAdapter(adapter);
-        uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-        databaseReference.child("Users2").child(uid).addValueEventListener(new ValueEventListener() {
+        databaseReference.child("Users2").child(UID).addValueEventListener(new ValueEventListener() {
                                                                    @Override
+                                                                   //TODO updaten
                                                                    public void onDataChange(DataSnapshot dataSnapshot) {
-                                                                       profile = dataSnapshot.getValue(UserProfile.class);
+                                                                       profile = (UserProfile) dataSnapshot.getValue();
                                                                        emailtext.setText(profile.getEmail());
                                                                        name.setText(profile.getName());
                                                                        gendertext.setText(Gender.parseToString(profile.getGender()));
@@ -78,20 +85,20 @@ public class EditProfile extends AppCompatActivity {
                 saveChanges();
             }
         });
-
+        UID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
 
     }
 
     public void saveChanges(){
-        DatabaseReference ref = childReference.child(uid);
-        ref.child("uid").setValue(uid);
+        DatabaseReference ref = childReference.child(UID);
+        ref.child("uid").setValue(UID);
         ref.child("email").setValue(emailtext.getText().toString());
         ref.child("name").setValue(name.getText().toString());
         ref.child("age").setValue(Integer.parseInt(age.getText().toString()));
         ref.child("level").setValue(Level.parseToEnum(level.getSelectedItemPosition()));
 
-        Intent data = new Intent(EditProfile.this, MainScreen.class);
+        Intent data = new Intent(EditProfile.this, ChatActivity.class);
         startActivity(data);
 
     }
