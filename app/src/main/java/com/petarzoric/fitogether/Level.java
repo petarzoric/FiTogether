@@ -43,6 +43,22 @@ public enum Level {
 
 
     }
+    public static String parseToString(Level level) {
+        switch (level) {
+            case ANFÄNGER:
+                return "ANFÄNGER";
+            case FORTGESCHRITTEN:
+                return "FORTGESCHRITTEN";
+            case PROFI:
+                return "PROFI";
+            case ARNOLD:
+                return "ARNOLD";
+
+
+
+        }
+        return "ARNOLD";
+    }
 
     public static int parseToInt(Level level) {
         switch (level) {
