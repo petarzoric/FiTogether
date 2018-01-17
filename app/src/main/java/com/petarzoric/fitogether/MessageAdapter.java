@@ -1,10 +1,13 @@
 package com.petarzoric.fitogether;
 
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.List;
 
@@ -18,6 +21,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 
 
     private List<Messages> messagesList;
+    private FirebaseAuth auth;
 
     public MessageAdapter(List<Messages> messagesList) {
         this.messagesList = messagesList;
@@ -32,7 +36,28 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 
     @Override
     public void onBindViewHolder(MessageViewHolder holder, int position) {
+        auth = FirebaseAuth.getInstance();
+
+        String current_user_id = auth.getCurrentUser().getUid();
         Messages c = messagesList.get(position);
+
+        String from_user = c.getFrom();
+
+        if(from_user.equals(current_user_id)){
+
+            holder.messageText.setBackgroundColor(Color.WHITE);
+            holder.messageText.setTextColor(Color.BLACK);
+
+
+        } else {
+            //layout ändern, damit man siegt, dass die Nachricht von der anderen Person ist
+
+            holder.messageText.setBackgroundResource(R.drawable.message_text_background);
+            holder.messageText.setTextColor(Color.WHITE) ;
+
+
+        }
+
         holder.messageText.setText(c.getMessage());
 
 

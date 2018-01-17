@@ -59,4 +59,8 @@ public class Messages {
     public void setFrom(String from) {
         this.from = from;
     }
+
+    public Messages(){
+
+    }
 }
