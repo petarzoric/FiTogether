@@ -22,24 +22,27 @@
         android:weightSum="10">
 
         <ImageButton
-            android:id="@+id/imageButton3"
+            android:id="@+id/chat_add_button"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
             app:srcCompat="@drawable/ic_add_black_24dp" />
 
-        <TextView
-            android:id="@+id/textView11"
+        <EditText
+            android:id="@+id/chat_message_view"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="8"
+            android:hint="Enter Message..."
             android:paddingBottom="12dp"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:paddingTop="10dp"
-            android:text="TextView" />
+            android:selectAllOnFocus="false"
+            android:singleLine="false" />
 
         <ImageButton
+            android:id="@+id/chat_send_button"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
