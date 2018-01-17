@@ -35,9 +35,6 @@ public class Tab1Dashboard extends Fragment {
     TextView agetext;
     TextView studiotext;
     TextView gendertext;
-    String level;
-    String studio;
-    String gender;
 
 
 
@@ -71,56 +68,9 @@ public class Tab1Dashboard extends Fragment {
                 emailtext.setText(profile.getEmail());
                 nametext.setText(profile.getName());
                 agetext.setText(String.valueOf(profile.getAge()));
-                if (profile.getLevel() == Level.ANFÄNGER){
-                    level = "Anfänger";
-                }else if (profile.getLevel() == Level.FORTGESCHRITTEN){
-                    level = "Fortgeschritten";
-                }else if (profile.getLevel() == Level.PROFI){
-                    level = "Profi";
-                }else if (profile.getLevel() == Level.ARNOLD){
-                    level = "Arnold";
-                }
-
-                if (profile.getGender() == Gender.MÄNNLICH){
-                    gender = "Männlich";
-                }else if (profile.getGender() == Gender.WEIBLICH){
-                    gender = "Weiblich";
-                }else if (profile.getGender() == Gender.NOTDEFINED){
-                    gender = "Anderes";
-                }
-
-                leveltext.setText(level);
-                gendertext.setText(gender);
-                String[] studios = getResources().getStringArray(R.array.Studio);
-                String[] location;
-                if (profile.getStudio() == 0){
-                        location = getResources().getStringArray(R.array.LocationFITSTAR);
-                        studio = studios[profile.getStudio()] +" "+location[profile.getLocation()];
-
-                }else if (profile.getStudio() == 1){
-                        location = getResources().getStringArray(R.array.LocationFitnessFirst);
-                        studio = studios[profile.getStudio()] +" "+location[profile.getLocation()];
-
-                }else if (profile.getStudio() == 2){
-                        location = getResources().getStringArray(R.array.LocationBodyandSoul);
-                        studio = studios[profile.getStudio()] +" "+location[profile.getLocation()];
-
-                }else if (profile.getStudio() == 3){
-                        location = getResources().getStringArray(R.array.LocationMcFit);
-                        studio = studios[profile.getStudio()] +" "+location[profile.getLocation()];
-
-                }else if (profile.getStudio() == 4){
-                        location = getResources().getStringArray(R.array.LocationCleverFit);
-                        studio = studios[profile.getStudio()] +" "+location[profile.getLocation()];
-
-                }else if (profile.getStudio() == 5){
-                        location = getResources().getStringArray(R.array.LocationAndere);
-                        studio = location[profile.getLocation()];
-
-                }
-                studiotext.setText(studio);
-
-
+                leveltext.setText(Level.parseToString(profile.getLevel()));
+                gendertext.setText(Gender.parseToString(profile.getGender()));
+                studiotext.setText(Converter.studioString(profile.getStudio(), profile.getLocation(), getResources()));
 
             }
 

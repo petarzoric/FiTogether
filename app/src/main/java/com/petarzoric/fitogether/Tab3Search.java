@@ -54,39 +54,11 @@ public class Tab3Search extends Fragment {
                 intent.putExtra("muscle", muscle);
                 intent.putExtra("gender", gender);
                 intent.putExtra("day", (day.getText().toString()));
-                intent.putExtra("month", monthToString(Integer.parseInt(month.getText().toString())));
+                intent.putExtra("month", Converter.monthConverter(Integer.parseInt(month.getText().toString())));
                 startActivity(intent);
             }
         });
         return rootView;
     }
-    public String monthToString(int month){
-        String monthString = "";
-        if (month == 1){
-            monthString = "Januar";
-        }if (month == 2){
-            monthString = "Februar";
-        }if (month == 3){
-            monthString = "März";
-        }if (month == 4){
-            monthString = "April";
-        }if (month == 5){
-            monthString = "Mai";
-        }if (month == 6){
-            monthString = "Juni";
-        }if (month == 7){
-            monthString = "Juli";
-        }if (month == 8){
-            monthString = "August";
-        }if (month == 9){
-            monthString = "September";
-        }if (month == 10){
-            monthString = "Oktober";
-        }if (month == 11){
-            monthString = "November";
-        }if (month == 12){
-            monthString = "Dezember";
-        }
-        return monthString;
-    }
+
 }

@@ -117,7 +117,7 @@ public class Tab2Calender extends Fragment {
                 level = Level.parseToInt(profile.getLevel());
                 times = time.getText().toString();
                 trainingProfile = new UserTraining(selectedDate, trainingType, key, level, studio, location, times);
-                databaseReferencecalender.child(monthToString(m)).child(String.valueOf(d)).child(key).setValue(trainingProfile);
+                databaseReferencecalender.child(Converter.monthConverter(m)).child(String.valueOf(d)).child(key).setValue(trainingProfile);
 
             }else{
                 Toast.makeText(getActivity(), "Please Select a Time", Toast.LENGTH_SHORT).show();
@@ -127,33 +127,5 @@ public class Tab2Calender extends Fragment {
         }
 
     }
-    public String monthToString(int month){
-        String monthString = "";
-        if (month == 1){
-            monthString = "Januar";
-        }if (month == 2){
-            monthString = "Februar";
-        }if (month == 3){
-            monthString = "März";
-        }if (month == 4){
-            monthString = "April";
-        }if (month == 5){
-            monthString = "Mai";
-        }if (month == 6){
-            monthString = "Juni";
-        }if (month == 7){
-            monthString = "Juli";
-        }if (month == 8){
-            monthString = "August";
-        }if (month == 9){
-            monthString = "September";
-        }if (month == 10){
-            monthString = "Oktober";
-        }if (month == 11){
-            monthString = "November";
-        }if (month == 12){
-            monthString = "Dezember";
-        }
-        return monthString;
-    }
+
 }
