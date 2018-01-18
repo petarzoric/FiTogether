@@ -2,10 +2,12 @@ package com.petarzoric.fitogether;
 
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -50,6 +52,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
         String current_user_id = auth.getCurrentUser().getUid();
         Messages c = messagesList.get(position);
 
+
         String from_user = c.getFrom();
         String message_type = c.getType();
 
@@ -83,9 +86,10 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 
 
         if(from_user.equals(current_user_id)){
-
-            holder.messageText.setBackgroundColor(Color.WHITE);
+           // holder.messageText.setBackgroundResource(R.drawable.message_text_background2);
+          //  holder.messageText.setBackgroundColor(Color.WHITE);
             holder.messageText.setTextColor(Color.BLACK);
+            holder.layout.setHorizontalGravity(Gravity.LEFT);
 
 
         } else {
@@ -93,6 +97,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 
             holder.messageText.setBackgroundResource(R.drawable.message_text_background);
             holder.messageText.setTextColor(Color.WHITE) ;
+            holder.layout.setHorizontalGravity(Gravity.RIGHT);
 
 
         }
@@ -110,16 +115,21 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 
     public class MessageViewHolder extends RecyclerView.ViewHolder {
 
+        public TextView time;
         public CircleImageView profileImage;
         public ImageView messageImage;
         public TextView messageText;
+        public RelativeLayout messageLayout;
+        public RelativeLayout layout;
 
         public MessageViewHolder(View view) {
             super(view);
+            time =
             messageText = (TextView) view.findViewById(R.id.message_text_layout);
             profileImage = (CircleImageView) view.findViewById(R.id.message_profile_layout);
             messageImage = (ImageView) view.findViewById(R.id.message_image_layout);
-
+            messageLayout = view.findViewById(R.id.messageRelativeLayout);
+            layout = view.findViewById(R.id.message_single_layout);
         }
 
 

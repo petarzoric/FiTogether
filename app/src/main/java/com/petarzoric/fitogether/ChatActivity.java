@@ -377,6 +377,7 @@ public class ChatActivity extends AppCompatActivity {
                 refreshLayout.setRefreshing(false);
 
                 linearLayout.scrollToPositionWithOffset(10, 0);
+                mMessageList.scrollToPosition(messagesList.size()-1);
             }
 
             @Override
