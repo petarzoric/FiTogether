@@ -13,8 +13,8 @@ public class UserProfile {
     int studio;
     int location;
     Gender gender;
-    String imageURL;
-    String thumbURL;
+    String image;
+    String thumbnail;
     String status;
 
 
@@ -27,8 +27,8 @@ public class UserProfile {
         this.studio = studio;
         this.location = location;
         this.gender = gender;
-        this.imageURL = iurl;
-        this.thumbURL = turl;
+        this.image = iurl;
+        this.thumbnail = turl;
         this.status = status;
     }
 
@@ -110,20 +110,20 @@ public class UserProfile {
         this.gender = gender;
     }
 
-    public String getImageURL() {
-        return imageURL;
+    public String getImage() {
+        return image;
     }
 
-    public void setImageURL(String imageURL) {
-        this.imageURL = imageURL;
+    public void setImage(String imageURL) {
+        this.image = imageURL;
     }
 
-    public String getThumbURL() {
-        return thumbURL;
+    public String getThumbnail() {
+        return thumbnail;
     }
 
-    public void setThumbURL(String thumbURL) {
-        this.thumbURL = thumbURL;
+    public void setThumbnail(String thumbURL) {
+        this.thumbnail = thumbURL;
     }
 }
 
