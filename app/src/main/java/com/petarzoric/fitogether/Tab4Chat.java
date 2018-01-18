@@ -201,7 +201,7 @@ public class Tab4Chat extends Fragment {
 
             if(!isSeen){
                 userStatusView.setTypeface(userStatusView.getTypeface(), Typeface.BOLD);
-                userStatusView.setTextColor(Color.GREEN);
+                userStatusView.setTextColor(R.color.colorPrimary);
             } else {
 
                 userStatusView.setTypeface(userStatusView.getTypeface(), Typeface.NORMAL);

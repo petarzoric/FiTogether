@@ -8,4 +8,9 @@
     <color name="text">#706843</color>
     <color name="buttonstyle">#90a566</color>
     <color name="alert">#A83945</color>
+    <color name="chat1">#E2FECB</color>
+    <color name="white">#FFFFFF</color>
+
+    <color name="chatBackground">#ede6dc</color>
+
 </resources>

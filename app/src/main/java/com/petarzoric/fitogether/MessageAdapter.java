@@ -19,6 +19,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.squareup.picasso.Picasso;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -51,6 +52,11 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 
         String current_user_id = auth.getCurrentUser().getUid();
         Messages c = messagesList.get(position);
+        long time = c.getTime();
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+        String timeToDisplay = sdf.format(time);
+        holder.time.setText(timeToDisplay);
+
 
 
         String from_user = c.getFrom();
@@ -86,7 +92,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 
 
         if(from_user.equals(current_user_id)){
-           // holder.messageText.setBackgroundResource(R.drawable.message_text_background2);
+            holder.messageText.setBackgroundResource(R.drawable.message_text_background2);
           //  holder.messageText.setBackgroundColor(Color.WHITE);
             holder.messageText.setTextColor(Color.BLACK);
             holder.layout.setHorizontalGravity(Gravity.LEFT);
@@ -96,7 +102,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
             //layout ändern, damit man siegt, dass die Nachricht von der anderen Person ist
 
             holder.messageText.setBackgroundResource(R.drawable.message_text_background);
-            holder.messageText.setTextColor(Color.WHITE) ;
+            holder.messageText.setTextColor(Color.BLACK) ;
             holder.layout.setHorizontalGravity(Gravity.RIGHT);
 
 
@@ -124,7 +130,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 
         public MessageViewHolder(View view) {
             super(view);
-            time =
+            time = view.findViewById(R.id.message_time);
             messageText = (TextView) view.findViewById(R.id.message_text_layout);
             profileImage = (CircleImageView) view.findViewById(R.id.message_profile_layout);
             messageImage = (ImageView) view.findViewById(R.id.message_image_layout);

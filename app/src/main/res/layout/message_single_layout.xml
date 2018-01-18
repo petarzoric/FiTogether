@@ -59,7 +59,7 @@
                 android:paddingLeft="12dp"
                 android:paddingTop="5dp"
                 android:text="time"
-                android:textSize="10sp" />
+                android:textSize="11sp" />
         </RelativeLayout>
 
     </RelativeLayout>
