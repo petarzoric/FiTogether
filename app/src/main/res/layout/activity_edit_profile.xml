@@ -17,6 +17,8 @@
         android:layout_marginTop="8dp"
         android:background="@color/common_google_signin_btn_text_dark_default"
         android:text="TextView"
+        android:textColor="@color/text"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.85"
@@ -35,7 +37,8 @@
         android:background="@color/common_google_signin_btn_text_dark_default"
         android:ems="10"
         android:inputType="textPersonName"
-        android:textSize="14sp"
+        android:textColor="@color/text"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.84"
@@ -54,7 +57,8 @@
         android:background="@color/common_google_signin_btn_text_dark_default"
         android:ems="10"
         android:inputType="numberSigned"
-        android:textSize="14sp"
+        android:textColor="@color/text"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.85"
@@ -64,20 +68,20 @@
 
     <Spinner
         android:id="@+id/levelspinner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="250dp"
+        android:layout_height="35dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:background="@color/common_google_signin_btn_text_dark_default"
+        android:background="@color/colorSecondary"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.8"
+        app:layout_constraintHorizontal_bias="0.85"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/agetext"
-        app:layout_constraintVertical_bias="0.19" />
+        app:layout_constraintVertical_bias="0.272" />
 
     <TextView
         android:id="@+id/studiotext"
@@ -90,12 +94,14 @@
         android:background="@color/common_google_signin_btn_text_dark_default"
         android:text="TextView"
 
+        android:textColor="@color/text"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.85"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/levelspinner"
-        app:layout_constraintVertical_bias="0.07999998" />
+        app:layout_constraintVertical_bias="0.069" />
 
     <Button
         android:id="@+id/savechanges"
@@ -107,7 +113,7 @@
         android:layout_marginTop="8dp"
         android:background="@color/buttonstyle"
         android:text="SPEICHERN"
-        android:textColor="@color/colorSecondary"
+        android:textColor="@color/colorBackground"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -147,6 +153,8 @@
 
         android:background="@color/common_google_signin_btn_text_dark_default"
         android:text="TextView"
+        android:textColor="@color/text"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.85"
@@ -229,7 +237,22 @@
         app:layout_constraintEnd_toStartOf="@+id/studiotext"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView4"
-        app:layout_constraintVertical_bias="0.060000002"
+        app:layout_constraintVertical_bias="0.29000002"
         app:srcCompat="@drawable/ic_location_on_black_24dp" />
+
+    <ImageView
+        android:id="@+id/imageView11"
+        android:layout_width="50dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/levelspinner"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView4"
+        app:layout_constraintVertical_bias="0.01999998"
+        app:srcCompat="@drawable/ic_grade_black_24dp" />
 
 </android.support.constraint.ConstraintLayout>
