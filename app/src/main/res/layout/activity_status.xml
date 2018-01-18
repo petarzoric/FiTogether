@@ -4,39 +4,39 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimaryDark"
+    android:background="@color/colorBackground"
     tools:context="com.petarzoric.fitogether.StatusActivity">
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/statusInput"
-        android:layout_marginRight="10dp"
-        android:layout_marginLeft="10dp"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="99dp"
-        android:background="@color/common_google_signin_btn_text_dark_default"
+        android:layout_marginTop="101dp"
+        android:background="@color/colorSecondary"
         android:gravity="center">
 
         <android.support.design.widget.TextInputEditText
             android:layout_width="280dp"
             android:layout_height="50dp"
-            android:background="@color/common_google_signin_btn_text_dark_default"
-            android:hint="Your status"
-            android:textColor="@color/colorPrimaryDark" />
+            android:background="@color/colorSecondary"
+            android:hint="DEIN STATUS"
+            android:textColor="@color/text"
+            android:textStyle="bold" />
 
     </android.support.design.widget.TextInputLayout>
 
     <Button
         android:id="@+id/statusSaveButton"
-        android:layout_width="140dp"
-        android:layout_height="wrap_content"
+        android:layout_width="250dp"
+        android:layout_height="35dp"
         android:layout_alignEnd="@+id/statusInput"
-        android:layout_below="@+id/statusInput"
-        android:layout_marginTop="29dp"
-        android:background="@color/common_google_signin_btn_text_dark_default"
-        android:text="SAVE CHANGES"
-        android:textColor="@color/colorPrimaryDark"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="71dp"
+        android:background="@color/buttonstyle"
+        android:text="SPEICHERN"
+        android:textColor="@color/colorBackground"
+        android:textSize="18sp"
         android:textStyle="bold" />
 </RelativeLayout>

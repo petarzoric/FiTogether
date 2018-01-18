@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimaryDark"
+    android:background="@color/colorBackground"
     tools:context="com.petarzoric.fitogether.SettingsActivity">
 
     <TextView
@@ -15,7 +15,7 @@
         android:layout_below="@+id/displayName"
         android:text="Hi there, I'm using FiTogether."
         android:textAlignment="center"
-        android:textColor="@color/common_google_signin_btn_text_dark_default"
+        android:textColor="@color/text"
         android:textSize="14sp"
         tools:layout_editor_absoluteX="67dp"
         tools:layout_editor_absoluteY="309dp" />
@@ -25,45 +25,51 @@
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/changeStatus"
-        android:layout_marginTop="19dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="53dp"
         android:src="@drawable/image_preview"
         tools:layout_editor_absoluteX="92dp"
         tools:layout_editor_absoluteY="46dp" />
 
     <Button
         android:id="@+id/changeImage"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
+        android:layout_width="250dp"
+        android:layout_height="35dp"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="55dp"
-        android:text="CHANGE IMAGE"
-        android:textColor="@color/colorPrimaryDark"
+        android:layout_alignStart="@+id/hiThere"
+        android:layout_marginBottom="42dp"
+        android:background="@color/alert"
+        android:text="FOTO WECHSELN"
+        android:textColor="@color/colorBackground"
+        android:textSize="18sp"
         android:textStyle="bold"
         tools:layout_editor_absoluteX="92dp"
         tools:layout_editor_absoluteY="433dp" />
 
     <Button
         android:id="@+id/changeStatus"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
+        android:layout_width="250dp"
+        android:layout_height="35dp"
         android:layout_above="@+id/changeImage"
         android:layout_alignStart="@+id/changeImage"
-        android:text="CHANGE STATUS"
-        android:textColor="@color/colorPrimaryDark"
+        android:background="@color/colorSecondary"
+        android:text="STATUS ÄNDERN"
+        android:textColor="@color/text"
+        android:textSize="18sp"
         android:textStyle="bold"
         tools:layout_editor_absoluteX="92dp"
         tools:layout_editor_absoluteY="488dp" />
 
     <Button
         android:id="@+id/editprofile"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
+        android:layout_width="250dp"
+        android:layout_height="35dp"
         android:layout_above="@+id/changeStatus"
         android:layout_alignStart="@+id/changeStatus"
-        android:text="EDIT PROFILE"
-        android:textColor="@color/colorPrimaryDark"
+        android:background="@color/buttonstyle"
+        android:text="PROFIL BEARBEITEN"
+        android:textColor="@color/colorBackground"
+        android:textSize="18sp"
         android:textStyle="bold"
         tools:layout_editor_absoluteX="92dp"
         tools:layout_editor_absoluteY="488dp" />
@@ -76,7 +82,7 @@
         android:layout_centerVertical="true"
         android:text="Display Name"
         android:textAlignment="center"
-        android:textColor="@color/common_google_signin_btn_text_dark_default"
+        android:textColor="@color/text"
         android:textSize="20sp"
         tools:layout_editor_absoluteX="67dp"
         tools:layout_editor_absoluteY="264dp" />

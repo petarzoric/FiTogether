@@ -4,19 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimaryDark"
+    android:background="@color/colorBackground"
     tools:context="com.petarzoric.fitogether.ProfileActivity">
 
     <Button
         android:id="@+id/declineButton"
-        android:layout_width="220dp"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/sendRequestButton"
         android:layout_below="@+id/sendRequestButton"
         android:layout_marginTop="23dp"
-        android:background="@android:color/holo_orange_dark"
-        android:text="DECLINE REQUEST"
-        android:textColor="@color/common_google_signin_btn_text_dark_default" />
+        android:background="@color/alert"
+        android:text="ABLEHNEN"
+        android:textColor="@color/colorBackground"
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/profile_displayname"
@@ -26,7 +27,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:text="Display Name "
-        android:textColor="@color/common_google_signin_btn_text_dark_default"
+        android:textColor="@color/text"
         android:textSize="24sp" />
 
     <ImageView
@@ -48,17 +49,18 @@
         android:layout_marginTop="16dp"
         android:text="Display Status"
         android:textAlignment="center"
-        android:textColor="@color/common_google_signin_btn_text_dark_default"
-        android:textSize="16sp" />
+        android:textColor="@color/text"
+        android:textSize="18sp" />
 
     <Button
         android:id="@+id/sendRequestButton"
-        android:layout_width="220dp"
-        android:layout_height="wrap_content"
+        android:layout_width="250dp"
+        android:layout_height="40dp"
         android:layout_below="@+id/profileStatus"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="40dp"
-        android:background="@android:color/holo_orange_dark"
-        android:text="SEND FRIEND REQUEST"
-        android:textColor="@color/common_google_signin_btn_text_dark_default" />
+        android:background="@color/buttonstyle"
+        android:text="FS ANFRAGE"
+        android:textColor="@color/colorBackground"
+        android:textSize="18sp" />
 </RelativeLayout>
