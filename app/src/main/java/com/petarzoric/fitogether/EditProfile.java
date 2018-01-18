@@ -25,7 +25,6 @@ public class EditProfile extends AppCompatActivity {
     TextView studios;
     TextView gendertext;
     Button savechanges;
-    DatabaseReference childReference;
     FirebaseDatabase database;
     DatabaseReference databaseReference;
     UserProfile profile;
@@ -45,7 +44,6 @@ public class EditProfile extends AppCompatActivity {
         studios = findViewById(R.id.studiotext);
         savechanges = findViewById(R.id.savechanges);
         gendertext = findViewById(R.id.gendertext);
-        childReference = FirebaseDatabase.getInstance().getReference("Users2");
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.Level, R.layout.support_simple_spinner_dropdown_item);
         level.setAdapter(adapter);
         uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -84,14 +82,14 @@ public class EditProfile extends AppCompatActivity {
     }
 
     public void saveChanges(){
-        DatabaseReference ref = childReference.child(uid);
+        DatabaseReference ref = databaseReference.child("Users2").child(uid);
         ref.child("uid").setValue(uid);
         ref.child("email").setValue(emailtext.getText().toString());
         ref.child("name").setValue(name.getText().toString());
         ref.child("age").setValue(Integer.parseInt(age.getText().toString()));
         ref.child("level").setValue(Level.parseToEnum(level.getSelectedItemPosition()));
 
-        Intent data = new Intent(EditProfile.this, StatusActivity.class);
+        Intent data = new Intent(EditProfile.this, MainScreen.class);
         startActivity(data);
 
     }

@@ -79,6 +79,8 @@ public class SearchResults extends AppCompatActivity {
                     for (int i = 0; i <match.size() ; i++) {
                         if (child.getKey().equals(match.get(i).getUser())){
                             userProfiles[count] = child.getValue(UserProfile.class);
+                            System.out.println("--------------------------------------------------"+ child.getValue(UserProfile.class).getThumbnail()+"-------------------------------------------------");
+
                             count++;
                         }
                     }

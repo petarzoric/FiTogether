@@ -30,7 +30,6 @@ public class MainScreen extends AppCompatActivity {
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
     private Toolbar toolbar;
-    private Button logOutButton;
     ClipData.Item allUsers;
     private DatabaseReference usersDatabase;
     private FirebaseAuth auth;
@@ -134,10 +133,8 @@ public class MainScreen extends AppCompatActivity {
 
 
         if(item.getItemId() == R.id.logout){
-
-
-                    Intent intent = new Intent(MainScreen.this, MainActivity.class);
                     FirebaseAuth.getInstance().signOut();
+                    Intent intent = new Intent(MainScreen.this, MainActivity.class);
                     startActivity(intent);
                 }
 
