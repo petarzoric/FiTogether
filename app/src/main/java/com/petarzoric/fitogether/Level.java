@@ -80,7 +80,7 @@ public enum Level {
     public static Level parseToEnum(int input){
         switch (input){
             case 0:
-                return Level.ARNOLD;
+                return Level.ANFÄNGER;
 
             case 1:
                 return Level.FORTGESCHRITTEN;

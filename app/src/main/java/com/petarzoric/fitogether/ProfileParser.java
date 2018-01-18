@@ -18,8 +18,8 @@ class ProfileParser {
         dataBaseObject.put("studio", profile.getStudio());
         dataBaseObject.put("location", profile.getLocation());
         dataBaseObject.put("gender", profile.getGender().toString());
-        dataBaseObject.put("image", profile.getImageURL());
-        dataBaseObject.put("thumbnail", profile.getThumbURL());
+        dataBaseObject.put("image", profile.getImage());
+        dataBaseObject.put("thumbnail", profile.getThumbnail());
         dataBaseObject.put("status", profile.getStatus());
 
         return dataBaseObject;
@@ -35,8 +35,8 @@ class ProfileParser {
         profile.setStudio((int) hashMap.get("studio"));
         profile.setLocation((int) hashMap.get("location"));
         profile.setGender(Gender.parseToEnum((String) hashMap.get("gender")));
-        profile.setImageURL((String) hashMap.get("image"));
-        profile.setThumbURL((String) hashMap.get("thumbnail"));
+        profile.setImage((String) hashMap.get("image"));
+        profile.setThumbnail((String) hashMap.get("thumbnail"));
         profile.setStatus((String) hashMap.get("status"));
 
         return profile;

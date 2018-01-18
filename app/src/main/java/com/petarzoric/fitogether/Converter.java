@@ -91,21 +91,5 @@ public class Converter extends Fragment {
 
     }
 
-    /*public static UserProfile getUserProfile(String uid) {
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-        UserProfile userProfile = databaseReference.child("Users2").child(uid).;
-        databaseReference.child("Users2").child(uid).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                UserProfile userProfile = dataSnapshot.getValue(UserProfile.class);
 
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-
-        });
-    }*/
 }

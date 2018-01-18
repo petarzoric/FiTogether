@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class Listadapter extends ArrayAdapter<String> {
@@ -39,14 +40,14 @@ public class Listadapter extends ArrayAdapter<String> {
         TextView txt2 = convertView.findViewById(R.id.ulevel);
         TextView txt3 = convertView.findViewById(R.id.age);
         TextView txt4 = convertView.findViewById(R.id.ugender);
-        ImageView img = convertView.findViewById(R.id.icon);
-        Picasso.with(context).load(matches[position].getThumbURL()).placeholder(R.drawable.image_preview).into(img);
-
+        CircleImageView img = convertView.findViewById(R.id.icon);
 
         txt1.setText(matches[position].getName());
         txt2.setText(Level.parseToString(matches[position].getLevel()));
         txt3.setText(String.valueOf(matches[position].getAge()));
         txt4.setText(Gender.parseToString(matches[position].getGender()));
+        Picasso.with(context).load(matches[position].getThumbnail()).placeholder(R.drawable.image_preview).into(img);
+
         return convertView;
     }
 

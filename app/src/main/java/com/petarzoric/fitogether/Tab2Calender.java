@@ -84,15 +84,12 @@ public class Tab2Calender extends Fragment {
 
         database = FirebaseDatabase.getInstance();
         databaseReferenceprofile = database.getReference();
-        databaseReferenceprofile.child("Users2").addValueEventListener(new ValueEventListener() {
+        databaseReferenceprofile.child("Users2").child(key).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Iterable<DataSnapshot> children = dataSnapshot.getChildren();
-                for(DataSnapshot child : children){
-                    if (child.getKey().equals(key)){
-                        profile = child.getValue(UserProfile.class);
-                    }
-                }
+                        profile = dataSnapshot.getValue(UserProfile.class);
+
+
             }
 
             @Override
@@ -117,6 +114,8 @@ public class Tab2Calender extends Fragment {
                 times = time.getText().toString();
                 trainingProfile = new UserTraining(selectedDate, trainingType, key, level, studio, location, times);
                 databaseReferencecalender.child(Converter.monthConverter(m)).child(String.valueOf(d)).child(key).setValue(trainingProfile);
+                Toast.makeText(getActivity(), "Training saved", Toast.LENGTH_SHORT).show();
+
 
             }else{
                 Toast.makeText(getActivity(), "Please Select a Time", Toast.LENGTH_SHORT).show();
