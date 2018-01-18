@@ -8,13 +8,30 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 /**
  * Created by Alex on 24.11.2017.
  */
 
 public class Tab4Chat extends Fragment {
 
-    Button friendsButton;
+    private Button friendsButton;
+
+    private DatabaseReference conversationDatabase;
+    private DatabaseReference messageDatabase;
+    private DatabaseReference userDatabase;
+    private FirebaseAuth auth;
+    private String current_user_id;
+    private View mainView;
+
+    //leerer Konstruktor wird benötigt, sonst gehts nicht
+    public Tab4Chat(){
+
+    }
+
 
 
 
@@ -30,6 +47,12 @@ public class Tab4Chat extends Fragment {
                 startActivity(settingsIntent);
             }
         });
+
+
+        auth = FirebaseAuth.getInstance();
+        current_user_id = auth.getCurrentUser().getUid();
+
+
         return rootView;
     }
 }

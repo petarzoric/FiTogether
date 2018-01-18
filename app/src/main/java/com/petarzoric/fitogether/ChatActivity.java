@@ -1,6 +1,9 @@
 package com.petarzoric.fitogether;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +19,8 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -25,6 +30,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -64,6 +72,8 @@ public class ChatActivity extends AppCompatActivity {
     private int itemPosition = 0;
     private String lastKey = "";
     private String prefKey;
+    private static final int GAL_PICK = 1;
+    private StorageReference imageStorage;
 
 
     @Override
@@ -116,6 +126,7 @@ public class ChatActivity extends AppCompatActivity {
         mMessageList.setLayoutManager(linearLayout);
 
         mMessageList.setAdapter(adapter);
+        imageStorage = FirebaseStorage.getInstance().getReference();
 
         loadMessages();
 
@@ -201,10 +212,74 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
 
+        chatAddBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent galleryIntent = new Intent();
+                galleryIntent.setType("image/*");
+                galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
+
+                startActivityForResult(Intent.createChooser(galleryIntent, "Select image"), GAL_PICK);
+            }
+        });
+
+
 
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == GAL_PICK && resultCode == RESULT_OK){
+
+            Uri imageUri = data.getData();
+
+            final String current_user_ref = "messages/" + currentUserId + "/" + chatUser;
+            final String chat_user_ref = "messages/" + chatUser + "/" + currentUserId;
+
+            DatabaseReference userMessagePush = rootRef.child("messages").child(currentUserId).child(chatUser).push();
+
+            final String push_id = userMessagePush.getKey();
+
+            StorageReference filepath = imageStorage.child("message_images").child(push_id + ".jpg");
+
+            filepath.putFile(imageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+
+                    if(task.isSuccessful()){
+
+                        String downloadurl = task.getResult().getDownloadUrl().toString();
+
+                        Map messageMap = new HashMap();
+                        messageMap.put("message", downloadurl);
+                        messageMap.put("seen", false);
+                        messageMap.put("type", "image");
+                        messageMap.put("time", ServerValue.TIMESTAMP);
+                        messageMap.put("from", currentUserId);
+
+                        Map messageUserMap = new HashMap();
+                        messageUserMap.put(current_user_ref + "/" + push_id, messageMap);
+                        messageUserMap.put(chat_user_ref + "/" + push_id, messageMap);
+
+                        chatMessageView.setText("");
+
+                        rootRef.updateChildren(messageUserMap, (databaseError, databasReference) -> {
+
+                            if(databaseError != null){
+
+                                //iwas loggen
+                            }
+
+                        });
+                    }
+                }
+            });
+        }
+    }
     //fürs Laden von neuen Nachrichten, wenn man das Refresh feature nutzt
 
 
@@ -329,6 +404,8 @@ public class ChatActivity extends AppCompatActivity {
 
 
 
+
+
     private void sendMessage(){
 
         String message = chatMessageView.getText().toString();
@@ -369,6 +446,7 @@ public class ChatActivity extends AppCompatActivity {
 
 
     }
+
 }
 
 
