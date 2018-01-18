@@ -107,7 +107,7 @@
         android:layout_marginTop="8dp"
         android:background="@color/buttonstyle"
         android:text="SPEICHERN"
-        android:textColor="@color/text"
+        android:textColor="@color/colorSecondary"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
