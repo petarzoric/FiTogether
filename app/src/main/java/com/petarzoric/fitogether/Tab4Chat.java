@@ -116,7 +116,7 @@ public class Tab4Chat extends Fragment {
                     @Override
                     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
 
-                        String data = dataSnapshot.child("messages").getValue().toString();
+                        String data = dataSnapshot.child("message").getValue().toString();
                         viewHolder.setMessage(data, model.isSeen());
                     }
 
@@ -197,6 +197,7 @@ public class Tab4Chat extends Fragment {
         }
         public void setMessage(String message, boolean isSeen){
             TextView userStatusView = (TextView) view.findViewById(R.id.user_single_status);
+            userStatusView.setText(message);
 
             if(!isSeen){
                 userStatusView.setTypeface(userStatusView.getTypeface(), Typeface.BOLD);
@@ -218,7 +219,7 @@ public class Tab4Chat extends Fragment {
         }
 
         public void setUserOnline(String status){
-            ImageView userOnlineView = (ImageView) view.findViewById(R.id.user_single_status);
+            ImageView userOnlineView = (ImageView) view.findViewById(R.id.user_single_online_icon);
 
             if(status.equals("true")){
 
