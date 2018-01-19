@@ -88,6 +88,7 @@ public class MainScreen extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
+
         usersDatabase.child("online").onDisconnect().setValue(ServerValue.TIMESTAMP);
 
         // Log.i("OnPause", "aufgerufen");

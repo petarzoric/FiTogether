@@ -1,27 +1,30 @@
 package com.petarzoric.fitogether;
 
-import android.content.ClipData;
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.Adapter;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class SearchResults extends AppCompatActivity {
 
 
-    ListView listView;
     ArrayList <UserTraining> matches = new ArrayList<>();
     FirebaseDatabase database;
     DatabaseReference databaseReference;
@@ -29,19 +32,20 @@ public class SearchResults extends AppCompatActivity {
 
 
 
+    RecyclerView recycleList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_results);
 
+        recycleList = findViewById(R.id.recyclelist);
+        recycleList.setHasFixedSize(true);
+        recycleList.setLayoutManager(new LinearLayoutManager(this));
+
+
         database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference();
-        listView = findViewById(R.id.userlist);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            }
-        });
         final Intent data = getIntent();
         final int level = data.getIntExtra("level", 0);
         final int gender = data.getIntExtra("gender", 0);
@@ -61,8 +65,28 @@ public class SearchResults extends AppCompatActivity {
                         }
                     }
                     matchesToProfile(matches);
+                   // databaseReference.child("Searchresults").child(FirebaseAuth.getInstance().getCurrentUser().getUid()))
 
+                /*    FirebaseRecyclerAdapter<UserProfile, SearchResults.UsersViewHolder> firebaseRecyclerAdapter= new FirebaseRecyclerAdapter<UserProfile, SearchResults.UsersViewHolder>(
+                            UserProfile.class, R.layout.listviewitems, SearchResults.UsersViewHolder.class, databaseReference.child("Users2")) {
+                        @Override
+                        protected void populateViewHolder(UsersViewHolder viewHolder, UserProfile model, int position) {
+                            viewHolder.setName(model.getName());
+                            viewHolder.setAge(String.valueOf(model.getAge()));
+                            viewHolder.setLevel(Level.parseToString(model.getLevel()));
+                            viewHolder.setGender(Gender.parseToString(model.getGender()));
+                            viewHolder.setImage(model.getThumbnail(), getApplicationContext());
+
+
+                        }
+
+
+                    };
+
+                    recycleList.setAdapter(firebaseRecyclerAdapter);
+*/
                 }
+
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
 
@@ -73,6 +97,8 @@ public class SearchResults extends AppCompatActivity {
 
 
     }
+
+
     public UserProfile[] matchesToProfile(final ArrayList<UserTraining> match){
         userProfiles = new UserProfile[match.size()];
         database = FirebaseDatabase.getInstance();
@@ -89,14 +115,15 @@ public class SearchResults extends AppCompatActivity {
                     for (int i = 0; i <match.size() ; i++) {
                         if (child.getKey().equals(match.get(i).getUser())){
                             userProfiles[count] = child.getValue(UserProfile.class);
-                            System.out.println("--------------------------------------------------"+ child.getValue(UserProfile.class).getThumbnail()+"-------------------------------------------------");
+                         //   databaseReference.child("Searchresults").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(child.getKey()).setValue(child.getValue(UserProfile.class));
 
                             count++;
                         }
                     }
                 }
-                ListAdapter adapter = new Listadapter(SearchResults.this,userProfiles);
-                listView.setAdapter(adapter);
+
+                SearchAdapter searchAdapter = new SearchAdapter(SearchResults.this, userProfiles);
+                recycleList.setAdapter(searchAdapter);
             }
 
             @Override
@@ -109,4 +136,5 @@ public class SearchResults extends AppCompatActivity {
         return userProfiles;
 
     }
+
 }
