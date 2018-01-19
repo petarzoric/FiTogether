@@ -1,8 +1,13 @@
 package com.petarzoric.fitogether;
 
+import android.content.ClipData;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Adapter;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -32,6 +37,11 @@ public class SearchResults extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference();
         listView = findViewById(R.id.userlist);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            }
+        });
         final Intent data = getIntent();
         final int level = data.getIntExtra("level", 0);
         final int gender = data.getIntExtra("gender", 0);

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#90A566</color>
+    <color name="colorPrimary">#90a566</color>
     <color name="colorPrimaryDark">#90A566</color>
     <color name="colorAccent">#C2985B</color>
     <color name="colorSecondary">#DFD9D0</color>
@@ -10,6 +10,12 @@
     <color name="alert">#A83945</color>
     <color name="chat1">#E2FECB</color>
     <color name="white">#FFFFFF</color>
+    <color name="bluedark">#2f333f</color>
+    <color name="bluelight">#49acd5</color>
+    <color name="green">#45bc62</color>
+    <color name="orange">#eaad43</color>
+    <color name="mediumblue">#3f51b5</color>
+    <color name="lightgrey">#acacac</color>
 
     <color name="chatBackground">#ede6dc</color>
 

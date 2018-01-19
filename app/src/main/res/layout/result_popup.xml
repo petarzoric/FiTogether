@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="335dp"
+    android:layout_height="425dp"
+    android:layout_gravity="center"
+    android:background="@color/bluedark"
+    android:orientation="vertical"
+    android:padding="5dp" >
+
+    <TextView
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_gravity="end"
+        android:background="@drawable/circlebackground"
+        android:gravity="center"
+        android:id="@+id/popup_close"
+        android:text="X"
+        android:textColor="@color/white"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="125dp"
+        android:layout_height="125dp"
+        android:layout_gravity="center"
+        android:src="@drawable/image_preview" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:id="@+id/popup_username"
+        android:layout_height="wrap_content"
+        android:text="user name"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="5dp"
+
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="fitness studio"
+        android:id="@+id/popup_fitnessstudio"
+        android:textColor="@color/white"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="5dp"
+
+        />
+
+    <LinearLayout
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+
+            android:id="@+id/gr"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_weight="1"
+            android:gravity="center_horizontal">
+
+            <EditText
+                android:layout_width="300dp"
+                android:layout_height="90dp"
+                android:background="@drawable/roundedittext"
+
+
+                android:gravity="left|fill_horizontal"
+                android:hint="Hinterlasse eine Nachricht... "
+                android:paddingLeft="10dp"
+                android:paddingTop="10dp"
+                android:textColor="@color/bluedark"
+                android:textColorHint="@color/lightgrey"
+                android:textSize="14sp" />
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ich will mittrainieren!"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/buttonstyle"
+        android:textColor="@color/white"
+        />
+
+
+</LinearLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

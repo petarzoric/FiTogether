@@ -33,6 +33,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -66,6 +67,7 @@ public class ChatActivity extends AppCompatActivity {
     private final List<Messages> messagesList = new ArrayList<>();
     private LinearLayoutManager linearLayout;
     private MessageAdapter adapter;
+    private CircleImageView customPic;
 
     private static final int ITEMS_TO_LOAD = 10;
     private int currentPage = 1;
@@ -138,6 +140,8 @@ public class ChatActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String online = dataSnapshot.child("online").getValue().toString();
                 String image = dataSnapshot.child("image").getValue().toString();
+
+                Picasso.with(getApplicationContext()).load(image).placeholder(R.drawable.image_preview).into(profileImage);
 
                 if(online.equals("true")){
 
