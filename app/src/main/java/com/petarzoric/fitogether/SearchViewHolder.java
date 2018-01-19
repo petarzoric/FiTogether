@@ -13,12 +13,12 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Created by Alex on 19.01.2018.
  */
 
-public class SearchViewHolder extends RecyclerView.ViewHolder {
+public class SearchViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
     View view;
     public SearchViewHolder(View itemView) {
         super(itemView);
-
         view = itemView;
+        view.setOnClickListener(this);
     }
 
     public void setName(String name){
@@ -49,6 +49,9 @@ public class SearchViewHolder extends RecyclerView.ViewHolder {
     }
 
 
+    @Override
+    public void onClick(View view) {
 
+    }
 }
 
