@@ -1,6 +1,5 @@
 package com.petarzoric.fitogether;
 
-import android.opengl.GLException;
 
 /**
  * Created by petarzoric on 12.12.17.

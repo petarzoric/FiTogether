@@ -1,26 +1,21 @@
 package com.petarzoric.fitogether;
 
-import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
-import android.widget.ListView;
-import android.widget.TextView;
 
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-import de.hdodenhof.circleimageview.CircleImageView;
 
 public class SearchResults extends AppCompatActivity {
 
@@ -44,6 +39,16 @@ public class SearchResults extends AppCompatActivity {
         recycleList.setLayoutManager(new LinearLayoutManager(this));
 
 
+
+
+
+
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
         database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference();
         final Intent data = getIntent();
@@ -65,12 +70,11 @@ public class SearchResults extends AppCompatActivity {
                         }
                     }
                     matchesToProfile(matches);
-                   // databaseReference.child("Searchresults").child(FirebaseAuth.getInstance().getCurrentUser().getUid()))
 
-                /*    FirebaseRecyclerAdapter<UserProfile, SearchResults.UsersViewHolder> firebaseRecyclerAdapter= new FirebaseRecyclerAdapter<UserProfile, SearchResults.UsersViewHolder>(
-                            UserProfile.class, R.layout.listviewitems, SearchResults.UsersViewHolder.class, databaseReference.child("Users2")) {
+                    FirebaseRecyclerAdapter<UserProfile, SearchViewHolder> firebaseRecyclerAdapter= new FirebaseRecyclerAdapter<UserProfile, SearchViewHolder>(
+                            UserProfile.class, R.layout.listviewitems, SearchViewHolder.class, databaseReference.child("Searchresults").child(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
                         @Override
-                        protected void populateViewHolder(UsersViewHolder viewHolder, UserProfile model, int position) {
+                        protected void populateViewHolder(SearchViewHolder viewHolder, UserProfile model, int position) {
                             viewHolder.setName(model.getName());
                             viewHolder.setAge(String.valueOf(model.getAge()));
                             viewHolder.setLevel(Level.parseToString(model.getLevel()));
@@ -84,7 +88,7 @@ public class SearchResults extends AppCompatActivity {
                     };
 
                     recycleList.setAdapter(firebaseRecyclerAdapter);
-*/
+
                 }
 
                 @Override
@@ -93,11 +97,7 @@ public class SearchResults extends AppCompatActivity {
                 }
             });}
 
-
-
-
     }
-
 
     public UserProfile[] matchesToProfile(final ArrayList<UserTraining> match){
         userProfiles = new UserProfile[match.size()];
@@ -115,15 +115,15 @@ public class SearchResults extends AppCompatActivity {
                     for (int i = 0; i <match.size() ; i++) {
                         if (child.getKey().equals(match.get(i).getUser())){
                             userProfiles[count] = child.getValue(UserProfile.class);
-                         //   databaseReference.child("Searchresults").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(child.getKey()).setValue(child.getValue(UserProfile.class));
+                            databaseReference.child("Searchresults").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(child.getKey()).setValue(child.getValue(UserProfile.class));
 
                             count++;
                         }
                     }
                 }
 
-                SearchAdapter searchAdapter = new SearchAdapter(SearchResults.this, userProfiles);
-                recycleList.setAdapter(searchAdapter);
+                //SearchAdapter searchAdapter = new SearchAdapter(SearchResults.this, userProfiles);
+                //recycleList.setAdapter(searchAdapter);
             }
 
             @Override
