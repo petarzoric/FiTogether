@@ -8,12 +8,12 @@
     android:padding="5dp" >
 
     <TextView
+        android:id="@+id/close"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_gravity="end"
         android:background="@drawable/circlebackground"
         android:gravity="center"
-        android:id="@+id/popup_close"
         android:text="X"
         android:textColor="@color/white"
         android:textStyle="bold" />

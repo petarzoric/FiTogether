@@ -35,7 +35,6 @@ public class SearchResults extends AppCompatActivity {
     FirebaseAuth auth;
     String currentUserId;
     Dialog popupDialog;
-    TextView closeIcon;
     Button requestButton;
     TextView userName;
     TextView userStudio;
@@ -53,8 +52,6 @@ public class SearchResults extends AppCompatActivity {
         recycleList.setHasFixedSize(true);
         recycleList.setLayoutManager(new LinearLayoutManager(this));
         auth = FirebaseAuth.getInstance();
-        closeIcon = findViewById(R.id.popup_close);
-        requestButton = findViewById(R.id.popup_button);
 
         currentUserId = auth.getCurrentUser().getUid();
         popupDialog = new Dialog(this);
@@ -110,16 +107,28 @@ public class SearchResults extends AppCompatActivity {
                                 @Override
                                 public void onClick(View v) {
 
-                                    closeIcon = (TextView) findViewById(R.id.popup_close);
+                                    TextView closeIcon;
+                                    Button requestButton;
+
                                     popupDialog.setContentView(R.layout.result_popup);
-                                    /*
+                                    closeIcon = (TextView) popupDialog.findViewById(R.id.close);
+                                    requestButton = popupDialog.findViewById(R.id.popup_button);
                                     closeIcon.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {
                                             popupDialog.dismiss();
                                         }
                                     });
-                                     */
+
+                                    requestButton.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            //TODO ANFRAGE SCHICKEN
+                                        }
+                                    });
+
+
+
                                     popupDialog.show();
                                 }
                             });
