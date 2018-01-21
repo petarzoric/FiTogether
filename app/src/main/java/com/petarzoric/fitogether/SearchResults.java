@@ -1,10 +1,16 @@
 package com.petarzoric.fitogether;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
@@ -16,6 +22,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 
 public class SearchResults extends AppCompatActivity {
 
@@ -24,8 +32,15 @@ public class SearchResults extends AppCompatActivity {
     FirebaseDatabase database;
     DatabaseReference databaseReference;
     UserProfile[] userProfiles;
-
-
+    FirebaseAuth auth;
+    String currentUserId;
+    Dialog popupDialog;
+    TextView closeIcon;
+    Button requestButton;
+    TextView userName;
+    TextView userStudio;
+    EditText userMessage;
+    CircleImageView userImage;
 
     RecyclerView recycleList;
 
@@ -37,6 +52,14 @@ public class SearchResults extends AppCompatActivity {
         recycleList = findViewById(R.id.recyclelist);
         recycleList.setHasFixedSize(true);
         recycleList.setLayoutManager(new LinearLayoutManager(this));
+        auth = FirebaseAuth.getInstance();
+        closeIcon = findViewById(R.id.popup_close);
+        requestButton = findViewById(R.id.popup_button);
+
+        currentUserId = auth.getCurrentUser().getUid();
+        popupDialog = new Dialog(this);
+
+
 
 
 
@@ -45,6 +68,8 @@ public class SearchResults extends AppCompatActivity {
 
 
     }
+
+
 
     @Override
     protected void onStart() {
@@ -80,6 +105,24 @@ public class SearchResults extends AppCompatActivity {
                             viewHolder.setLevel(Level.parseToString(model.getLevel()));
                             viewHolder.setGender(Gender.parseToString(model.getGender()));
                             viewHolder.setImage(model.getThumbnail(), getApplicationContext());
+
+                           viewHolder.view.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+
+                                    closeIcon = (TextView) findViewById(R.id.popup_close);
+                                    popupDialog.setContentView(R.layout.result_popup);
+                                    /*
+                                    closeIcon.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            popupDialog.dismiss();
+                                        }
+                                    });
+                                     */
+                                    popupDialog.show();
+                                }
+                            });
 
 
                         }
