@@ -91,6 +91,7 @@ public class SearchResults extends AppCompatActivity {
 
                         }
                     }
+
                     matchesToProfile(matches);
 
                     FirebaseRecyclerAdapter<UserProfile, SearchViewHolder> firebaseRecyclerAdapter= new FirebaseRecyclerAdapter<UserProfile, SearchViewHolder>(
@@ -151,38 +152,45 @@ public class SearchResults extends AppCompatActivity {
 
     }
 
-    public UserProfile[] matchesToProfile(final ArrayList<UserTraining> match){
+    public UserProfile[] matchesToProfile(final ArrayList<UserTraining> match) {
         userProfiles = new UserProfile[match.size()];
         database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference();
-        databaseReference.child("Users2").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                ArrayList<UserProfile> profiles = new ArrayList<>();
+        databaseReference.child("Searchresults").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).removeValue();
+            databaseReference.child("Users2").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    ArrayList<UserProfile> profiles = new ArrayList<>();
 
-                Iterable<DataSnapshot> children = dataSnapshot.getChildren();
-                int count = 0;
-                for (DataSnapshot child : children) {
-                    profiles.add(child.getValue(UserProfile.class));
-                    for (int i = 0; i <match.size() ; i++) {
-                        if (child.getKey().equals(match.get(i).getUser())){
-                            userProfiles[count] = child.getValue(UserProfile.class);
-                            databaseReference.child("Searchresults").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(child.getKey()).setValue(child.getValue(UserProfile.class));
+                    Iterable<DataSnapshot> children = dataSnapshot.getChildren();
+                    int count = 0;
+                    for (DataSnapshot child : children) {
+                        profiles.add(child.getValue(UserProfile.class));
+                        for (int i = 0; i < match.size(); i++) {
+                            if (child.getKey().equals(match.get(i).getUser())) {
+                                userProfiles[count] = child.getValue(UserProfile.class);
+                                databaseReference.child("Searchresults").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(child.getKey()).setValue(child.getValue(UserProfile.class));
 
-                            count++;
+                                count++;
+                            }
                         }
                     }
+                    if (count == 0){
+                        Toast.makeText(SearchResults.this, "No Results found", Toast.LENGTH_SHORT).show();
+                        SearchResults.super.onBackPressed();
+
+                    }
+
+                    //SearchAdapter searchAdapter = new SearchAdapter(SearchResults.this, userProfiles);
+                    //recycleList.setAdapter(searchAdapter);
                 }
 
-                //SearchAdapter searchAdapter = new SearchAdapter(SearchResults.this, userProfiles);
-                //recycleList.setAdapter(searchAdapter);
-            }
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
+                }
+            });
 
-            }
-        });
 
 
         return userProfiles;
