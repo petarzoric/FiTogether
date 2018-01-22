@@ -12,11 +12,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
+
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
@@ -24,7 +22,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ServerValue;
 
 
-public class MainScreen extends AppCompatActivity {
+public class MainScreen extends AppCompatActivity  {
 
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
@@ -144,6 +142,8 @@ public class MainScreen extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
 
     }
+
+
 
     /**
      * A placeholder fragment containing a simple view.
