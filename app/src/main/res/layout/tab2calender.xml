@@ -69,6 +69,7 @@
         android:background="@color/common_google_signin_btn_text_dark_default"
         android:ems="10"
         android:hint="00:00"
+        android:focusable="false"
 
         android:inputType="time"
         android:textColor="@color/text"

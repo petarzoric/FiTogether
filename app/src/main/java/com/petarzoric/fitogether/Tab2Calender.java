@@ -1,5 +1,6 @@
 package com.petarzoric.fitogether;
 
+import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -18,6 +20,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.Calendar;
+import java.util.TimeZone;
 
 /**
  * Created by Alex on 26.11.2017.
@@ -80,6 +85,23 @@ public class Tab2Calender extends Fragment {
                 saveTraining();
             }
         });
+        time.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Calendar cal = Calendar.getInstance(TimeZone.getDefault()); // Get current date
+
+
+// Create the DatePickerDialog instance
+                TimePickerDialog timePicker = new TimePickerDialog(getContext(),
+                        timePickerListener,
+                        R.style.Theme_AppCompat_Light,
+                        cal.get(Calendar.HOUR_OF_DAY),
+                        true);
+                        timePicker.setCancelable(false);
+                timePicker.setTitle("Select the time");
+                timePicker.show();
+            }
+        });
 
 
         database = FirebaseDatabase.getInstance();
@@ -125,5 +147,17 @@ public class Tab2Calender extends Fragment {
         }
 
     }
+    private TimePickerDialog.OnTimeSetListener timePickerListener = new TimePickerDialog.OnTimeSetListener(){
+        @Override
+        public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
+                String times = String.valueOf(hourOfDay)+":"+String.valueOf(minute);
+                time.setText(times);
+
+
+        }
+
+        // when dialog box is closed, below method will be called.
+
+    };
 
 }
