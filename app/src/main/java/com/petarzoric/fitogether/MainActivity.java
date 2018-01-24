@@ -149,6 +149,13 @@ public class MainActivity extends AppCompatActivity {
         };
 
 
+
+
+    }
+    @Override
+    public void onStart() {
+        super.onStart();
+        auth.addAuthStateListener(authListener);
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -175,12 +182,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-    }
-    @Override
-    public void onStart() {
-        super.onStart();
-        auth.addAuthStateListener(authListener);
 
 
 
@@ -230,12 +231,6 @@ public class MainActivity extends AppCompatActivity {
                                 }
                                 if (exists){
                                     Intent data = new Intent(MainActivity.this, MainScreen.class);
-                                    /*database.getReference().child("Users2").child(key).child("device_token").setValue(deviceToken).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void aVoid) {
-
-                                        }
-                                    });*/
                                     startActivity(data);
                                 }
                                 else{
