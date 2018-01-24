@@ -30,9 +30,9 @@ public class SearchViewHolder extends RecyclerView.ViewHolder implements View.On
         TextView userage =  view.findViewById(R.id.uage);
         userage.setText(age);
     }
-    public void setLevel(String level){
-        TextView userage =  view.findViewById(R.id.ulevel);
-        userage.setText(level);
+    public void setLevel(String level) {
+            TextView userage = view.findViewById(R.id.ulevel);
+            userage.setText(level);
     }
 
     public void setGender(String gender){
@@ -46,6 +46,16 @@ public class SearchViewHolder extends RecyclerView.ViewHolder implements View.On
 
 
         Picasso.with(context).load(image).placeholder(R.drawable.image_preview).into(userImageView);
+    }
+    public void setTime(String time){
+        TextView timeView = view.findViewById(R.id.timeView);
+        timeView.setText(time);
+
+
+    }
+    public void setStudio(String studio){
+        TextView studioView = view.findViewById(R.id.studioView);
+        studioView.setText(studio);
     }
 
 

@@ -57,13 +57,6 @@ public class SearchResults extends AppCompatActivity {
         popupDialog = new Dialog(this);
 
 
-
-
-
-
-
-
-
     }
 
 
@@ -94,15 +87,17 @@ public class SearchResults extends AppCompatActivity {
 
                     matchesToProfile(matches);
 
-                    FirebaseRecyclerAdapter<UserProfile, SearchViewHolder> firebaseRecyclerAdapter= new FirebaseRecyclerAdapter<UserProfile, SearchViewHolder>(
-                            UserProfile.class, R.layout.listviewitems, SearchViewHolder.class, databaseReference.child("Searchresults").child(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
+                    FirebaseRecyclerAdapter<UserResults, SearchViewHolder> firebaseRecyclerAdapter= new FirebaseRecyclerAdapter<UserResults, SearchViewHolder>(
+                            UserResults.class, R.layout.listviewitems, SearchViewHolder.class, databaseReference.child("Searchresults").child(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
                         @Override
-                        protected void populateViewHolder(SearchViewHolder viewHolder, UserProfile model, int position) {
+                        protected void populateViewHolder(SearchViewHolder viewHolder, UserResults model, int position) {
                             viewHolder.setName(model.getName());
                             viewHolder.setAge(String.valueOf(model.getAge()));
                             viewHolder.setLevel(Level.parseToString(model.getLevel()));
                             viewHolder.setGender(Gender.parseToString(model.getGender()));
                             viewHolder.setImage(model.getThumbnail(), getApplicationContext());
+                            viewHolder.setTime(model.getTime());
+                            viewHolder.setStudio(Converter.studioString(model.getStudio(), model.getLocation(),getResources()));
 
                            viewHolder.view.setOnClickListener(new View.OnClickListener() {
                                 @Override
@@ -128,15 +123,11 @@ public class SearchResults extends AppCompatActivity {
                                         }
                                     });
 
-
-
                                     popupDialog.show();
                                 }
                             });
 
-
                         }
-
 
                     };
 
@@ -156,7 +147,9 @@ public class SearchResults extends AppCompatActivity {
         userProfiles = new UserProfile[match.size()];
         database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference();
-        databaseReference.child("Searchresults").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).removeValue();
+        int gender = getIntent().getIntExtra("gender", 0);
+        String key = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        databaseReference.child("Searchresults").child(key).removeValue();
             databaseReference.child("Users2").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
@@ -167,11 +160,13 @@ public class SearchResults extends AppCompatActivity {
                     for (DataSnapshot child : children) {
                         profiles.add(child.getValue(UserProfile.class));
                         for (int i = 0; i < match.size(); i++) {
-                            if (child.getKey().equals(match.get(i).getUser())) {
-                                userProfiles[count] = child.getValue(UserProfile.class);
-                                databaseReference.child("Searchresults").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(child.getKey()).setValue(child.getValue(UserProfile.class));
-
-                                count++;
+                            if (child.getKey().equals(match.get(i).getUser()) ) {
+                                if (Gender.parseToInt(child.getValue(UserProfile.class).getGender()) == gender || gender == 2 ) {
+                                    userProfiles[count] = child.getValue(UserProfile.class);
+                                    UserResults results = new UserResults(userProfiles[i].getUid(), userProfiles[i].getName(), userProfiles[i].getAge(), userProfiles[i].getLevel(), userProfiles[i].getStudio(), userProfiles[i].getLocation(), userProfiles[i].getGender(), userProfiles[i].getThumbnail(), match.get(i).getTime());
+                                    databaseReference.child("Searchresults").child(key).child(child.getKey()).setValue(results);
+                                    count++;
+                                }
                             }
                         }
                     }
@@ -181,8 +176,6 @@ public class SearchResults extends AppCompatActivity {
 
                     }
 
-                    //SearchAdapter searchAdapter = new SearchAdapter(SearchResults.this, userProfiles);
-                    //recycleList.setAdapter(searchAdapter);
                 }
 
                 @Override
@@ -190,8 +183,6 @@ public class SearchResults extends AppCompatActivity {
 
                 }
             });
-
-
 
         return userProfiles;
 
