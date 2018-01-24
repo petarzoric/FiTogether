@@ -48,6 +48,14 @@ public class Tab1Dashboard extends Fragment {
         gendertext = rootView.findViewById(R.id.gendertext);
         uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
+
+        return rootView;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
         databaseReference.child("Users2").child(uid).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -66,9 +74,5 @@ public class Tab1Dashboard extends Fragment {
 
             }
         });
-
-        return rootView;
     }
-
-
 }
