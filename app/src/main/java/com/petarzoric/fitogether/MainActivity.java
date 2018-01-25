@@ -216,7 +216,6 @@ public class MainActivity extends AppCompatActivity {
                         progressDialog.hide();
                         emailtext = email.getText().toString();
                         key = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                        exists = false;
 
                         databaseReference.child("Users2").addValueEventListener(new ValueEventListener() {
                             @Override
@@ -228,6 +227,25 @@ public class MainActivity extends AppCompatActivity {
                                         exists = true;
 
                                     }
+
+                                }
+                                if (exists){
+                                    Intent data = new Intent(MainActivity.this, MainScreen.class);
+                                    startActivity(data);
+                                }
+                                else{
+
+                                    progressDialog.dismiss();
+                                    emailtext = email.getText().toString();
+                                    Intent dataFirstScreen = new Intent(MainActivity.this, SecondScreen.class);
+                                    //neuer ansatz
+                                    dataFirstScreen.putExtra("userMail", emailtext);
+                                    dataFirstScreen.putExtra("userID", key);
+
+                                    startActivity(dataFirstScreen);
+
+                                    finish();
+
                                 }
 
                             }
@@ -238,24 +256,7 @@ public class MainActivity extends AppCompatActivity {
 
                             }
                         });
-                        if (exists){
-                            Intent data = new Intent(MainActivity.this, MainScreen.class);
-                            startActivity(data);
-                        }
-                        else{
 
-                            progressDialog.dismiss();
-                            emailtext = email.getText().toString();
-                            Intent dataFirstScreen = new Intent(MainActivity.this, SecondScreen.class);
-                            //neuer ansatz
-                            dataFirstScreen.putExtra("userMail", emailtext);
-                            dataFirstScreen.putExtra("userID", key);
-
-                            startActivity(dataFirstScreen);
-
-                            finish();
-
-                        }
 
 
                     }
@@ -265,19 +266,27 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void autoLogin(){
-        exists = false;
+        key = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
         databaseReference.child("Users2").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 Iterable<DataSnapshot> children = dataSnapshot.getChildren();
 
-                String key = FirebaseAuth.getInstance().getCurrentUser().getUid();
                 for (DataSnapshot child : children) {
                     if (child.getKey().equals(key)) {
                         exists = true;
 
                     }
+                }
+                if (exists) {
+                    progressDialog.dismiss();
+                    Intent data = new Intent(MainActivity.this, MainScreen.class);
+                    startActivity(data);
+                }else{
+                    progressDialog.dismiss();
+                    Toast.makeText(MainActivity.this, "Please Login and finish your account creation", Toast.LENGTH_LONG).show();
                 }
 
             }
@@ -288,14 +297,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-        if (exists) {
-            progressDialog.dismiss();
-            Intent data = new Intent(MainActivity.this, MainScreen.class);
-            startActivity(data);
-        }else{
-            progressDialog.dismiss();
-            Toast.makeText(MainActivity.this, "Please Login and finish your account creation", Toast.LENGTH_LONG).show();
-        }
+
     }
 
 
