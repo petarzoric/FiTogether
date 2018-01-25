@@ -213,8 +213,6 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(MainActivity.this, "Try Again", Toast.LENGTH_LONG).show();
                     }else {
 
-
-
                         progressDialog.hide();
                         emailtext = email.getText().toString();
                         key = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -267,7 +265,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void autoLogin(){
-
+        exists = false;
         databaseReference.child("Users2").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -275,21 +273,13 @@ public class MainActivity extends AppCompatActivity {
                 Iterable<DataSnapshot> children = dataSnapshot.getChildren();
 
                 String key = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                boolean exists = false;
                 for (DataSnapshot child : children) {
                     if (child.getKey().equals(key)) {
                         exists = true;
 
                     }
                 }
-                if (exists) {
-                    progressDialog.dismiss();
-                    Intent data = new Intent(MainActivity.this, MainScreen.class);
-                    startActivity(data);
-                }else{
-                    progressDialog.dismiss();
-                    Toast.makeText(MainActivity.this, "Please Login and finish your account creation", Toast.LENGTH_LONG).show();
-                }
+
             }
 
 
@@ -298,6 +288,14 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+        if (exists) {
+            progressDialog.dismiss();
+            Intent data = new Intent(MainActivity.this, MainScreen.class);
+            startActivity(data);
+        }else{
+            progressDialog.dismiss();
+            Toast.makeText(MainActivity.this, "Please Login and finish your account creation", Toast.LENGTH_LONG).show();
+        }
     }
 
 
