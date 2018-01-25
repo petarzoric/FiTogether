@@ -216,9 +216,10 @@ public class MainActivity extends AppCompatActivity {
                         progressDialog.hide();
                         emailtext = email.getText().toString();
                         key = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                        databaseReference.child("Users2").addListenerForSingleValueEvent(new ValueEventListener() {
 
-                        databaseReference.child("Users2").addValueEventListener(new ValueEventListener() {
-                            @Override
+                       /* databaseReference.child("Users2").addValueEventListener(new ValueEventListener() {
+                            @Override*/
                             public void onDataChange(DataSnapshot dataSnapshot) {
 
                                 Iterable<DataSnapshot> children = dataSnapshot.getChildren();
@@ -267,8 +268,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void autoLogin(){
         key = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        databaseReference.child("Users2").addListenerForSingleValueEvent(new ValueEventListener() {
 
-        databaseReference.child("Users2").addValueEventListener(new ValueEventListener() {
+
+      //  databaseReference.child("Users2").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
