@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     FirebaseDatabase database;
     FirebaseUser currentUser;
     private ProgressDialog progressDialog;
+    boolean exists;
 
     private DatabaseReference usersDatabase;
 
@@ -49,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        exists = false;
 
         email =  findViewById(R.id.email);
         password =  findViewById(R.id.password);
@@ -216,38 +218,20 @@ public class MainActivity extends AppCompatActivity {
                         progressDialog.hide();
                         emailtext = email.getText().toString();
                         key = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                        exists = false;
+
                         databaseReference.child("Users2").addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                                String deviceToken = FirebaseInstanceId.getInstance().getToken();
                                 Iterable<DataSnapshot> children = dataSnapshot.getChildren();
-                                boolean exists = false;
                                 for (DataSnapshot child : children) {
                                     if (child.getKey().equals(key)) {
                                         exists = true;
 
                                     }
                                 }
-                                if (exists){
-                                    Intent data = new Intent(MainActivity.this, MainScreen.class);
-                                    startActivity(data);
-                                }
-                                else{
 
-                                    progressDialog.dismiss();
-                                    emailtext = email.getText().toString();
-                                    Toast.makeText(MainActivity.this, "Created Account", Toast.LENGTH_LONG).show();
-                                    Intent dataFirstScreen = new Intent(MainActivity.this, SecondScreen.class);
-                                    //neuer ansatz
-                                    dataFirstScreen.putExtra("userMail", emailtext);
-                                    dataFirstScreen.putExtra("userID", key);
-
-                                    startActivity(dataFirstScreen);
-
-                                    finish();
-
-                                }
                             }
 
 
@@ -256,6 +240,24 @@ public class MainActivity extends AppCompatActivity {
 
                             }
                         });
+                        if (exists){
+                            Intent data = new Intent(MainActivity.this, MainScreen.class);
+                            startActivity(data);
+                        }
+                        else{
+
+                            progressDialog.dismiss();
+                            emailtext = email.getText().toString();
+                            Intent dataFirstScreen = new Intent(MainActivity.this, SecondScreen.class);
+                            //neuer ansatz
+                            dataFirstScreen.putExtra("userMail", emailtext);
+                            dataFirstScreen.putExtra("userID", key);
+
+                            startActivity(dataFirstScreen);
+
+                            finish();
+
+                        }
 
 
                     }
