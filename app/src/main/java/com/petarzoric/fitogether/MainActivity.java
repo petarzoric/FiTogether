@@ -41,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
     FirebaseDatabase database;
     FirebaseUser currentUser;
     private ProgressDialog progressDialog;
-    boolean exists;
 
     private DatabaseReference usersDatabase;
 
@@ -50,7 +49,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        exists = false;
 
         email =  findViewById(R.id.email);
         password =  findViewById(R.id.password);
@@ -151,13 +149,6 @@ public class MainActivity extends AppCompatActivity {
         };
 
 
-
-
-    }
-    @Override
-    public void onStart() {
-        super.onStart();
-        auth.addAuthStateListener(authListener);
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -184,6 +175,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+    }
+    @Override
+    public void onStart() {
+        super.onStart();
+        auth.addAuthStateListener(authListener);
 
 
 
@@ -213,42 +210,51 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(MainActivity.this, "Try Again", Toast.LENGTH_LONG).show();
                     }else {
 
+
+
                         progressDialog.hide();
                         emailtext = email.getText().toString();
                         key = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                        databaseReference.child("Users2").addListenerForSingleValueEvent(new ValueEventListener() {
-
-                       /* databaseReference.child("Users2").addValueEventListener(new ValueEventListener() {
-                            @Override*/
+                        databaseReference.child("Users2").child(currentUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
 
+                                Toast.makeText(MainActivity.this, "Created Account TEST TEST TEST", Toast.LENGTH_LONG).show();
+
+                                String deviceToken = FirebaseInstanceId.getInstance().getToken();
                                 Iterable<DataSnapshot> children = dataSnapshot.getChildren();
+                                boolean exists = false;
                                 for (DataSnapshot child : children) {
                                     if (child.getKey().equals(key)) {
                                         exists = true;
 
                                     }
-
                                 }
                                 if (exists){
-                                    Intent data = new Intent(MainActivity.this, MainScreen.class);
-                                    startActivity(data);
+                                   Intent data = new Intent(MainActivity.this, MainScreen.class);
+                                    /*database.getReference().child("Users2").child(key).child("device_token").setValue(deviceToken).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+
+                                        }
+                                    });*/
+                                   // startActivity(data);
                                 }
                                 else{
 
                                     progressDialog.dismiss();
                                     emailtext = email.getText().toString();
+                                    Toast.makeText(MainActivity.this, "Created Account", Toast.LENGTH_LONG).show();
                                     Intent dataFirstScreen = new Intent(MainActivity.this, SecondScreen.class);
                                     //neuer ansatz
                                     dataFirstScreen.putExtra("userMail", emailtext);
                                     dataFirstScreen.putExtra("userID", key);
 
-                                    startActivity(dataFirstScreen);
+                                  //  startActivity(dataFirstScreen);
 
                                     finish();
 
                                 }
-
                             }
 
 
@@ -259,7 +265,6 @@ public class MainActivity extends AppCompatActivity {
                         });
 
 
-
                     }
                 }
             });
@@ -267,16 +272,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void autoLogin(){
-        key = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
         databaseReference.child("Users2").addListenerForSingleValueEvent(new ValueEventListener() {
-
-
-      //  databaseReference.child("Users2").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 Iterable<DataSnapshot> children = dataSnapshot.getChildren();
 
+                String key = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                boolean exists = false;
                 for (DataSnapshot child : children) {
                     if (child.getKey().equals(key)) {
                         exists = true;
@@ -291,7 +295,6 @@ public class MainActivity extends AppCompatActivity {
                     progressDialog.dismiss();
                     Toast.makeText(MainActivity.this, "Please Login and finish your account creation", Toast.LENGTH_LONG).show();
                 }
-
             }
 
 
@@ -300,7 +303,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
     }
 
 

@@ -99,9 +99,12 @@ public class SearchResults extends AppCompatActivity {
                             viewHolder.setTime(model.getTime());
                             viewHolder.setStudio(Converter.studioString(model.getStudio(), model.getLocation(),getResources()));
 
+                            String clickedUserID = getRef(position).getKey();
+
                            viewHolder.view.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
+
 
                                     TextView closeIcon;
                                     Button requestButton;
@@ -119,7 +122,7 @@ public class SearchResults extends AppCompatActivity {
                                     requestButton.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {
-                                            //TODO ANFRAGE SCHICKEN
+
                                         }
                                     });
 
