@@ -74,7 +74,7 @@ public class SearchResults extends AppCompatActivity {
         final String day = data.getStringExtra("day");
 
         if ( databaseReference.child("TrainingsDate").child(month).child(day)!= null){
-            databaseReference.child("TrainingsDate").child(month).child(day).addValueEventListener(new ValueEventListener() {
+            databaseReference.child("TrainingsDate").child(month).child(day).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     Iterable<DataSnapshot> children = dataSnapshot.getChildren();
@@ -148,9 +148,11 @@ public class SearchResults extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference();
         int gender = getIntent().getIntExtra("gender", 0);
+        int level = getIntent().getIntExtra("level", 0);
+
         String key = FirebaseAuth.getInstance().getCurrentUser().getUid();
         databaseReference.child("Searchresults").child(key).removeValue();
-            databaseReference.child("Users2").addValueEventListener(new ValueEventListener() {
+            databaseReference.child("Users2").addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     ArrayList<UserProfile> profiles = new ArrayList<>();
@@ -161,11 +163,13 @@ public class SearchResults extends AppCompatActivity {
                         profiles.add(child.getValue(UserProfile.class));
                         for (int i = 0; i < match.size(); i++) {
                             if (child.getKey().equals(match.get(i).getUser()) ) {
-                                if (Gender.parseToInt(child.getValue(UserProfile.class).getGender()) == gender || gender == 2 ) {
-                                    userProfiles[count] = child.getValue(UserProfile.class);
-                                    UserResults results = new UserResults(userProfiles[i].getUid(), userProfiles[i].getName(), userProfiles[i].getAge(), userProfiles[i].getLevel(), userProfiles[i].getStudio(), userProfiles[i].getLocation(), userProfiles[i].getGender(), userProfiles[i].getThumbnail(), match.get(i).getTime());
-                                    databaseReference.child("Searchresults").child(key).child(child.getKey()).setValue(results);
-                                    count++;
+                              //  if (Level.parseToInt(child.getValue(UserProfile.class).getLevel()) == level) {
+                                    if (Gender.parseToInt(child.getValue(UserProfile.class).getGender()) == gender || gender == 2) {
+                                        userProfiles[count] = child.getValue(UserProfile.class);
+                                        UserResults results = new UserResults(userProfiles[i].getUid(), userProfiles[i].getName(), userProfiles[i].getAge(), userProfiles[i].getLevel(), userProfiles[i].getStudio(), userProfiles[i].getLocation(), userProfiles[i].getGender(), userProfiles[i].getThumbnail(), match.get(i).getTime());
+                                        databaseReference.child("Searchresults").child(key).child(child.getKey()).setValue(results);
+                                        count++;
+                                //    }
                                 }
                             }
                         }
