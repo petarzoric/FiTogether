@@ -65,7 +65,8 @@ public class Tab3Search extends Fragment {
 // Listener
 
             }
-        }); month.setOnClickListener(new View.OnClickListener() {
+        });
+        month.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Calendar cal = Calendar.getInstance(TimeZone.getDefault()); // Get current date
