@@ -145,6 +145,8 @@ public class Tab2Calender extends Fragment {
                 times = time.getText().toString();
                 trainingProfile = new UserTraining(selectedDate, trainingType, key, level, studio, location, times);
                 databaseReferencecalender.child(Converter.monthConverter(m)).child(String.valueOf(d)).child(key).setValue(trainingProfile);
+                databaseReferenceprofile.child("TotalTrainings").child(key).child(Converter.monthConverter(m)).child(String.valueOf(d)).setValue(training.getSelectedItem().toString());
+
                 Toast.makeText(getActivity(), "Training saved", Toast.LENGTH_SHORT).show();
 
 
