@@ -37,14 +37,17 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class Tab4Chat extends Fragment {
 
     private Button friendsButton;
+    private TextView requestNotificationText;
 
     private DatabaseReference conversationDatabase;
     private DatabaseReference messageDatabase;
     private DatabaseReference userDatabase;
+    private DatabaseReference requestsDatabase;
     private FirebaseAuth auth;
     private String current_user_id;
     private View mainView;
     private RecyclerView chatList;
+    private int requestNumber;
 
     //leerer Konstruktor wird benötigt, sonst gehts nicht
     public Tab4Chat(){
@@ -59,9 +62,10 @@ public class Tab4Chat extends Fragment {
 
         mainView = inflater.inflate(R.layout.tab4chat, container, false);
 
-
+        requestNumber = 0;
         auth = FirebaseAuth.getInstance();
         current_user_id = auth.getCurrentUser().getUid();
+        requestsDatabase = FirebaseDatabase.getInstance().getReference().child("Friend_req");
         conversationDatabase = FirebaseDatabase.getInstance().getReference().child("Chat").child(current_user_id);
         conversationDatabase.keepSynced(true);
         userDatabase = FirebaseDatabase.getInstance().getReference().child("Users2");
@@ -69,6 +73,17 @@ public class Tab4Chat extends Fragment {
         messageDatabase = FirebaseDatabase.getInstance().getReference().child("messages").child(current_user_id);
         chatList = (RecyclerView) mainView.findViewById(R.id.chatList2);
         System.out.println(chatList);
+
+
+
+        requestNotificationText = mainView.findViewById(R.id.requestText2);
+        requestNotificationText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //INTENT TO SCREEN WITH REQUESTS
+
+            }
+        });
 
 
         friendsButton = mainView.findViewById(R.id.friends_button);
@@ -86,6 +101,19 @@ public class Tab4Chat extends Fragment {
 
         chatList.setHasFixedSize(true);
         chatList.setLayoutManager(linearLayoutManager);
+
+        requestsDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                requestNumber = Long.valueOf(dataSnapshot.getChildrenCount()).intValue();
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
 
 

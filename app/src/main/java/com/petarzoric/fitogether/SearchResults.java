@@ -47,6 +47,7 @@ public class SearchResults extends AppCompatActivity {
     EditText userMessage;
     CircleImageView userImage;
     DatabaseReference friendRequestDatabase;
+    private DatabaseReference RequestDatabase;
     DatabaseReference usersDatabase;
     String clickedUserID = "";
     DatabaseReference notificationDatabase;
@@ -189,6 +190,7 @@ public class SearchResults extends AppCompatActivity {
                                                                                                         message.setText("");
                                                                                                         message.setVisibility(View.INVISIBLE);
                                                                                                         requestButton.setText("Anfrage abbrechen");
+                                                                                                        friendRequestDatabase.child(clickedUserID).child("requests").child(currentUserId).setValue(currentUserId);
                                                                                                         dialog.dismiss();
 
                                                                                                     }
@@ -223,6 +225,7 @@ public class SearchResults extends AppCompatActivity {
                                                                                     message.setText("");
                                                                                     message.setVisibility(View.VISIBLE);
                                                                                     requestButton.setText("Ich will mittrainieren!");
+                                                                                    friendRequestDatabase.child(clickedUserID).child("requests").child(currentUserId).removeValue();
                                                                                     dialog.dismiss();
 
 
