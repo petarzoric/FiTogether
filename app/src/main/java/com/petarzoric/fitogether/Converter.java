@@ -57,6 +57,86 @@ public class Converter extends Fragment {
         }
         return monthString;
     }
+    public static int monthConverterToInt(String monthString) {
+        int month = 1;
+        if (monthString.equals("Januar")) {
+            month = 1;
+        }
+        if (monthString.equals("Februar")) {
+            month = 2;
+        }
+        if (monthString.equals("März")) {
+            month = 3;
+        }
+        if ( monthString.equals("April") ) {
+            month = 4;
+        }
+        if (monthString.equals("Mai") ) {
+            month = 5;
+        }
+        if (monthString.equals("Juni")) {
+            month = 6;
+        }
+        if (monthString.equals("Juli")) {
+            month = 7;
+        }
+        if (monthString.equals("August")) {
+            month = 8;
+        }
+        if (monthString.equals("September")) {
+            month = 9;
+        }
+        if ( monthString.equals("Oktober")) {
+            month = 10;
+        }
+        if (monthString.equals("November")) {
+            month = 11;
+        }
+        if (monthString.equals("Dezember")) {
+            month = 12 ;
+        }
+        return month;
+    }
+    public static int monthDays(String monthString){
+        int month = 28;
+        if (monthString.equals("Januar")) {
+            month = 31;
+        }
+        if (monthString.equals("Februar")) {
+            month = 28;
+        }
+        if (monthString.equals("März")) {
+            month = 31;
+        }
+        if ( monthString.equals("April") ) {
+            month = 30;
+        }
+        if (monthString.equals("Mai") ) {
+            month = 31;
+        }
+        if (monthString.equals("Juni")) {
+            month = 30;
+        }
+        if (monthString.equals("Juli")) {
+            month = 31;
+        }
+        if (monthString.equals("August")) {
+            month = 31;
+        }
+        if (monthString.equals("September")) {
+            month = 30;
+        }
+        if ( monthString.equals("Oktober")) {
+            month = 31;
+        }
+        if (monthString.equals("November")) {
+            month = 30;
+        }
+        if (monthString.equals("Dezember")) {
+            month = 31 ;
+        }
+        return month;
+    }
 
     public static String studioString(int studio, int loc, Resources res) {
         String[] studios = res.getStringArray(R.array.Studio);

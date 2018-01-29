@@ -51,8 +51,7 @@ public class Tab2Calender extends Fragment {
     int d;
     EditText time;
     String times;
-    EditText dayView;
-    EditText monthView;
+
 
 
 
@@ -63,8 +62,7 @@ public class Tab2Calender extends Fragment {
         ArrayAdapter<CharSequence> trainingadapter = ArrayAdapter.createFromResource(getActivity(), R.array.Training, R.layout.support_simple_spinner_dropdown_item);
         training.setAdapter(trainingadapter);
         time = rootView.findViewById(R.id.timestart);
-        dayView = rootView.findViewById(R.id.dayView);
-        monthView = rootView.findViewById(R.id.monthView);
+
         saveTraining = rootView.findViewById(R.id.savetraining);
         search = rootView.findViewById(R.id.search);
         search.setOnClickListener(new View.OnClickListener() {
@@ -74,48 +72,22 @@ public class Tab2Calender extends Fragment {
 
             }
         });
-        dayView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Calendar cal = Calendar.getInstance(TimeZone.getDefault()); // Get current date
 
-// Create the DatePickerDialog instance
-                DatePickerDialog datePicker = new DatePickerDialog(getContext(),
-                        R.style.Theme_AppCompat_Light, datePickerListener,
-                        cal.get(Calendar.YEAR),
-                        cal.get(Calendar.MONTH),
-                        cal.get(Calendar.DAY_OF_MONTH));
-                datePicker.setCancelable(false);
-                datePicker.setTitle("Select the date");
-                datePicker.show();
-
-// Listener
-
-            }
-        });
-        monthView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Calendar cal = Calendar.getInstance(TimeZone.getDefault()); // Get current date
-
-// Create the DatePickerDialog instance
-                DatePickerDialog datePicker = new DatePickerDialog(getContext(),
-                        R.style.Theme_AppCompat_Light, datePickerListener,
-                        cal.get(Calendar.YEAR),
-                        cal.get(Calendar.MONTH),
-                        cal.get(Calendar.DAY_OF_MONTH));
-                datePicker.setCancelable(false);
-                datePicker.setTitle("Select the date");
-                datePicker.show();
-
-// Listener
-
-            }
-        });
 
         key = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        calendar = rootView.findViewById(R.id.calendarView);
+        Calendar c = Calendar.getInstance();
+        d = c.get(Calendar.DAY_OF_MONTH);
+        m = c.get(Calendar.MONTH) + 1;
+        calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+                                             @Override
+                                             public void onSelectedDayChange(CalendarView view, int year, int month,int dayOfMonth) {
+                                                 d = dayOfMonth;
+                                                 m = month + 1;
+                                                 selectedDate = String.valueOf(d)+ "_" + String.valueOf(m) + "_" + String.valueOf(year);
+                                             }
 
-
+                                         });
         saveTraining.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -163,7 +135,7 @@ public class Tab2Calender extends Fragment {
 
 
     public void saveTraining(){
-        if (!dayView.getText().toString().equals("")) {
+        if (d>0) {
             if (!time.getText().toString().equals("")) {
                 databaseReferencecalender = FirebaseDatabase.getInstance().getReference("TrainingsDate");
                 trainingType = training.getSelectedItemPosition();
@@ -173,6 +145,8 @@ public class Tab2Calender extends Fragment {
                 times = time.getText().toString();
                 trainingProfile = new UserTraining(selectedDate, trainingType, key, level, studio, location, times);
                 databaseReferencecalender.child(Converter.monthConverter(m)).child(String.valueOf(d)).child(key).setValue(trainingProfile);
+                databaseReferenceprofile.child("TotalTrainings").child(key).child(Converter.monthConverter(m)).child(String.valueOf(d)).setValue(training.getSelectedItem().toString());
+
                 Toast.makeText(getActivity(), "Training saved", Toast.LENGTH_SHORT).show();
 
 
@@ -198,7 +172,7 @@ public class Tab2Calender extends Fragment {
     };
 
     private void searchForDate() {
-        if (!dayView.getText().toString().equals("")) {
+       if (d>0) {
                 Intent intent = new Intent(getActivity(), DateResults.class);
                 intent.putExtra("day", String.valueOf(d));
                 intent.putExtra("month", Converter.monthConverter(m));
@@ -210,17 +184,6 @@ public class Tab2Calender extends Fragment {
         }
     }
 
-    private DatePickerDialog.OnDateSetListener datePickerListener = new DatePickerDialog.OnDateSetListener() {
 
-        // when dialog box is closed, below method will be called.
-        public void onDateSet(DatePicker view, int selectedYear,
-                              int selectedMonth, int selectedDay) {
-            m =selectedMonth + 1;
-            d = selectedDay ;
-            dayView.setText(String.valueOf(d));
-            monthView.setText(String.valueOf(m));
-
-        }
-    };
 
 }

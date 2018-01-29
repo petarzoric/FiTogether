@@ -12,6 +12,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.LineGraphSeries;
+
+import java.util.Calendar;
 
 
 /**
@@ -29,6 +34,7 @@ public class Tab1Dashboard extends Fragment {
     TextView studiotext;
     TextView gendertext;
     String uid;
+    GraphView graph;
 
 
 
@@ -47,6 +53,8 @@ public class Tab1Dashboard extends Fragment {
         studiotext = rootView.findViewById(R.id.studiotext);
         gendertext = rootView.findViewById(R.id.gendertext);
         uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        graph = rootView.findViewById(R.id.graph);
+
 
 
         return rootView;
@@ -74,5 +82,34 @@ public class Tab1Dashboard extends Fragment {
 
             }
         });
+        Calendar c = Calendar.getInstance();
+        int m = c.get(Calendar.MONTH) + 1;
+        databaseReference.child("TotalTrainings").child(uid).child(Converter.monthConverter(m)).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Iterable<DataSnapshot> children = dataSnapshot.getChildren();
+                int [] trainingsdays = new int[Converter.monthDays(Converter.monthConverter(m))+1];
+
+                for (DataSnapshot child : children) {
+                trainingsdays[Integer.parseInt(child.getKey())] = 1;
+                }
+                DataPoint[] dataPoint = new DataPoint[trainingsdays.length];
+                for (int i = 0; i <trainingsdays.length; i++) {
+                    dataPoint[i] = new DataPoint(i, trainingsdays[i]);
+
+                }
+                LineGraphSeries<DataPoint> series = new LineGraphSeries<DataPoint>(dataPoint);
+                graph.getViewport().setMaxX(trainingsdays.length -1);
+                graph.getViewport().setXAxisBoundsManual(true);
+                graph.addSeries(series);
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
     }
 }
