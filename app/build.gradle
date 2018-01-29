@@ -43,9 +43,11 @@ dependencies {
     compile 'id.zelory:compressor:2.0.0'
     compile 'com.squareup.okhttp:okhttp:2.5.0'
     compile 'com.android.support:design:22.2.0'
+    compile 'com.jjoe64:graphview:4.2.1'
 
 
 }
+
 
 
 
