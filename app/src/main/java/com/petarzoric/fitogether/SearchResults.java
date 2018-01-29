@@ -1,7 +1,9 @@
 package com.petarzoric.fitogether;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,6 +15,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -21,6 +26,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -40,7 +46,13 @@ public class SearchResults extends AppCompatActivity {
     TextView userStudio;
     EditText userMessage;
     CircleImageView userImage;
-
+    DatabaseReference friendRequestDatabase;
+    DatabaseReference usersDatabase;
+    String clickedUserID = "";
+    DatabaseReference notificationDatabase;
+    Boolean sentRequest = false;
+    ProgressDialog dialog;
+    private int current_state;
     RecyclerView recycleList;
 
     @Override
@@ -55,6 +67,20 @@ public class SearchResults extends AppCompatActivity {
 
         currentUserId = auth.getCurrentUser().getUid();
         popupDialog = new Dialog(this);
+        friendRequestDatabase = FirebaseDatabase.getInstance().getReference().child("Friend_req");
+        notificationDatabase = FirebaseDatabase.getInstance().getReference().child("notifications");
+
+        current_state = 0;
+        usersDatabase = FirebaseDatabase.getInstance().getReference().child("Users2").child(currentUserId);
+
+
+        dialog = new ProgressDialog(this);
+        dialog.setTitle("sending friend request");
+        dialog.setMessage("wait a second...");
+        dialog.setCanceledOnTouchOutside(false);
+
+
+
 
 
     }
@@ -99,16 +125,22 @@ public class SearchResults extends AppCompatActivity {
                             viewHolder.setTime(model.getTime());
                             viewHolder.setStudio(Converter.studioString(model.getStudio(), model.getLocation(),getResources()));
 
+                            clickedUserID = getRef(position).getKey();
+
                            viewHolder.view.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
 
+
                                     TextView closeIcon;
                                     Button requestButton;
+                                    Button declineButton;
+                                    EditText message;
 
                                     popupDialog.setContentView(R.layout.result_popup);
                                     closeIcon = (TextView) popupDialog.findViewById(R.id.close);
                                     requestButton = popupDialog.findViewById(R.id.popup_button);
+                                    message = popupDialog.findViewById(R.id.popup_message);
                                     closeIcon.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {
@@ -119,7 +151,86 @@ public class SearchResults extends AppCompatActivity {
                                     requestButton.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {
-                                            //TODO ANFRAGE SCHICKEN
+
+                                            if(sentRequest == false){
+                                                sentRequest = true;
+                                                dialog.setTitle("sending friend_request...");
+                                                dialog.show();
+
+                                                HashMap<String, String> requestData = new HashMap<>();
+                                                requestData.put("request_type", "sent");
+                                                requestData.put("message", message.getText().toString());
+
+                                                //notificationData.put("message", message.getText().toString());
+                                                friendRequestDatabase.child(currentUserId).child(clickedUserID).setValue(requestData)
+                                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                            @Override
+                                                            public void onComplete(@NonNull Task<Void> task) {
+                                                                if(task.isSuccessful()){
+                                                                    HashMap<String, String> requestData = new HashMap<>();
+                                                                    requestData.put("request_type", "received");
+                                                                    requestData.put("message", message.getText().toString());
+
+                                                                    friendRequestDatabase.child(clickedUserID).child(currentUserId).setValue(requestData)
+                                                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                                                @Override
+                                                                                public void onSuccess(Void aVoid) {
+                                                                                    HashMap<String, String> notificationData = new HashMap<>();
+                                                                                    notificationData.put("from", currentUserId);
+                                                                                    notificationData.put("type", "request");
+                                                                                    //notificationData.put("message", message.getText().toString());
+
+                                                                                    notificationDatabase.child(clickedUserID).push().setValue(notificationData)
+                                                                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                                                                @Override
+                                                                                                public void onComplete(@NonNull Task<Void> task) {
+                                                                                                    if(task.isSuccessful()){
+                                                                                                        sentRequest = true;
+                                                                                                        requestButton.setText("Anfrage abbrechen");
+                                                                                                        dialog.dismiss();
+
+                                                                                                    }
+                                                                                                }
+                                                                                            });
+
+                                                                                }
+                                                                            });
+                                                                }
+                                                            }
+                                                        });
+                                            } else {
+                                                sentRequest = false;
+                                                dialog.setTitle("deleting friend_request...");
+                                                dialog.show();
+
+
+
+                                                //notificationData.put("message", message.getText().toString());
+                                                friendRequestDatabase.child(currentUserId).child(clickedUserID).removeValue()
+                                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                            @Override
+                                                            public void onComplete(@NonNull Task<Void> task) {
+                                                                if(task.isSuccessful()){
+
+
+                                                                    friendRequestDatabase.child(clickedUserID).child(currentUserId).removeValue()
+                                                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                                                @Override
+                                                                                public void onSuccess(Void aVoid) {
+                                                                                    sentRequest = false;
+                                                                                    requestButton.setText("Ich will mittrainieren!");
+                                                                                    dialog.dismiss();
+
+
+
+                                                                                }
+                                                                            });
+                                                                }
+                                                            }
+                                                        });
+                                            }
+
+
                                         }
                                     });
 
