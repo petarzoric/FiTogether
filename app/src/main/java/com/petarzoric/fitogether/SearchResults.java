@@ -186,6 +186,8 @@ public class SearchResults extends AppCompatActivity {
                                                                                                 public void onComplete(@NonNull Task<Void> task) {
                                                                                                     if(task.isSuccessful()){
                                                                                                         sentRequest = true;
+                                                                                                        message.setText("");
+                                                                                                        message.setVisibility(View.INVISIBLE);
                                                                                                         requestButton.setText("Anfrage abbrechen");
                                                                                                         dialog.dismiss();
 
@@ -199,7 +201,7 @@ public class SearchResults extends AppCompatActivity {
                                                             }
                                                         });
                                             } else {
-                                                sentRequest = false;
+
                                                 dialog.setTitle("deleting friend_request...");
                                                 dialog.show();
 
@@ -218,6 +220,8 @@ public class SearchResults extends AppCompatActivity {
                                                                                 @Override
                                                                                 public void onSuccess(Void aVoid) {
                                                                                     sentRequest = false;
+                                                                                    message.setText("");
+                                                                                    message.setVisibility(View.VISIBLE);
                                                                                     requestButton.setText("Ich will mittrainieren!");
                                                                                     dialog.dismiss();
 
