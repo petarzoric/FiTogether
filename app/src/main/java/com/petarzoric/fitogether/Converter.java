@@ -170,6 +170,22 @@ public class Converter extends Fragment {
         return studioText;
 
     }
+    public static String trainingstypeString(int training){
+        String triningString = "";
+        if (training == 0){
+            triningString = "Ganzkörper";
+        }
+        if (training == 1){
+            triningString = "Oberkörper";
+        }
+        if (training == 2){
+            triningString = "Unterkörper";
+        }
+        if (training == 3){
+            triningString = "Cardio";
+        }
+       return triningString;
+    }
 
 
 }
