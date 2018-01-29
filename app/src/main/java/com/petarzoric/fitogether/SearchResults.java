@@ -24,6 +24,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -55,6 +56,7 @@ public class SearchResults extends AppCompatActivity {
     ProgressDialog dialog;
     private int current_state;
     RecyclerView recycleList;
+    DatabaseReference rootRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +75,8 @@ public class SearchResults extends AppCompatActivity {
 
         current_state = 0;
         usersDatabase = FirebaseDatabase.getInstance().getReference().child("Users2").child(currentUserId);
+        rootRef = FirebaseDatabase.getInstance().getReference();
+
 
 
         dialog = new ProgressDialog(this);
@@ -90,6 +94,7 @@ public class SearchResults extends AppCompatActivity {
 
     @Override
     protected void onStart() {
+        String userImage;
         super.onStart();
         database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference();
@@ -133,15 +138,42 @@ public class SearchResults extends AppCompatActivity {
                                 public void onClick(View v) {
 
 
+                                    TextView userNamePopup;
+                                    CircleImageView userImage;
                                     TextView closeIcon;
                                     Button requestButton;
                                     Button declineButton;
                                     EditText message;
+                                    TextView userStudio;
 
                                     popupDialog.setContentView(R.layout.result_popup);
                                     closeIcon = (TextView) popupDialog.findViewById(R.id.close);
                                     requestButton = popupDialog.findViewById(R.id.popup_button);
                                     message = popupDialog.findViewById(R.id.popup_message);
+                                    userImage = popupDialog.findViewById(R.id.popup_image);
+                                    userNamePopup = popupDialog.findViewById(R.id.popup_username);
+                                    userStudio = popupDialog.findViewById(R.id.popup_fitnessstudio);
+
+                                    rootRef.child("Users2").child(clickedUserID).addValueEventListener(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(DataSnapshot dataSnapshot) {
+                                            String userImagee = dataSnapshot.child("image").getValue().toString();
+                                            Picasso.with(SearchResults.this).load(userImagee).placeholder(R.drawable.image_preview).into(userImage);
+                                            String name = dataSnapshot.child("name").getValue().toString();
+                                            userNamePopup.setText(name);
+                                            int studio = Integer.parseInt(dataSnapshot.child("studio").getValue().toString());
+                                            int location = Integer.parseInt(dataSnapshot.child("location").getValue().toString());
+                                            String gym = Converter.studioString(studio, location, getResources());
+                                            userStudio.setText(gym);
+
+                                        }
+
+                                        @Override
+                                        public void onCancelled(DatabaseError databaseError) {
+
+                                        }
+                                    });
+
                                     closeIcon.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {
