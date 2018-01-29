@@ -84,6 +84,7 @@ public class Tab1Dashboard extends Fragment {
         });
         Calendar c = Calendar.getInstance();
         int m = c.get(Calendar.MONTH) + 1;
+        int d = c.get(Calendar.DAY_OF_MONTH);
         databaseReference.child("TotalTrainings").child(uid).child(Converter.monthConverter(m)).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

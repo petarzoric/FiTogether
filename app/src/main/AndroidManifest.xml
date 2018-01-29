@@ -56,8 +56,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".FriendsActivity" />
-        <activity android:name=".ChatActivity"
-            android:parentActivityName=".FriendsActivity"></activity>
+        <activity
+            android:name=".ChatActivity"
+            android:parentActivityName=".FriendsActivity" />
+        <activity android:name=".DateResults"></activity>
     </application>
 
 </manifest>
