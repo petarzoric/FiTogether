@@ -26,15 +26,20 @@ import java.util.Calendar;
 public class Tab1Dashboard extends Fragment {
     FirebaseDatabase database;
     DatabaseReference databaseReference;
-    UserProfile profile;
-    TextView emailtext;
-    TextView nametext;
-    TextView leveltext;
-    TextView agetext;
-    TextView studiotext;
-    TextView gendertext;
+    TextView upCommingT;
+    TextView trainingsday;
+    TextView trainingstime;
+    TextView trainingstype;
+    TextView training1day;
+    TextView training1time;
+    TextView training1type;
+    TextView training2day;
+    TextView training2time;
+    TextView training2type;
     String uid;
     GraphView graph;
+    int upcommingtraining1;
+    int upcommingtraining2;
 
 
 
@@ -46,14 +51,22 @@ public class Tab1Dashboard extends Fragment {
         View rootView = inflater.inflate(R.layout.tab1dashboard, container, false);
         database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference();
-        emailtext = rootView.findViewById(R.id.emailtext);
-        nametext = rootView.findViewById(R.id.nametext);
-        leveltext = rootView.findViewById(R.id.leveltext);
-        agetext = rootView.findViewById(R.id.agetext);
-        studiotext = rootView.findViewById(R.id.studiotext);
-        gendertext = rootView.findViewById(R.id.gendertext);
         uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         graph = rootView.findViewById(R.id.graph);
+        upcommingtraining1 = 0;
+        upcommingtraining2 = 0;
+
+        upCommingT = rootView.findViewById(R.id.upCommingT);
+        trainingsday = rootView.findViewById(R.id.trainingsday);
+        training1day = rootView.findViewById(R.id.training1day);
+        training2day = rootView.findViewById(R.id.training2day);
+        trainingstime = rootView.findViewById(R.id.trainingstime);
+        training1time = rootView.findViewById(R.id.training1time);
+        training2time = rootView.findViewById(R.id.training2time);
+        trainingstype = rootView.findViewById(R.id.trainingstype);
+        training1type = rootView.findViewById(R.id.training1type);
+        training2type = rootView.findViewById(R.id.training2type);
+
 
 
 
@@ -63,33 +76,15 @@ public class Tab1Dashboard extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-
-        databaseReference.child("Users2").child(uid).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                profile = dataSnapshot.getValue(UserProfile.class);
-                emailtext.setText(profile.getEmail());
-                nametext.setText(profile.getName());
-                agetext.setText(String.valueOf(profile.getAge()));
-                leveltext.setText(Level.parseToString(profile.getLevel()));
-                gendertext.setText(Gender.parseToString(profile.getGender()));
-                studiotext.setText(Converter.studioString(profile.getStudio(), profile.getLocation(), getResources()));
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
         Calendar c = Calendar.getInstance();
         int m = c.get(Calendar.MONTH) + 1;
         int d = c.get(Calendar.DAY_OF_MONTH);
+        int monthdays = Converter.monthDays(Converter.monthConverter(m))+1;
         databaseReference.child("TotalTrainings").child(uid).child(Converter.monthConverter(m)).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Iterable<DataSnapshot> children = dataSnapshot.getChildren();
-                int [] trainingsdays = new int[Converter.monthDays(Converter.monthConverter(m))+1];
+                int [] trainingsdays = new int[monthdays];
 
                 for (DataSnapshot child : children) {
                 trainingsdays[Integer.parseInt(child.getKey())] = 1;
@@ -97,12 +92,61 @@ public class Tab1Dashboard extends Fragment {
                 DataPoint[] dataPoint = new DataPoint[trainingsdays.length];
                 for (int i = 0; i <trainingsdays.length; i++) {
                     dataPoint[i] = new DataPoint(i, trainingsdays[i]);
+                    if (i >= d && trainingsdays[i] == 1){
+                        if (upcommingtraining1 == 0){
+                            upcommingtraining1 = i;
+                        }else{
+                            if (upcommingtraining2 == 0){
+                                upcommingtraining2 = i;
+                            }
+                        }
+                    }
 
                 }
                 LineGraphSeries<DataPoint> series = new LineGraphSeries<DataPoint>(dataPoint);
                 graph.getViewport().setMaxX(trainingsdays.length -1);
                 graph.getViewport().setXAxisBoundsManual(true);
                 graph.addSeries(series);
+
+
+                if (upcommingtraining1 != 0){
+                    databaseReference.child("TrainingsDate").child(Converter.monthConverter(m)).child(String.valueOf(upcommingtraining1)).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            UserTraining training = dataSnapshot.child(uid).getValue(UserTraining.class);
+                            upCommingT.setText("Nächste Trainings");
+                            trainingsday.setText("Tag");
+                            trainingstime.setText("Zeit");
+                            trainingstype.setText("Muskelgruppe");
+                            training1day.setText(upcommingtraining1+"."+m);
+                            training1time.setText(training.getTime());
+                            training1type.setText(Converter.trainingstypeString(training.getTrainingstype()));
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+                    if (upcommingtraining2 != 0){
+                        databaseReference.child("TrainingsDate").child(Converter.monthConverter(m)).child(String.valueOf(upcommingtraining2)).addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                UserTraining training = dataSnapshot.child(uid).getValue(UserTraining.class);
+                                training2day.setText(upcommingtraining2+"."+m);
+                                training2time.setText(training.getTime());
+                                training2type.setText(Converter.trainingstypeString(training.getTrainingstype()));
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+                    }
+                }else{
+                    upCommingT.setText("Kein kommendes Training diesen Monat");
+                }
 
             }
 
@@ -112,5 +156,6 @@ public class Tab1Dashboard extends Fragment {
             }
         });
 
-    }
+
+        }
 }
