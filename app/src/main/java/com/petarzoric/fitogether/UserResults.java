@@ -15,7 +15,7 @@ package com.petarzoric.fitogether;
         int location;
         Gender gender;
         String thumbnail;
-    String time;
+        String time;
 
 
         public UserResults(String uid,String name,int age, Level userlevel, int studio, int location, Gender gender, String turl, String time) {

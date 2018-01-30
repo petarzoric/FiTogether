@@ -59,7 +59,6 @@ public class EditProfile extends AppCompatActivity {
                                                                        level.setSelection(Level.parseToInt(profile.getLevel()));
                                                                        studios.setText(Converter.studioString(profile.getStudio(), profile.getLocation(), getResources()));
 
-
                                                                    }
                                                                        @Override
                                                                        public void onCancelled

@@ -1,6 +1,5 @@
 package com.petarzoric.fitogether;
 
-import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CalendarView;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TimePicker;
@@ -49,6 +47,8 @@ public class Tab2Calender extends Fragment {
     int location;
     int m;
     int d;
+    int day;
+    int month;
     EditText time;
     String times;
 
@@ -79,6 +79,8 @@ public class Tab2Calender extends Fragment {
         Calendar c = Calendar.getInstance();
         d = c.get(Calendar.DAY_OF_MONTH);
         m = c.get(Calendar.MONTH) + 1;
+        day = c.get(Calendar.DAY_OF_MONTH);
+        month = c.get(Calendar.MONTH) + 1;
         calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
                                              @Override
                                              public void onSelectedDayChange(CalendarView view, int year, int month,int dayOfMonth) {
@@ -135,7 +137,7 @@ public class Tab2Calender extends Fragment {
 
 
     public void saveTraining(){
-        if (d>0) {
+        if (m != month || d>=day) {
             if (!time.getText().toString().equals("")) {
                 databaseReferencecalender = FirebaseDatabase.getInstance().getReference("TrainingsDate");
                 trainingType = training.getSelectedItemPosition();
@@ -154,7 +156,7 @@ public class Tab2Calender extends Fragment {
                 Toast.makeText(getActivity(), "Please Select a Time", Toast.LENGTH_SHORT).show();
             }
         }else{
-            Toast.makeText(getActivity(), "Please Select a Date", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Please Select the Current or Future Date", Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -172,7 +174,7 @@ public class Tab2Calender extends Fragment {
     };
 
     private void searchForDate() {
-       if (d>0) {
+        if (m != month || d>=day) {
                 Intent intent = new Intent(getActivity(), DateResults.class);
                 intent.putExtra("day", String.valueOf(d));
                 intent.putExtra("month", Converter.monthConverter(m));
@@ -180,7 +182,7 @@ public class Tab2Calender extends Fragment {
 
 
         }else{
-            Toast.makeText(getActivity(), "Please Select a Date", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Please Select the Current or Future Date", Toast.LENGTH_SHORT).show();
         }
     }
 

@@ -90,19 +90,30 @@ public class Tab3Search extends Fragment {
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Calendar c = Calendar.getInstance();
+                int d = c.get(Calendar.DAY_OF_MONTH);
+                int m = c.get(Calendar.MONTH) + 1;
                 if (!day.getText().toString().isEmpty()) {
-                    level = levelspinner.getSelectedItemPosition();
-                    gender = genderspinner.getSelectedItemPosition();
-                    muscle = musclespinner.getSelectedItemPosition();
-                    Intent intent = new Intent(getActivity(), SearchResults.class);
-                    intent.putExtra("level", level);
-                    intent.putExtra("muscle", muscle);
-                    intent.putExtra("gender", gender);
-                    intent.putExtra("day", (day.getText().toString()));
-                    intent.putExtra("month", Converter.monthConverter(Integer.parseInt(month.getText().toString())));
-                    startActivity(intent);
+                    if (m != Integer.parseInt(month.getText().toString()) || d<=Integer.parseInt(day.getText().toString())) {
+
+                        level = levelspinner.getSelectedItemPosition();
+                        gender = genderspinner.getSelectedItemPosition();
+                        muscle = musclespinner.getSelectedItemPosition();
+                        Intent intent = new Intent(getActivity(), SearchResults.class);
+                        intent.putExtra("level", level);
+                        intent.putExtra("muscle", muscle);
+                        intent.putExtra("gender", gender);
+                        intent.putExtra("day", (day.getText().toString()));
+                        intent.putExtra("month", Converter.monthConverter(Integer.parseInt(month.getText().toString())));
+                        startActivity(intent);
+                    }
+                    else {
+                        Toast.makeText(getActivity(), "Please Select the Current or Future Date", Toast.LENGTH_SHORT).show();
+
+                    }
                 } else {
                     Toast.makeText(getActivity(), "Select a Date", Toast.LENGTH_SHORT).show();
+
 
                 }
             }

@@ -3,12 +3,6 @@ package com.petarzoric.fitogether;
 import android.app.Fragment;
 import android.content.res.Resources;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
 /**
  * Created by Alex on 17.01.2018.
  */

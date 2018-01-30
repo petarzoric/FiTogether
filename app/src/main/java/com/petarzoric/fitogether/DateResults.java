@@ -298,13 +298,10 @@ public class DateResults extends AppCompatActivity {
                     profiles.add(child.getValue(UserProfile.class));
                     for (int i = 0; i < match.size(); i++) {
                         if (child.getKey().equals(match.get(i).getUser()) ) {
-                            //  if (Level.parseToInt(child.getValue(UserProfile.class).getLevel()) == level) {
                             userProfiles[count] = child.getValue(UserProfile.class);
                             UserResults results = new UserResults(userProfiles[i].getUid(), userProfiles[i].getName(), userProfiles[i].getAge(), userProfiles[i].getLevel(), userProfiles[i].getStudio(), userProfiles[i].getLocation(), userProfiles[i].getGender(), userProfiles[i].getThumbnail(), match.get(i).getTime());
                             databaseReference.child("Searchresults").child(key).child(child.getKey()).setValue(results);
                             count++;
-                            //    }
-
                         }
                     }
                 }
