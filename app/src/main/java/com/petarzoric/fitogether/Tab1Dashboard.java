@@ -110,6 +110,7 @@ public class Tab1Dashboard extends Fragment {
 
 
                 if (upcommingtraining1 != 0){
+
                     databaseReference.child("TrainingsDate").child(Converter.monthConverter(m)).child(String.valueOf(upcommingtraining1)).addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
@@ -119,8 +120,10 @@ public class Tab1Dashboard extends Fragment {
                             trainingstime.setText("Zeit");
                             trainingstype.setText("Muskelgruppe");
                             training1day.setText(upcommingtraining1+"."+m);
-                            training1time.setText(training.getTime());
-                            training1type.setText(Converter.trainingstypeString(training.getTrainingstype()));
+                            if (training != null) {
+                                training1time.setText(training.getTime());
+                                training1type.setText(Converter.trainingstypeString(training.getTrainingstype()));
+                            }
                         }
 
                         @Override
@@ -134,8 +137,10 @@ public class Tab1Dashboard extends Fragment {
                             public void onDataChange(DataSnapshot dataSnapshot) {
                                 UserTraining training = dataSnapshot.child(uid).getValue(UserTraining.class);
                                 training2day.setText(upcommingtraining2+"."+m);
-                                training2time.setText(training.getTime());
-                                training2type.setText(Converter.trainingstypeString(training.getTrainingstype()));
+                                if (training != null) {
+                                    training2time.setText(training.getTime());
+                                    training2type.setText(Converter.trainingstypeString(training.getTrainingstype()));
+                                }
                             }
 
                             @Override

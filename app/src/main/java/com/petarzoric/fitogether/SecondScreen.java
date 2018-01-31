@@ -64,38 +64,50 @@ public class SecondScreen extends AppCompatActivity {
         });
     }
     void next(){
-        if (!TextUtils.isEmpty(name.getText().toString()) && !TextUtils.isEmpty(age.getText().toString()) && Integer.parseInt(age.getText().toString()) > 0 && Integer.parseInt(age.getText().toString()) < 100) {
-            username = name.getText().toString();
-            userage = Integer.parseInt(age.getText().toString());
-
-            userlevel = level.getSelectedItemPosition();
-            usergender = gender.getSelectedItemPosition();
-            Intent intent = getIntent();
-            //DB, neuer Ansatz
-            String userID = getIntent().getStringExtra("userID");
-            String userMail = getIntent().getStringExtra("userMail");
+        if (!TextUtils.isEmpty(name.getText().toString())) {
+            if (!TextUtils.isEmpty(age.getText().toString())){
+               if (Integer.parseInt(age.getText().toString()) < 100) {
+                   username = name.getText().toString();
+                   if (15 < Integer.parseInt(age.getText().toString())){
 
 
-            Intent dataSecondScreen = new Intent(SecondScreen.this, StudioScreen.class);
+                       userage = Integer.parseInt(age.getText().toString());
 
-            //
-            //DB-Umstellung, Tests
-            dataSecondScreen.putExtra("userMail", userMail);
-            dataSecondScreen.putExtra("userID", userID);
-            dataSecondScreen.putExtra("userLevel", userlevel);
-            dataSecondScreen.putExtra("userGender", usergender);
-            dataSecondScreen.putExtra("userAge", userage);
-            dataSecondScreen.putExtra("userName", username);
+                       userlevel = level.getSelectedItemPosition();
+                       usergender = gender.getSelectedItemPosition();
+                       Intent intent = getIntent();
+                       //DB, neuer Ansatz
+                       String userID = getIntent().getStringExtra("userID");
+                       String userMail = getIntent().getStringExtra("userMail");
 
 
+                       Intent dataSecondScreen = new Intent(SecondScreen.this, StudioScreen.class);
+
+                       //
+                       //DB-Umstellung, Tests
+                       dataSecondScreen.putExtra("userMail", userMail);
+                       dataSecondScreen.putExtra("userID", userID);
+                       dataSecondScreen.putExtra("userLevel", userlevel);
+                       dataSecondScreen.putExtra("userGender", usergender);
+                       dataSecondScreen.putExtra("userAge", userage);
+                       dataSecondScreen.putExtra("userName", username);
 
 
-
-            startActivity(dataSecondScreen);
+                       startActivity(dataSecondScreen);
+                   }else {
+                       Toast.makeText(SecondScreen.this, "You must be over 15 years old", Toast.LENGTH_SHORT).show();
+                   }
+                }
+                else {
+                    Toast.makeText(SecondScreen.this, "You must be under 100 years old", Toast.LENGTH_SHORT).show();
+                }
+            }else {
+                    Toast.makeText(SecondScreen.this, "Please Select an Age", Toast.LENGTH_SHORT).show();
+                }
 
         }
         else {
-            Toast.makeText(SecondScreen.this, "Please Fill Out Every Field", Toast.LENGTH_SHORT).show();
+            Toast.makeText(SecondScreen.this, "Please Enter a Name", Toast.LENGTH_SHORT).show();
         }
 
     }

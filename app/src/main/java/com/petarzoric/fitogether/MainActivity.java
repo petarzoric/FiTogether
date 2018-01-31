@@ -132,7 +132,6 @@ public class MainActivity extends AppCompatActivity {
                     autoLogin();
 
 
-                    Toast.makeText(MainActivity.this, currentUser.getEmail(), Toast.LENGTH_LONG).show();
                     Toast.makeText(MainActivity.this, "Welcome", Toast.LENGTH_LONG).show();
 
                 } else {
@@ -216,12 +215,10 @@ public class MainActivity extends AppCompatActivity {
                         databaseReference.child("Users2").child(currentUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
-
-                                Toast.makeText(MainActivity.this, "Created Account TEST TEST TEST", Toast.LENGTH_LONG).show();
+                                boolean exists = false;
 
                                 String deviceToken = FirebaseInstanceId.getInstance().getToken();
                                 Iterable<DataSnapshot> children = dataSnapshot.getChildren();
-                                boolean exists = false;
                                 for (DataSnapshot child : children) {
                                     if (child.getKey().equals(key)) {
                                         exists = true;
@@ -236,7 +233,9 @@ public class MainActivity extends AppCompatActivity {
 
                                         }
                                     });*/
-                                   // startActivity(data);
+                                    Toast.makeText(MainActivity.this, currentUser.getEmail(), Toast.LENGTH_LONG).show();
+
+                                    startActivity(data);
                                 }
                                 else{
 
@@ -248,7 +247,7 @@ public class MainActivity extends AppCompatActivity {
                                     dataFirstScreen.putExtra("userMail", emailtext);
                                     dataFirstScreen.putExtra("userID", key);
 
-                                  //  startActivity(dataFirstScreen);
+                                    startActivity(dataFirstScreen);
 
                                     finish();
 
@@ -288,6 +287,7 @@ public class MainActivity extends AppCompatActivity {
                 if (exists) {
                     progressDialog.dismiss();
                     Intent data = new Intent(MainActivity.this, MainScreen.class);
+                    Toast.makeText(MainActivity.this, currentUser.getEmail(), Toast.LENGTH_LONG).show();
                     startActivity(data);
                 }else{
                     progressDialog.dismiss();
