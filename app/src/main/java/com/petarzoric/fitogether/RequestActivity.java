@@ -73,7 +73,7 @@ public class RequestActivity extends AppCompatActivity {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         final String userName = dataSnapshot.child("name").getValue().toString();
-                        String userThumb = dataSnapshot.child("thumbnail").getValue().toString();
+                        final String userThumb = dataSnapshot.child("thumbnail").getValue().toString();
                         viewHolder.setName(userName);
                         viewHolder.setImage(userThumb, getApplicationContext());
 
@@ -138,6 +138,7 @@ public class RequestActivity extends AppCompatActivity {
 
             }
         };
+        requestsList.setAdapter(requestsRecyclerViewAdapter);
 
     }
 
