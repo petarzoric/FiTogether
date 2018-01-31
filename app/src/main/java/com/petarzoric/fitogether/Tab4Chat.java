@@ -47,7 +47,7 @@ public class Tab4Chat extends Fragment {
     private String current_user_id;
     private View mainView;
     private RecyclerView chatList;
-    private int requestNumber;
+    private long requestNumber;
 
     //leerer Konstruktor wird benötigt, sonst gehts nicht
     public Tab4Chat(){
@@ -104,10 +104,17 @@ public class Tab4Chat extends Fragment {
         chatList.setHasFixedSize(true);
         chatList.setLayoutManager(linearLayoutManager);
 
-        requestsDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+        requestsDatabase.child(current_user_id).child("requests").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                requestNumber = Long.valueOf(dataSnapshot.getChildrenCount()).intValue();
+                requestNumber = dataSnapshot.getChildrenCount();
+                requestNotificationText.setText(Long.toString(requestNumber));
+
+                if(requestNumber == 0){
+                    requestNotificationText.setVisibility(View.INVISIBLE);
+                } else {
+                    requestNotificationText.setVisibility(View.VISIBLE);
+                }
 
             }
 
