@@ -257,11 +257,13 @@ public class SearchResults extends AppCompatActivity {
                                                                                                 @Override
                                                                                                 public void onComplete(@NonNull Task<Void> task) {
                                                                                                     if(task.isSuccessful()){
-                                                                                                        //sentRequest = true;
+
+
+                                                                                                        requestButton.setText("Anfrage abbrechen");
+                                                                                                        Request request = new Request(message.getText().toString(), currentUserId);
+                                                                                                        friendRequestDatabase.child(clicked2).child("requests").child(currentUserId).setValue(request);
                                                                                                         message.setText("");
                                                                                                         message.setVisibility(View.INVISIBLE);
-                                                                                                        requestButton.setText("Anfrage abbrechen");
-                                                                                                        friendRequestDatabase.child(clicked2).child("requests").child(currentUserId).setValue(currentUserId);
                                                                                                         dialog.dismiss();
 
                                                                                                     }

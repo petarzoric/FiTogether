@@ -42,12 +42,14 @@ public class RequestActivity extends AppCompatActivity {
 
         auth = FirebaseAuth.getInstance();
         currentUserId = auth.getCurrentUser().getUid();
-        requestsDatabaseList = requestsDatabase.child(currentUserId).child("requests");
+
         usersDatabase = FirebaseDatabase.getInstance().getReference().child("Users2");
         requestsList.setHasFixedSize(true);
         requestsList.setLayoutManager(new LinearLayoutManager(RequestActivity.this));
         popupDialog = new Dialog(this);
         rootRef = FirebaseDatabase.getInstance().getReference();
+        requestsDatabaseList = FirebaseDatabase.getInstance().getReference().child("Friend_req").child(auth.getCurrentUser().getUid())
+                .child("requests");
 
 
     }

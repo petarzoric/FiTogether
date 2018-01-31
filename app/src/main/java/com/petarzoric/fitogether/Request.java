@@ -22,6 +22,11 @@ public class Request {
         this.thumb = thumb;
     }
 
+    public Request(String requestMessage, String from) {
+        this.requestMessage = requestMessage;
+        this.from = from;
+    }
+
     public String getRequestMessage() {
         return requestMessage;
     }
