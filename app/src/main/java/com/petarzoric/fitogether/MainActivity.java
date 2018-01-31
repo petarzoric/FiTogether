@@ -212,7 +212,8 @@ public class MainActivity extends AppCompatActivity {
                         progressDialog.hide();
                         emailtext = email.getText().toString();
                         key = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                        databaseReference.child("Users2").child(currentUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+
+                        databaseReference.child("Users2").addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
                                 boolean exists = false;
