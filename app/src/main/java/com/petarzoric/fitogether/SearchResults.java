@@ -150,14 +150,25 @@ public class SearchResults extends AppCompatActivity {
                                     closeIcon = (TextView) popupDialog.findViewById(R.id.close);
                                     requestButton = popupDialog.findViewById(R.id.popup_button);
                                     String clicked = getRef(position).getKey();
+                                    message = popupDialog.findViewById(R.id.popup_message);
+                                    userImage = popupDialog.findViewById(R.id.popup_image);
+                                    userNamePopup = popupDialog.findViewById(R.id.popup_username);
+                                    userStudio = popupDialog.findViewById(R.id.popup_fitnessstudio);
 
                                     rootRef.child("Friend_req").child(currentUserId).addValueEventListener(new ValueEventListener() {
                                         @Override
                                         public void onDataChange(DataSnapshot dataSnapshot) {
                                             if(dataSnapshot.hasChild(clicked)){
                                                 sentRequest=true;
+                                                requestButton.setText("Anfrage abbrechen");
+                                                message.setVisibility(View.INVISIBLE);
+                                                notifyDataSetChanged();
                                             } else {
                                                 sentRequest=false;
+                                                requestButton.setText("Ich will mittrainieren!");
+                                                message.setVisibility(View.VISIBLE);
+
+                                                notifyDataSetChanged();
                                             }
                                         }
 
@@ -170,17 +181,15 @@ public class SearchResults extends AppCompatActivity {
                                     if(sentRequest!= null){
                                         if(sentRequest==true){
                                             requestButton.setText("Anfrage abbrechen");
+                                            message.setVisibility(View.INVISIBLE);
                                         }
                                         if(sentRequest==false) {
-
+                                            message.setVisibility(View.VISIBLE);
                                             requestButton.setText("Ich will mittrainieren!");
                                         }
                                     }
 
-                                    message = popupDialog.findViewById(R.id.popup_message);
-                                    userImage = popupDialog.findViewById(R.id.popup_image);
-                                    userNamePopup = popupDialog.findViewById(R.id.popup_username);
-                                    userStudio = popupDialog.findViewById(R.id.popup_fitnessstudio);
+
 
 
                                     rootRef.child("Users2").child(clicked).addValueEventListener(new ValueEventListener() {
@@ -248,7 +257,7 @@ public class SearchResults extends AppCompatActivity {
                                                                                                 @Override
                                                                                                 public void onComplete(@NonNull Task<Void> task) {
                                                                                                     if(task.isSuccessful()){
-                                                                                                        sentRequest = true;
+                                                                                                        //sentRequest = true;
                                                                                                         message.setText("");
                                                                                                         message.setVisibility(View.INVISIBLE);
                                                                                                         requestButton.setText("Anfrage abbrechen");
@@ -283,7 +292,7 @@ public class SearchResults extends AppCompatActivity {
                                                                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                                                 @Override
                                                                                 public void onSuccess(Void aVoid) {
-                                                                                    sentRequest = false;
+                                                                                   // sentRequest = false;
                                                                                     message.setText("");
                                                                                     message.setVisibility(View.VISIBLE);
                                                                                     requestButton.setText("Ich will mittrainieren!");
