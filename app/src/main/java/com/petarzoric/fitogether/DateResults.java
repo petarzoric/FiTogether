@@ -49,7 +49,7 @@ public class DateResults extends AppCompatActivity {
     DatabaseReference usersDatabase;
     String clickedUserID = "";
     DatabaseReference notificationDatabase;
-    Boolean sentRequest = false;
+    Boolean sentRequest;
     ProgressDialog dialog;
     private int current_state;
     DatabaseReference rootRef;
@@ -136,6 +136,22 @@ public class DateResults extends AppCompatActivity {
                                     popupDialog.setContentView(R.layout.result_popup);
                                     closeIcon = (TextView) popupDialog.findViewById(R.id.close);
                                     requestButton = popupDialog.findViewById(R.id.popup_button);
+                                    rootRef.child("Friend_req").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(DataSnapshot dataSnapshot) {
+                                            if(dataSnapshot.hasChild(clickedUserID)){
+                                                sentRequest=true;
+                                            } else {
+                                                sentRequest=false;
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onCancelled(DatabaseError databaseError) {
+
+                                        }
+                                    });
+
                                     if(sentRequest==true){
                                         requestButton.setText("Anfrage abbrechen");
                                     }
@@ -148,7 +164,7 @@ public class DateResults extends AppCompatActivity {
                                     userStudio = popupDialog.findViewById(R.id.popup_fitnessstudio);
                                     String clicked = getRef(position).getKey();
 
-                                    rootRef.child("Users2").child(clicked).addValueEventListener(new ValueEventListener() {
+                                    rootRef.child("Users2").child(clicked).addListenerForSingleValueEvent(new ValueEventListener() {
                                         @Override
                                         public void onDataChange(DataSnapshot dataSnapshot) {
                                             String userImagee = dataSnapshot.child("image").getValue().toString();
@@ -159,6 +175,7 @@ public class DateResults extends AppCompatActivity {
                                             int location = Integer.parseInt(dataSnapshot.child("location").getValue().toString());
                                             String gym = Converter.studioString(studio, location, getResources());
                                             userStudio.setText(gym);
+
 
                                         }
 
@@ -180,7 +197,6 @@ public class DateResults extends AppCompatActivity {
                                         public void onClick(View v) {
 
                                             if(sentRequest == false){
-                                                sentRequest = true;
                                                 dialog.setTitle("sending friend_request...");
                                                 dialog.show();
 

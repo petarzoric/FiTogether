@@ -42,7 +42,7 @@ public class SearchResults extends AppCompatActivity {
     FirebaseAuth auth;
     String currentUserId;
     Dialog popupDialog;
-    Button requestButton;
+
     TextView userName;
     TextView userStudio;
     EditText userMessage;
@@ -52,7 +52,7 @@ public class SearchResults extends AppCompatActivity {
     DatabaseReference usersDatabase;
     String clickedUserID = "";
     DatabaseReference notificationDatabase;
-    Boolean sentRequest = false;
+    Boolean sentRequest;
     ProgressDialog dialog;
     private int current_state;
     RecyclerView recycleList;
@@ -149,17 +149,39 @@ public class SearchResults extends AppCompatActivity {
                                     popupDialog.setContentView(R.layout.result_popup);
                                     closeIcon = (TextView) popupDialog.findViewById(R.id.close);
                                     requestButton = popupDialog.findViewById(R.id.popup_button);
-                                    if(sentRequest==true){
-                                        requestButton.setText("Anfrage abbrechen");
+                                    String clicked = getRef(position).getKey();
+
+                                    rootRef.child("Friend_req").child(currentUserId).addValueEventListener(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(DataSnapshot dataSnapshot) {
+                                            if(dataSnapshot.hasChild(clicked)){
+                                                sentRequest=true;
+                                            } else {
+                                                sentRequest=false;
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onCancelled(DatabaseError databaseError) {
+
+                                        }
+                                    });
+
+                                    if(sentRequest!= null){
+                                        if(sentRequest==true){
+                                            requestButton.setText("Anfrage abbrechen");
+                                        }
+                                        if(sentRequest==false) {
+
+                                            requestButton.setText("Ich will mittrainieren!");
+                                        }
                                     }
-                                    else {
-                                        requestButton.setText("Ich will mittrainieren!");
-                                    }
+
                                     message = popupDialog.findViewById(R.id.popup_message);
                                     userImage = popupDialog.findViewById(R.id.popup_image);
                                     userNamePopup = popupDialog.findViewById(R.id.popup_username);
                                     userStudio = popupDialog.findViewById(R.id.popup_fitnessstudio);
-                                    String clicked = getRef(position).getKey();
+
 
                                     rootRef.child("Users2").child(clicked).addValueEventListener(new ValueEventListener() {
                                         @Override
@@ -191,8 +213,9 @@ public class SearchResults extends AppCompatActivity {
                                     requestButton.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {
+                                            String clicked2 = getRef(position).getKey();
 
-                                            if(sentRequest == false){
+                                            if(sentRequest == false ){
                                                 sentRequest = true;
                                                 dialog.setTitle("sending friend_request...");
                                                 dialog.show();
@@ -202,7 +225,7 @@ public class SearchResults extends AppCompatActivity {
                                                 requestData.put("message", message.getText().toString());
 
                                                 //notificationData.put("message", message.getText().toString());
-                                                friendRequestDatabase.child(currentUserId).child(clickedUserID).setValue(requestData)
+                                                friendRequestDatabase.child(currentUserId).child(clicked2).setValue(requestData)
                                                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                                                             @Override
                                                             public void onComplete(@NonNull Task<Void> task) {
@@ -211,16 +234,16 @@ public class SearchResults extends AppCompatActivity {
                                                                     requestData.put("request_type", "received");
                                                                     requestData.put("message", message.getText().toString());
 
-                                                                    friendRequestDatabase.child(clickedUserID).child(currentUserId).setValue(requestData)
+                                                                    friendRequestDatabase.child(clicked2).child(currentUserId).setValue(requestData)
                                                                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                                                 @Override
                                                                                 public void onSuccess(Void aVoid) {
                                                                                     HashMap<String, String> notificationData = new HashMap<>();
                                                                                     notificationData.put("from", currentUserId);
                                                                                     notificationData.put("type", "request");
-                                                                                    //notificationData.put("message", message.getText().toString());
+                                                                                    notificationData.put("message", message.getText().toString());
 
-                                                                                    notificationDatabase.child(clickedUserID).push().setValue(notificationData)
+                                                                                    notificationDatabase.child(clicked2).push().setValue(notificationData)
                                                                                             .addOnCompleteListener(new OnCompleteListener<Void>() {
                                                                                                 @Override
                                                                                                 public void onComplete(@NonNull Task<Void> task) {
@@ -229,7 +252,7 @@ public class SearchResults extends AppCompatActivity {
                                                                                                         message.setText("");
                                                                                                         message.setVisibility(View.INVISIBLE);
                                                                                                         requestButton.setText("Anfrage abbrechen");
-                                                                                                        friendRequestDatabase.child(clickedUserID).child("requests").child(currentUserId).setValue(currentUserId);
+                                                                                                        friendRequestDatabase.child(clicked2).child("requests").child(currentUserId).setValue(currentUserId);
                                                                                                         dialog.dismiss();
 
                                                                                                     }
@@ -249,14 +272,14 @@ public class SearchResults extends AppCompatActivity {
 
 
                                                 //notificationData.put("message", message.getText().toString());
-                                                friendRequestDatabase.child(currentUserId).child(clickedUserID).removeValue()
+                                                friendRequestDatabase.child(currentUserId).child(clicked2).removeValue()
                                                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                                                             @Override
                                                             public void onComplete(@NonNull Task<Void> task) {
                                                                 if(task.isSuccessful()){
 
 
-                                                                    friendRequestDatabase.child(clickedUserID).child(currentUserId).removeValue()
+                                                                    friendRequestDatabase.child(clicked2).child(currentUserId).removeValue()
                                                                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                                                 @Override
                                                                                 public void onSuccess(Void aVoid) {
@@ -264,7 +287,7 @@ public class SearchResults extends AppCompatActivity {
                                                                                     message.setText("");
                                                                                     message.setVisibility(View.VISIBLE);
                                                                                     requestButton.setText("Ich will mittrainieren!");
-                                                                                    friendRequestDatabase.child(clickedUserID).child("requests").child(currentUserId).removeValue();
+                                                                                    friendRequestDatabase.child(clicked2).child("requests").child(currentUserId).removeValue();
                                                                                     dialog.dismiss();
 
 
