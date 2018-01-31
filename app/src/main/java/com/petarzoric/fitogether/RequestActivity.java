@@ -71,11 +71,15 @@ public class RequestActivity extends AppCompatActivity {
 
                 final String clicked_id = getRef(position).getKey();
 
+                viewHolder.setMessage(model.getRequestMessage());
+
+
                 usersDatabase.child(clicked_id).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         final String userName = dataSnapshot.child("name").getValue().toString();
                         final String userThumb = dataSnapshot.child("thumbnail").getValue().toString();
+
                         viewHolder.setName(userName);
                         viewHolder.setImage(userThumb, getApplicationContext());
 
