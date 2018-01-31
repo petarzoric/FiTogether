@@ -31,6 +31,7 @@ public class RequestActivity extends AppCompatActivity {
     private DatabaseReference usersDatabase;
     private Dialog popupDialog;
     private DatabaseReference rootRef;
+    private DatabaseReference requestsDatabaseList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,8 +39,10 @@ public class RequestActivity extends AppCompatActivity {
         setContentView(R.layout.activity_request);
         requestsList = findViewById(R.id.requestsList);
         requestsDatabase = FirebaseDatabase.getInstance().getReference().child("Friend_req");
+
         auth = FirebaseAuth.getInstance();
         currentUserId = auth.getCurrentUser().getUid();
+        requestsDatabaseList = requestsDatabase.child(currentUserId).child("requests");
         usersDatabase = FirebaseDatabase.getInstance().getReference().child("Users2");
         requestsList.setHasFixedSize(true);
         requestsList.setLayoutManager(new LinearLayoutManager(RequestActivity.this));
@@ -53,11 +56,12 @@ public class RequestActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
+
         FirebaseRecyclerAdapter<Request, RequestsViewHolder> requestsRecyclerViewAdapter = new FirebaseRecyclerAdapter<Request, RequestsViewHolder>(
                 Request.class,
                 R.layout.users_single_layout,
                 RequestsViewHolder.class,
-                requestsDatabase
+                requestsDatabaseList
         ) {
             @Override
             protected void populateViewHolder(final RequestsViewHolder viewHolder, Request model, int position) {
@@ -92,8 +96,10 @@ public class RequestActivity extends AppCompatActivity {
                                 userNamePopup = popupDialog.findViewById(R.id.popup_username);
                                 userStudio = popupDialog.findViewById(R.id.popup_fitnessstudio);
 
+                                String clicked = getRef(position).getKey();
 
-                                rootRef.child("Users2").child(clicked_id).addValueEventListener(new ValueEventListener() {
+
+                                rootRef.child("Users2").child(clicked).addValueEventListener(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(DataSnapshot dataSnapshot) {
                                         String userImagee = dataSnapshot.child("image").getValue().toString();

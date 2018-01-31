@@ -149,12 +149,19 @@ public class SearchResults extends AppCompatActivity {
                                     popupDialog.setContentView(R.layout.result_popup);
                                     closeIcon = (TextView) popupDialog.findViewById(R.id.close);
                                     requestButton = popupDialog.findViewById(R.id.popup_button);
+                                    if(sentRequest==true){
+                                        requestButton.setText("Anfrage abbrechen");
+                                    }
+                                    else {
+                                        requestButton.setText("Ich will mittrainieren!");
+                                    }
                                     message = popupDialog.findViewById(R.id.popup_message);
                                     userImage = popupDialog.findViewById(R.id.popup_image);
                                     userNamePopup = popupDialog.findViewById(R.id.popup_username);
                                     userStudio = popupDialog.findViewById(R.id.popup_fitnessstudio);
+                                    String clicked = getRef(position).getKey();
 
-                                    rootRef.child("Users2").child(clickedUserID).addValueEventListener(new ValueEventListener() {
+                                    rootRef.child("Users2").child(clicked).addValueEventListener(new ValueEventListener() {
                                         @Override
                                         public void onDataChange(DataSnapshot dataSnapshot) {
                                             String userImagee = dataSnapshot.child("image").getValue().toString();

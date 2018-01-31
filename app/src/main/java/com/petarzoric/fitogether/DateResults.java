@@ -136,12 +136,19 @@ public class DateResults extends AppCompatActivity {
                                     popupDialog.setContentView(R.layout.result_popup);
                                     closeIcon = (TextView) popupDialog.findViewById(R.id.close);
                                     requestButton = popupDialog.findViewById(R.id.popup_button);
+                                    if(sentRequest==true){
+                                        requestButton.setText("Anfrage abbrechen");
+                                    }
+                                    else {
+                                        requestButton.setText("Ich will mittrainieren!");
+                                    }
                                     message = popupDialog.findViewById(R.id.popup_message);
                                     userImage = popupDialog.findViewById(R.id.popup_image);
                                     userNamePopup = popupDialog.findViewById(R.id.popup_username);
                                     userStudio = popupDialog.findViewById(R.id.popup_fitnessstudio);
+                                    String clicked = getRef(position).getKey();
 
-                                    rootRef.child("Users2").child(clickedUserID).addValueEventListener(new ValueEventListener() {
+                                    rootRef.child("Users2").child(clicked).addValueEventListener(new ValueEventListener() {
                                         @Override
                                         public void onDataChange(DataSnapshot dataSnapshot) {
                                             String userImagee = dataSnapshot.child("image").getValue().toString();
@@ -299,7 +306,9 @@ public class DateResults extends AppCompatActivity {
                     for (int i = 0; i < match.size(); i++) {
                         if (child.getKey().equals(match.get(i).getUser()) ) {
                             userProfiles[count] = child.getValue(UserProfile.class);
-                            UserResults results = new UserResults(userProfiles[i].getUid(), userProfiles[i].getName(), userProfiles[i].getAge(), userProfiles[i].getLevel(), userProfiles[i].getStudio(), userProfiles[i].getLocation(), userProfiles[i].getGender(), userProfiles[i].getThumbnail(), match.get(i).getTime());
+                            UserResults results = new UserResults(userProfiles[i].getUid(), userProfiles[i].getName(),
+                                    userProfiles[i].getAge(), userProfiles[i].getLevel(), userProfiles[i].getStudio(),
+                                    userProfiles[i].getLocation(), userProfiles[i].getGender(), userProfiles[i].getThumbnail(), match.get(i).getTime());
                             databaseReference.child("Searchresults").child(key).child(child.getKey()).setValue(results);
                             count++;
                         }
