@@ -42,6 +42,7 @@ public class ProfileActivity extends AppCompatActivity {
     private DatabaseReference rootref;
 
     private DatabaseReference friendRequestDatabase;
+    private String user_id;
 
     private FirebaseUser currentUser;
 

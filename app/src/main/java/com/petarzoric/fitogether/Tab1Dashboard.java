@@ -96,7 +96,7 @@ public class Tab1Dashboard extends Fragment {
                         if (upcommingtraining1 == 0){
                             upcommingtraining1 = i;
                         }else{
-                            if (upcommingtraining2 == 0){
+                            if (upcommingtraining2 == 0 && i != upcommingtraining1){
                                 upcommingtraining2 = i;
                             }
                         }
