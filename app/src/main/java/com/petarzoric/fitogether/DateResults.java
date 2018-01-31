@@ -52,6 +52,8 @@ public class DateResults extends AppCompatActivity {
     Boolean sentRequest = false;
     ProgressDialog dialog;
     private int current_state;
+    String month;
+    String day;
     DatabaseReference rootRef;
 
     RecyclerView recycleList;
@@ -73,6 +75,9 @@ public class DateResults extends AppCompatActivity {
         current_state = 0;
         usersDatabase = FirebaseDatabase.getInstance().getReference().child("Users2").child(currentUserId);
         rootRef = FirebaseDatabase.getInstance().getReference();
+         Intent data = getIntent();
+         month = data.getStringExtra("month");
+         day = data.getStringExtra("day");
 
 
 
@@ -84,15 +89,18 @@ public class DateResults extends AppCompatActivity {
 
     }
     @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
     protected void onStart() {
         super.onStart();
         database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference();
-        final Intent data = getIntent();
-        final String month = data.getStringExtra("month");
-        final String day = data.getStringExtra("day");
 
-        if ( databaseReference.child("TrainingsDate").child(month).child(day)!= null){
+
+        if (databaseReference.child("TrainingsDate").child(month).child(day)!= null){
             databaseReference.child("TrainingsDate").child(month).child(day).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
@@ -338,9 +346,13 @@ public class DateResults extends AppCompatActivity {
                     for (int i = 0; i < match.size(); i++) {
                         if (child.getKey().equals(match.get(i).getUser()) ) {
                             userProfiles[count] = child.getValue(UserProfile.class);
-                            UserResults results = new UserResults(userProfiles[i].getUid(), userProfiles[i].getName(), userProfiles[i].getAge(), userProfiles[i].getLevel(), userProfiles[i].getStudio(), userProfiles[i].getLocation(), userProfiles[i].getGender(), userProfiles[i].getThumbnail(), match.get(i).getTime());
-                            databaseReference.child("Searchresults").child(key).child(child.getKey()).setValue(results);
-                            count++;
+                            try {
+                                UserResults results = new UserResults(userProfiles[i].getUid(), userProfiles[i].getName(), userProfiles[i].getAge(), userProfiles[i].getLevel(), userProfiles[i].getStudio(), userProfiles[i].getLocation(), userProfiles[i].getGender(), userProfiles[i].getThumbnail(), match.get(i).getTime());
+                                databaseReference.child("Searchresults").child(key).child(child.getKey()).setValue(results);
+                                count++;
+                            }catch (NullPointerException e){
+                                DateResults.super.onBackPressed();
+                            }
                         }
                     }
                 }

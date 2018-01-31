@@ -355,9 +355,13 @@ public class SearchResults extends AppCompatActivity {
                               //  if (Level.parseToInt(child.getValue(UserProfile.class).getLevel()) == level) {
                                     if (Gender.parseToInt(child.getValue(UserProfile.class).getGender()) == gender || gender == 2) {
                                         userProfiles[count] = child.getValue(UserProfile.class);
+                                        try{
                                         UserResults results = new UserResults(userProfiles[i].getUid(), userProfiles[i].getName(), userProfiles[i].getAge(), userProfiles[i].getLevel(), userProfiles[i].getStudio(), userProfiles[i].getLocation(), userProfiles[i].getGender(), userProfiles[i].getThumbnail(), match.get(i).getTime());
                                         databaseReference.child("Searchresults").child(key).child(child.getKey()).setValue(results);
                                         count++;
+                                    }catch (NullPointerException e){
+                                    SearchResults.super.onBackPressed();
+                                }
                                 //    }
                                 }
                             }
