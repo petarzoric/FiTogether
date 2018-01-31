@@ -81,6 +81,8 @@ public class Tab4Chat extends Fragment {
             @Override
             public void onClick(View v) {
                 //INTENT TO SCREEN WITH REQUESTS
+                Intent requestIntent = new Intent(getActivity(), RequestActivity.class);
+                startActivity(requestIntent);
 
             }
         });
@@ -208,6 +210,18 @@ public class Tab4Chat extends Fragment {
         };
 
 
+
+        userDatabase.child(current_user_id).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
 
         chatList.setAdapter(firebaseChatAdapter);

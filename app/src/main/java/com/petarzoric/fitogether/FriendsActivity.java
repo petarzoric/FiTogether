@@ -57,7 +57,7 @@ public class FriendsActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-       // usersDatabase.child(currentUserId).child("online").setValue(true);
+        usersDatabase.child(currentUserId).child("online").setValue(true);
 
         FirebaseRecyclerAdapter<Friends, FriendsViewHolder> friendsRecycleViewAdapter = new FirebaseRecyclerAdapter<Friends, FriendsViewHolder>(
                 Friends.class,

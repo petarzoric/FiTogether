@@ -59,7 +59,8 @@
         <activity
             android:name=".ChatActivity"
             android:parentActivityName=".FriendsActivity" />
-        <activity android:name=".DateResults"></activity>
+        <activity android:name=".DateResults" />
+        <activity android:name=".RequestActivity"></activity>
     </application>
 
 </manifest>
