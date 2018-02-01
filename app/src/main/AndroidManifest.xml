@@ -36,11 +36,15 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".EditProfile" />
         <activity android:name=".SearchResults" />
-        <activity android:name=".SettingsActivity" />
+        <activity android:name=".SettingsActivity"
+        android:parentActivityName=".MainScreen"
+
+            />
+
         <activity
             android:name=".StatusActivity"
-            android:parentActivityName=".SettingsActivity">
-            -
+            android:parentActivityName=".MainScreen">
+
         </activity>
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"

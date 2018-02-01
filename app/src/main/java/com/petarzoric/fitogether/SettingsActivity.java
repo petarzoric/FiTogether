@@ -71,6 +71,7 @@ public class SettingsActivity extends AppCompatActivity {
         imageStorage = FirebaseStorage.getInstance().getReference();
         displayImage = findViewById(R.id.settingsImage);
 
+
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
         String current_uid = currentUser.getUid();
         mUserDatabase = FirebaseDatabase.getInstance().getReference().child("Users2").child(current_uid);
