@@ -96,6 +96,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
           //  holder.messageText.setBackgroundColor(Color.WHITE);
             holder.messageText.setTextColor(Color.BLACK);
             holder.layout.setHorizontalGravity(Gravity.LEFT);
+            holder.messageText.setHint("Enter Message...");
 
 
         } else {
@@ -104,6 +105,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
             holder.messageText.setBackgroundResource(R.drawable.message_text_background);
             holder.messageText.setTextColor(Color.BLACK) ;
             holder.layout.setHorizontalGravity(Gravity.RIGHT);
+            holder.messageText.setHint("Enter Message...");
 
 
         }
@@ -131,11 +133,14 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
         public MessageViewHolder(View view) {
             super(view);
             time = view.findViewById(R.id.message_time);
+            time.setTextColor(Color.BLACK);
             messageText = (TextView) view.findViewById(R.id.message_text_layout);
             profileImage = (CircleImageView) view.findViewById(R.id.message_profile_layout);
             messageImage = (ImageView) view.findViewById(R.id.message_image_layout);
             messageLayout = view.findViewById(R.id.messageRelativeLayout);
             layout = view.findViewById(R.id.message_single_layout);
+            messageText.setHint("Enter Message...");
+            messageText.setHintTextColor(Color.BLACK);
         }
 
 
