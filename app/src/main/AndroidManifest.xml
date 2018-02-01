@@ -53,18 +53,20 @@
             android:name=".UsersActivity"
             android:parentActivityName=".MainScreen" />
         <activity android:name=".ProfileActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.PICK" />
 
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
         </activity>
         <activity android:name=".FriendsActivity" />
         <activity
             android:name=".ChatActivity"
             android:parentActivityName=".FriendsActivity" />
         <activity android:name=".DateResults" />
-        <activity android:name=".RequestActivity"></activity>
+        <activity android:name=".RequestActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.PICK" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

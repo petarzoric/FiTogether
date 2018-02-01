@@ -77,6 +77,13 @@ public class RequestActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        final String user_id = getIntent().getStringExtra("user_id");
+        if(user_id != null){
+
+
+
+        }
+
 
 
         FirebaseRecyclerAdapter<Request, RequestsViewHolder> requestsRecyclerViewAdapter = new FirebaseRecyclerAdapter<Request, RequestsViewHolder>(
@@ -91,6 +98,8 @@ public class RequestActivity extends AppCompatActivity {
 
                 final String clicked_id = getRef(position).getKey();
 
+
+
                 viewHolder.setMessage(model.getRequestMessage());
 
 
@@ -102,6 +111,8 @@ public class RequestActivity extends AppCompatActivity {
 
                         viewHolder.setName(userName);
                         viewHolder.setImage(userThumb, getApplicationContext());
+
+
 
                         viewHolder.view.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -316,6 +327,8 @@ public class RequestActivity extends AppCompatActivity {
 
                                 popupDialog.show();
 
+
+
                             }
                         });
                     }
@@ -326,9 +339,12 @@ public class RequestActivity extends AppCompatActivity {
                     }
                 });
 
+
             }
+
         };
         requestsList.setAdapter(requestsRecyclerViewAdapter);
+
 
     }
 
