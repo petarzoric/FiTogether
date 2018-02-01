@@ -274,25 +274,28 @@ public class MainActivity extends AppCompatActivity {
         databaseReference.child("Users2").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-
-                Iterable<DataSnapshot> children = dataSnapshot.getChildren();
-
-                String key = FirebaseAuth.getInstance().getCurrentUser().getUid();
                 boolean exists = false;
-                for (DataSnapshot child : children) {
-                    if (child.getKey().equals(key)) {
-                        exists = true;
+                Iterable<DataSnapshot> children = dataSnapshot.getChildren();
+                key = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
+
+                if (auth.getCurrentUser() != null) {
+
+                    for (DataSnapshot child : children) {
+                        if (child.getKey().equals(key)) {
+                            exists = true;
+
+                        }
                     }
-                }
-                if (exists) {
-                    progressDialog.dismiss();
-                    Intent data = new Intent(MainActivity.this, MainScreen.class);
-                    Toast.makeText(MainActivity.this, currentUser.getEmail(), Toast.LENGTH_LONG).show();
-                    startActivity(data);
-                }else{
-                    progressDialog.dismiss();
-                    Toast.makeText(MainActivity.this, "Please Login and finish your account creation", Toast.LENGTH_LONG).show();
+                    if (exists) {
+                        progressDialog.dismiss();
+                        Intent data = new Intent(MainActivity.this, MainScreen.class);
+                        Toast.makeText(MainActivity.this, currentUser.getEmail(), Toast.LENGTH_LONG).show();
+                        startActivity(data);
+                    } else {
+                        progressDialog.dismiss();
+                        Toast.makeText(MainActivity.this, "Please Login and finish your account creation", Toast.LENGTH_LONG).show();
+                    }
                 }
             }
 

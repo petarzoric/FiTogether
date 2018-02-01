@@ -105,7 +105,7 @@ public class SearchResults extends AppCompatActivity {
         final String month = data.getStringExtra("month");
         final String day = data.getStringExtra("day");
 
-        if ( databaseReference.child("TrainingsDate").child(month).child(day)!= null){
+        if (databaseReference.child("TrainingsDate").child(month).child(day)!= null){
             databaseReference.child("TrainingsDate").child(month).child(day).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
@@ -356,7 +356,6 @@ public class SearchResults extends AppCompatActivity {
                         profiles.add(child.getValue(UserProfile.class));
                         for (int i = 0; i < match.size(); i++) {
                             if (child.getKey().equals(match.get(i).getUser()) ) {
-                              //  if (Level.parseToInt(child.getValue(UserProfile.class).getLevel()) == level) {
                                     if (Gender.parseToInt(child.getValue(UserProfile.class).getGender()) == gender || gender == 2) {
                                         userProfiles[count] = child.getValue(UserProfile.class);
                                         try{
@@ -366,7 +365,6 @@ public class SearchResults extends AppCompatActivity {
                                     }catch (NullPointerException e){
                                     SearchResults.super.onBackPressed();
                                 }
-                                //    }
                                 }
                             }
                         }

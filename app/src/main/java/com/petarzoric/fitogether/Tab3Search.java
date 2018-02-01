@@ -30,6 +30,8 @@ public class Tab3Search extends Fragment {
     Spinner genderspinner;
     Spinner musclespinner;
     EditText day;
+    int days;
+    int months;
     EditText month;
 
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
@@ -46,7 +48,6 @@ public class Tab3Search extends Fragment {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(), R.array.Level, R.layout.support_simple_spinner_dropdown_item);
         levelspinner.setAdapter(adapter);
         day = rootView.findViewById(R.id.day);
-        month = rootView.findViewById(R.id.month);
         day.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -66,26 +67,6 @@ public class Tab3Search extends Fragment {
 
             }
         });
-        month.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Calendar cal = Calendar.getInstance(TimeZone.getDefault()); // Get current date
-
-// Create the DatePickerDialog instance
-                DatePickerDialog datePicker = new DatePickerDialog(getContext(),
-                        R.style.Theme_AppCompat_Light, datePickerListener,
-                        cal.get(Calendar.YEAR),
-                        cal.get(Calendar.MONTH),
-                        cal.get(Calendar.DAY_OF_MONTH));
-                datePicker.setCancelable(false);
-                datePicker.setTitle("Select the date");
-                datePicker.show();
-
-// Listener
-
-            }
-        });
-
 
         search.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,7 +75,7 @@ public class Tab3Search extends Fragment {
                 int d = c.get(Calendar.DAY_OF_MONTH);
                 int m = c.get(Calendar.MONTH) + 1;
                 if (!day.getText().toString().isEmpty()) {
-                    if (m != Integer.parseInt(month.getText().toString()) || d<=Integer.parseInt(day.getText().toString())) {
+                    if (m != months || d<= days) {
 
                         level = levelspinner.getSelectedItemPosition();
                         gender = genderspinner.getSelectedItemPosition();
@@ -103,8 +84,8 @@ public class Tab3Search extends Fragment {
                         intent.putExtra("level", level);
                         intent.putExtra("muscle", muscle);
                         intent.putExtra("gender", gender);
-                        intent.putExtra("day", (day.getText().toString()));
-                        intent.putExtra("month", Converter.monthConverter(Integer.parseInt(month.getText().toString())));
+                        intent.putExtra("day", String.valueOf(days));
+                        intent.putExtra("month", Converter.monthConverter(months));
                         startActivity(intent);
                     }
                     else {
@@ -128,8 +109,9 @@ public class Tab3Search extends Fragment {
                               int selectedMonth, int selectedDay) {
             String month1 = String.valueOf(selectedMonth + 1);
             String day1 = String.valueOf(selectedDay);
-            day.setText(day1);
-            month.setText(month1);
+            day.setText(day1+"."+month1);
+            days = selectedDay;
+            months = selectedMonth;
 
         }
     };
