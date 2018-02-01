@@ -225,6 +225,7 @@ public class SearchResults extends AppCompatActivity {
                                         @Override
                                         public void onClick(View v) {
                                             String clicked2 = getRef(position).getKey();
+                                            declineButton.setVisibility(View.INVISIBLE);
 
                                             if(sentRequest == false ){
                                                 sentRequest = true;
@@ -266,6 +267,7 @@ public class SearchResults extends AppCompatActivity {
                                                                                                         friendRequestDatabase.child(clicked2).child("requests").child(currentUserId).setValue(request);
                                                                                                         message.setText("");
                                                                                                         message.setVisibility(View.INVISIBLE);
+                                                                                                        declineButton.setVisibility(View.INVISIBLE);
                                                                                                         dialog.dismiss();
 
                                                                                                     }
