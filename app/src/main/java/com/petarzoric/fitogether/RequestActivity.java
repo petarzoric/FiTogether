@@ -23,6 +23,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
@@ -83,15 +84,22 @@ public class RequestActivity extends AppCompatActivity {
 
     }
 
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        FirebaseDatabase.getInstance().getReference().child("Users2").child(FirebaseAuth
+                .getInstance().getCurrentUser().getUid()).child("online").setValue(ServerValue.TIMESTAMP);
+    }
+
+
     @Override
     protected void onStart() {
         super.onStart();
-        final String user_id = getIntent().getStringExtra("user_id");
-        if(user_id != null){
+        FirebaseDatabase.getInstance().getReference().child("Users2").child(FirebaseAuth
+                .getInstance().getCurrentUser().getUid()).child("online").setValue(true);
 
 
-
-        }
 
 
 

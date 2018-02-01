@@ -19,6 +19,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
@@ -49,6 +50,22 @@ public class ProfileActivity extends AppCompatActivity {
     private int current_state;
 
     ProgressDialog progressDialog;
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FirebaseDatabase.getInstance().getReference().child("Users2").child(FirebaseAuth
+                .getInstance().getCurrentUser().getUid()).child("online").setValue(true);
+    }
+
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        FirebaseDatabase.getInstance().getReference().child("Users2").child(FirebaseAuth
+                .getInstance().getCurrentUser().getUid()).child("online").setValue(ServerValue.TIMESTAMP);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

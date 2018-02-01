@@ -63,6 +63,14 @@ public class SecondScreen extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    public void onBackPressed() {
+        Intent data = new Intent(SecondScreen.this, MainActivity.class);
+        startActivity(data);
+        FirebaseAuth.getInstance().signOut();
+    }
+
     void next(){
         if (!TextUtils.isEmpty(name.getText().toString())) {
             if (!TextUtils.isEmpty(age.getText().toString())){
