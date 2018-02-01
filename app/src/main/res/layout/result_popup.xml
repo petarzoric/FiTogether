@@ -106,8 +106,7 @@
         android:layout_marginTop="10dp"
         android:background="@drawable/buttonstyle"
         android:text="Ablehnen"
-        android:textColor="@color/white"
-        android:visibility="invisible" />
+        android:textColor="@color/white" />
 
 
 </LinearLayout>
