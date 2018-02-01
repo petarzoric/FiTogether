@@ -2,6 +2,7 @@ package com.petarzoric.fitogether;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -118,6 +119,8 @@ public class ChatActivity extends AppCompatActivity {
         chatAddBtn = (ImageButton) findViewById(R.id.chat_add_button);
         chatSendBtn = (ImageButton) findViewById(R.id.chat_send_button);
         chatMessageView = (EditText) findViewById(R.id.chat_message_view);
+        chatMessageView.setHint("Enter Message...");
+        chatMessageView.setHintTextColor(Color.LTGRAY);
 
         adapter = new MessageAdapter(messagesList);
 
@@ -456,6 +459,8 @@ public class ChatActivity extends AppCompatActivity {
             messageUserMap.put(chat_user_ref + "/" + push_id, messageMap);
 
             chatMessageView.setText("");
+            chatMessageView.setHint("Enter Message...");
+            chatMessageView.setHintTextColor(Color.LTGRAY);
 
             rootRef.updateChildren(messageUserMap, new DatabaseReference.CompletionListener() {
                 @Override

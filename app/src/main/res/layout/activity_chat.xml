@@ -54,6 +54,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="8"
+            android:ellipsize="end"
             android:hint="Enter Message..."
             android:paddingBottom="12dp"
             android:paddingLeft="10dp"
@@ -61,6 +62,7 @@
             android:paddingTop="10dp"
             android:selectAllOnFocus="false"
             android:singleLine="false"
+            android:textAlignment="viewStart"
             android:textColor="@color/text" />
 
         <ImageButton
