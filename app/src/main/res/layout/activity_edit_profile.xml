@@ -208,7 +208,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView2"
         app:layout_constraintVertical_bias="0.01999998"
-        app:srcCompat="@drawable/ic_date_range_black_24dp" />
+        app:srcCompat="@drawable/ic_date_range_greenk_24dp" />
 
     <ImageView
         android:id="@+id/imageView4"

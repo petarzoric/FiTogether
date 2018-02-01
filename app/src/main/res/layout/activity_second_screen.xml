@@ -177,8 +177,8 @@
         app:layout_constraintEnd_toStartOf="@+id/ageLayout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView6"
-        app:layout_constraintVertical_bias="0.16000003"
-        app:srcCompat="@drawable/ic_date_range_black_24dp" />
+        app:layout_constraintVertical_bias="0.13"
+        app:srcCompat="@drawable/ic_date_range_greenk_24dp" />
 
     <ImageView
         android:id="@+id/imageView9"
