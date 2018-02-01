@@ -54,6 +54,7 @@ public class SettingsActivity extends AppCompatActivity {
     private StorageReference imageStorage;
 
     private ProgressDialog progressDialog;
+    Button back;
 
 
 
@@ -76,6 +77,7 @@ public class SettingsActivity extends AppCompatActivity {
         String current_uid = currentUser.getUid();
         mUserDatabase = FirebaseDatabase.getInstance().getReference().child("Users2").child(current_uid);
         mUserDatabase.keepSynced(true);
+        back = findViewById(R.id.back);
 
         mUserDatabase.addValueEventListener(new ValueEventListener() {
             @Override
@@ -112,6 +114,13 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
+            }
+        });
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent backscreen = new Intent(SettingsActivity.this, MainScreen.class);
+                startActivity(backscreen);
             }
         });
 
