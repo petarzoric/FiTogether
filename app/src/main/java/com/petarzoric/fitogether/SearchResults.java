@@ -25,7 +25,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -106,15 +105,21 @@ public class SearchResults extends AppCompatActivity {
         final String day = data.getStringExtra("day");
 
         if (databaseReference.child("TrainingsDate").child(month).child(day)!= null){
-            databaseReference.child("TrainingsDate").child(month).child(day).addListenerForSingleValueEvent(new ValueEventListener() {
+            databaseReference.child("TrainingsDate").child(month).child(day).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     Iterable<DataSnapshot> children = dataSnapshot.getChildren();
                     for (DataSnapshot child : children) {
-                        if ((!child.getKey().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) && (child.getValue(UserTraining.class).getLevel() == level) && (child.getValue(UserTraining.class).getTrainingstype() == muscle) ) {
-                            matches.add(child.getValue(UserTraining.class));
+                        if (!child.getKey().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
+                        if(child.getValue(UserTraining.class).getLevel() == level) {
+
+                            if(child.getValue(UserTraining.class).getTrainingstype() == muscle) {
+
+                                matches.add(child.getValue(UserTraining.class));
 
                         }
+                        }
+                    }
                     }
 
                     matchesToProfile(matches);
@@ -338,12 +343,14 @@ public class SearchResults extends AppCompatActivity {
 
     }
 
-    public UserProfile[] matchesToProfile(final ArrayList<UserTraining> match) {
+    public UserProfile[] matchesToProfile(ArrayList<UserTraining> match) {
         userProfiles = new UserProfile[match.size()];
+        ArrayList<UserTraining> matches = match;
         database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference();
         int gender = getIntent().getIntExtra("gender", 0);
         int level = getIntent().getIntExtra("level", 0);
+        System.out.println();
 
         String key = FirebaseAuth.getInstance().getCurrentUser().getUid();
         databaseReference.child("Searchresults").child(key).removeValue();
@@ -356,8 +363,8 @@ public class SearchResults extends AppCompatActivity {
                     int count = 0;
                     for (DataSnapshot child : children) {
                         profiles.add(child.getValue(UserProfile.class));
-                        for (int i = 0; i < match.size(); i++) {
-                            if (child.getKey().equals(match.get(i).getUser()) ) {
+                        for (int i = 0; i < matches.size(); i++) {
+                            if (child.getKey().equals(matches.get(i).getUser()) ) {
                                     if (Gender.parseToInt(child.getValue(UserProfile.class).getGender()) == gender || gender == 2) {
                                         userProfiles[count] = child.getValue(UserProfile.class);
                                         try{

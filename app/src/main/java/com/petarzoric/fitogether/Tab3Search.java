@@ -111,7 +111,7 @@ public class Tab3Search extends Fragment {
             String day1 = String.valueOf(selectedDay);
             day.setText(day1+"."+month1);
             days = selectedDay;
-            months = selectedMonth;
+            months = selectedMonth+1;
 
         }
     };
