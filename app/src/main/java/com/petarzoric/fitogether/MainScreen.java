@@ -70,7 +70,7 @@ public class MainScreen extends AppCompatActivity  {
         super.onStart();
 
         //Log.i("OnStart", "aufgerufen");
-       // usersDatabase.child("online").setValue(true);
+        usersDatabase.child("online").setValue(true);
 
 
     }
@@ -81,13 +81,15 @@ public class MainScreen extends AppCompatActivity  {
 
         // Log.i("OnStop", "aufgerufen");
        // usersDatabase.child("online").setValue(false);
+       // usersDatabase.child("online").setValue(ServerValue.TIMESTAMP);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+        usersDatabase.child("online").setValue(ServerValue.TIMESTAMP);
 
-        usersDatabase.child("online").onDisconnect().setValue(ServerValue.TIMESTAMP);
+       // usersDatabase.child("online").onDisconnect().setValue(ServerValue.TIMESTAMP);
 
         // Log.i("OnPause", "aufgerufen");
         //usersDatabase.child("online").setValue(false);
@@ -96,7 +98,7 @@ public class MainScreen extends AppCompatActivity  {
     @Override
     protected void onResume() {
         super.onResume();
-        usersDatabase.child("online").setValue("true");
+      //  usersDatabase.child("online").setValue("true");
 
     }
 

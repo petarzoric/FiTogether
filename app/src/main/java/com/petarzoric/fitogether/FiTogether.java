@@ -55,7 +55,7 @@ public class FiTogether extends Application {
                         if (exists) {
 
                             usersDatabase.child("online").onDisconnect().setValue(ServerValue.TIMESTAMP);
-                            usersDatabase.child("online").setValue("true");
+
                         }
                     }
                 }

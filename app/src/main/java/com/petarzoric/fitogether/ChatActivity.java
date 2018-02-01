@@ -288,6 +288,25 @@ public class ChatActivity extends AppCompatActivity {
     //fürs Laden von neuen Nachrichten, wenn man das Refresh feature nutzt
 
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FirebaseDatabase.getInstance().getReference().child("Users2").child(FirebaseAuth
+                .getInstance().getCurrentUser().getUid()).child("online").setValue(true);
+    }
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        super.onStop();
+        FirebaseDatabase.getInstance().getReference().child("Users2").child(FirebaseAuth
+                .getInstance().getCurrentUser().getUid()).child("online").setValue(ServerValue.TIMESTAMP);
+
+    }
+
+
+
     private void loadMoreMessages(){
 
         DatabaseReference messageReference = rootRef.child("messages").child(currentUserId).child(chatUser);

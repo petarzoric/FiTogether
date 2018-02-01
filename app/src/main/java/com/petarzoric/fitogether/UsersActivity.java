@@ -10,8 +10,10 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ServerValue;
 import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -41,6 +43,9 @@ public class UsersActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        super.onStart();
+        FirebaseDatabase.getInstance().getReference().child("Users2").child(FirebaseAuth
+                .getInstance().getCurrentUser().getUid()).child("online").setValue(true);
 
         FirebaseRecyclerAdapter<Users, UsersViewHolder> firebaseRecyclerAdapter= new FirebaseRecyclerAdapter<Users, UsersViewHolder>(
                 Users.class, R.layout.users_single_layout, UsersViewHolder.class,databaseReference ) {
@@ -102,4 +107,11 @@ public class UsersActivity extends AppCompatActivity {
 
 
     }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        FirebaseDatabase.getInstance().getReference().child("Users2").child(FirebaseAuth
+                .getInstance().getCurrentUser().getUid()).child("online").setValue(ServerValue.TIMESTAMP);
+    }
+
 }

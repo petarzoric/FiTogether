@@ -19,6 +19,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
@@ -55,8 +56,19 @@ public class FriendsActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        FirebaseDatabase.getInstance().getReference().child("Users2").child(FirebaseAuth
+                .getInstance().getCurrentUser().getUid()).child("online").setValue(ServerValue.TIMESTAMP);
+    }
+
+
+    @Override
     protected void onStart() {
         super.onStart();
+        FirebaseDatabase.getInstance().getReference().child("Users2").child(FirebaseAuth
+                .getInstance().getCurrentUser().getUid()).child("online").setValue(true);
+
         usersDatabase.child(currentUserId).child("online").setValue(true);
 
         FirebaseRecyclerAdapter<Friends, FriendsViewHolder> friendsRecycleViewAdapter = new FirebaseRecyclerAdapter<Friends, FriendsViewHolder>(
@@ -141,18 +153,7 @@ public class FriendsActivity extends AppCompatActivity {
         friendsList.setAdapter(friendsRecycleViewAdapter);
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        //usersDatabase.child(currentUserId).child("online").setValue(false);
 
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-       // usersDatabase.child(currentUserId).child("online").setValue(false);
-    }
 
     public static class FriendsViewHolder extends RecyclerView.ViewHolder{
 
