@@ -221,9 +221,8 @@ public class MainActivity extends AppCompatActivity {
                                 String deviceToken = FirebaseInstanceId.getInstance().getToken();
                                 Iterable<DataSnapshot> children = dataSnapshot.getChildren();
                                 for (DataSnapshot child : children) {
-                                    if (child.getKey().equals(key)) {
+                                    if (child.getValue(UserProfile.class).getUid() != null) {
                                         exists = true;
-
                                     }
                                 }
                                 if (exists){
@@ -283,8 +282,9 @@ public class MainActivity extends AppCompatActivity {
 
                     for (DataSnapshot child : children) {
                         if (child.getKey().equals(key)) {
-                            exists = true;
-
+                            if (child.getValue(UserProfile.class).getUid() != null) {
+                                exists = true;
+                            }
                         }
                     }
                     if (exists) {
