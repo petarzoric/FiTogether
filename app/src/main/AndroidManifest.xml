@@ -58,6 +58,7 @@
         <activity android:name=".FriendsActivity" />
         <activity
             android:name=".ChatActivity"
+            android:theme="@style/Theme.Design.NoActionBar"
             android:parentActivityName=".FriendsActivity" />
         <activity android:name=".DateResults" />
         <activity android:name=".RequestActivity">

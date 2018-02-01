@@ -77,12 +77,7 @@ public class RequestActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        final String user_id = getIntent().getStringExtra("user_id");
-        if(user_id != null){
 
-
-
-        }
 
 
 

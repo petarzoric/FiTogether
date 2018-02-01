@@ -110,6 +110,7 @@ public class ChatActivity extends AppCompatActivity {
         actionBar.setCustomView(actionBarView);
 
 
+
         titleView = (TextView) findViewById(R.id.custom_bar_title);
         lastSeenView = (TextView) findViewById(R.id.custom_bar_seen);
         profileImage = (CircleImageView) findViewById(R.id.custom_bar_image);
