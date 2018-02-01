@@ -18,7 +18,7 @@ public class UserProfile {
     String status;
 
 
-    public UserProfile(String uid,String email,String name,int age,   Level userlevel, int studio, int location, Gender gender, String iurl, String turl, String status ) {
+    public UserProfile(String uid,String email,String name,int age, Level userlevel, int studio, int location, Gender gender, String iurl, String turl, String status) {
         this.uid = uid;
         this.email = email;
         this.name = name;

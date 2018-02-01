@@ -10,7 +10,7 @@ class ProfileParser {
 
     public static HashMap<String, Object> parseToHashmap(UserProfile profile){
         HashMap<String, Object> dataBaseObject= new HashMap<>();
-        dataBaseObject.put("UID", profile.getUid());
+        dataBaseObject.put("uid", profile.getUid());
         dataBaseObject.put("email", profile.getEmail());
         dataBaseObject.put("name", profile.getName());
         dataBaseObject.put("age", profile.getAge());
@@ -28,7 +28,7 @@ class ProfileParser {
     public static UserProfile parseToProfile(HashMap<String, Object> hashMap){
         UserProfile profile = new UserProfile();
         profile.setEmail((String) hashMap.get("email"));
-        profile.setUid((String) hashMap.get("UID"));
+        profile.setUid((String) hashMap.get("uid"));
         profile.setName((String) hashMap.get("name"));
         profile.setAge((int) hashMap.get("age"));
         profile.setLevel(Level.parseToEnum((String) hashMap.get("level")));

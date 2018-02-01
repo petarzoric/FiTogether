@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -36,7 +37,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class Tab4Chat extends Fragment {
 
-    private Button friendsButton;
+    private FloatingActionButton friendsButton;
     private TextView requestNotificationText;
 
     private DatabaseReference conversationDatabase;
