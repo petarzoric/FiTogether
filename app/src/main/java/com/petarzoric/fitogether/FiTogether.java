@@ -38,6 +38,7 @@ public class FiTogether extends Application {
 
         auth = FirebaseAuth.getInstance();
         if (auth.getCurrentUser() != null) {
+            key = FirebaseAuth.getInstance().getCurrentUser().getUid();
             usersDatabase = FirebaseDatabase.getInstance().getReference().child("Users2").child(auth.getCurrentUser().getUid());
             usersDatabase.addValueEventListener(new ValueEventListener() {
                 @Override
@@ -45,7 +46,6 @@ public class FiTogether extends Application {
                     if (dataSnapshot != null) {
                         Iterable<DataSnapshot> children = dataSnapshot.getChildren();
                         boolean exists = false;
-                        key = FirebaseAuth.getInstance().getCurrentUser().getUid();
                         for (DataSnapshot child : children) {
                             if (child.getKey().equals(key)) {
                                 exists = true;
