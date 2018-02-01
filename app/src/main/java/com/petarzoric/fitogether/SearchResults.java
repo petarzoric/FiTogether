@@ -154,6 +154,8 @@ public class SearchResults extends AppCompatActivity {
                                     userImage = popupDialog.findViewById(R.id.popup_image);
                                     userNamePopup = popupDialog.findViewById(R.id.popup_username);
                                     userStudio = popupDialog.findViewById(R.id.popup_fitnessstudio);
+                                    declineButton = popupDialog.findViewById(R.id.popup_button_decline2);
+                                    declineButton.setVisibility(View.INVISIBLE);
 
                                     rootRef.child("Friend_req").child(currentUserId).addValueEventListener(new ValueEventListener() {
                                         @Override
