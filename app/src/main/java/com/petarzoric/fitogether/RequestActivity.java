@@ -48,6 +48,7 @@ public class RequestActivity extends AppCompatActivity {
     private ProgressDialog dialog;
     private DatabaseReference friendRequestDatabase;
     private DatabaseReference friendDatabase;
+    Button back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +72,14 @@ public class RequestActivity extends AppCompatActivity {
         dialog.setTitle("sending friend request");
         dialog.setMessage("wait a second...");
         dialog.setCanceledOnTouchOutside(false);
+        back = findViewById(R.id.backb);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(RequestActivity.this, MainScreen.class);
+                startActivity(intent);
+            }
+        });
 
 
     }
