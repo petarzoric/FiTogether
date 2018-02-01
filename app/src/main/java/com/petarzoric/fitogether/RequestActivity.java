@@ -124,6 +124,7 @@ public class RequestActivity extends AppCompatActivity {
                                 String clicked = getRef(position).getKey();
                                 message.setFocusable(false);
                                 declineButton = popupDialog.findViewById(R.id.popup_button_decline2);
+
                                 message.setText(model.getRequestMessage());
 
                                 rootRef.child("Friends").child(currentUserId).addValueEventListener(new ValueEventListener() {
@@ -176,6 +177,45 @@ public class RequestActivity extends AppCompatActivity {
                                     public void onClick(View v) {
                                         popupDialog.dismiss();
 
+                                    }
+                                });
+
+                                declineButton.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        String clicked2 = clicked;
+                                        friendRequestDatabase.child(currentUserId).child(clicked2).removeValue()
+                                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<Void> task) {
+                                                        if(task.isSuccessful()){
+
+
+                                                            friendRequestDatabase.child(clicked2).child(currentUserId).removeValue()
+                                                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                                        @Override
+                                                                        public void onSuccess(Void aVoid) {
+                                                                            dialog.setTitle("Declining friend_request...");
+                                                                            dialog.show();
+                                                                            // sentRequest = false;
+                                                                            message.setText("");
+                                                                            message.setVisibility(View.VISIBLE);
+                                                                            requestButton.setText("Ich will mittrainieren!");
+                                                                            friendRequestDatabase.child(currentUserId).child("requests").child(clicked2).removeValue();
+                                                                            declineButton.setVisibility(View.INVISIBLE);
+                                                                            requestButton.setText("Entfernen");
+                                                                            message.setVisibility(View.INVISIBLE);
+
+                                                                            popupDialog.dismiss();
+                                                                            dialog.dismiss();
+
+
+
+                                                                        }
+                                                                    });
+                                                        }
+                                                    }
+                                                });
                                     }
                                 });
 
