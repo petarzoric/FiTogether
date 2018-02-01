@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBackground"
+    android:background="#cccccc"
     tools:context="com.petarzoric.fitogether.ChatActivity">
 
     <include
@@ -25,7 +25,7 @@
             android:layout_above="@+id/linearLayout"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/chat_app_bar"
-            android:background="@color/colorBackground"></android.support.v7.widget.RecyclerView>
+            android:background="@color/colorSecondary"></android.support.v7.widget.RecyclerView>
 
     </android.support.v4.widget.SwipeRefreshLayout>
 
