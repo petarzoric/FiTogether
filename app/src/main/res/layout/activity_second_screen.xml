@@ -26,6 +26,9 @@
         <AutoCompleteTextView
             android:id="@+id/name"
             android:layout_width="250dp"
+            android:imeOptions="actionNext"
+            android:singleLine="true"
+            android:nextFocusForward="@+id/age"
             android:layout_height="50dp"
             android:layout_marginTop="45dp"
             android:hint="NAME"
@@ -53,6 +56,9 @@
             android:layout_width="250dp"
             android:layout_height="50dp"
             android:layout_marginTop="45dp"
+            android:imeOptions="actionDone"
+            android:singleLine="true"
+
             android:hint="ALTER"
             android:inputType="number"
             android:textColor="@color/text" />
@@ -104,6 +110,8 @@
         android:layout_height="35dp"
         android:layout_marginBottom="240dp"
         android:layout_marginLeft="8dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         android:layout_marginRight="8dp"
         android:background="@color/colorSecondary"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -140,8 +148,12 @@
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         android:layout_marginTop="8dp"
         android:background="@color/colorSecondary"
+        android:imeOptions="actionDone"
+        android:singleLine="true"
 
         app:layout_constraintBottom_toTopOf="@+id/saveprofile"
         app:layout_constraintEnd_toEndOf="parent"

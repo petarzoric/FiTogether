@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
         email =  findViewById(R.id.email);
         password =  findViewById(R.id.password);
+
         auth = FirebaseAuth.getInstance();
         signup = findViewById(R.id.signup);
         login =  findViewById(R.id.login);

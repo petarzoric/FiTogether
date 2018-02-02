@@ -42,13 +42,18 @@
             android:layout_width="350dp"
             android:layout_height="50dp"
             android:layout_marginTop="45dp"
+
+            android:imeOptions="actionNext"
+            android:singleLine="true"
+
+            android:nextFocusForward="@id/password"
             android:hint="E-MAIL"
             android:inputType="textEmailAddress"
             android:textColor="@color/text" />
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
-        android:id="@+id/to_text_input_layout"
+        android:id="@+id/to_text_input_layout2"
         android:layout_width="350dp"
         android:layout_height="70dp"
         android:layout_marginBottom="8dp"
@@ -65,6 +70,7 @@
             android:layout_width="350dp"
             android:layout_height="50dp"
             android:layout_marginTop="45dp"
+            android:imeOptions="actionDone"
             android:hint="PASSWORT"
             android:inputType="textPassword"
             android:textColor="@color/text" />

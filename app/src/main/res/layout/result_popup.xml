@@ -114,7 +114,8 @@
                 android:layout_width="300dp"
                 android:layout_height="90dp"
 
-
+                android:imeOptions="actionDone"
+                android:singleLine="true"
                 android:background="@drawable/roundedittext"
                 android:gravity="left|fill_horizontal"
                 android:hint="Hinterlasse eine Nachricht... "
