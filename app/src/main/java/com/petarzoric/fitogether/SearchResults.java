@@ -106,8 +106,6 @@ public class SearchResults extends AppCompatActivity {
         final int muscle = data.getIntExtra("muscle", 0);
         final String month = data.getStringExtra("month");
         final String day = data.getStringExtra("day");
-        System.out.println("-----------------------------------------------------------"+level);
-
         if (databaseReference.child("TrainingsDate").child(month).child(day)!= null){
             databaseReference.child("TrainingsDate").child(month).child(day).addValueEventListener(new ValueEventListener() {
                 @Override
@@ -115,9 +113,6 @@ public class SearchResults extends AppCompatActivity {
                     Iterable<DataSnapshot> children = dataSnapshot.getChildren();
                     for (DataSnapshot child : children) {
                         if (!child.getKey().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
-                            System.out.println(child.getValue(UserTraining.class).getUser()+"--------------------------------");
-                            System.out.println(child.getValue(UserTraining.class).getLevel()+"--------------------------------");
-
                             if(child.getValue(UserTraining.class).getLevel() == level) {
 
                             if(child.getValue(UserTraining.class).getTrainingstype() == muscle) {
@@ -128,7 +123,6 @@ public class SearchResults extends AppCompatActivity {
                         }
                     }
                     }
-                    System.out.println("------------------------------------"+matches.size());
                     matchesToProfile(matches);
 
                     FirebaseRecyclerAdapter<UserResults, SearchViewHolder> firebaseRecyclerAdapter= new FirebaseRecyclerAdapter<UserResults, SearchViewHolder>(
@@ -387,18 +381,14 @@ public class SearchResults extends AppCompatActivity {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     ArrayList<UserProfile> profiles = new ArrayList<>();
-
                     Iterable<DataSnapshot> children = dataSnapshot.getChildren();
                     int count = 0;
                     for (DataSnapshot child : children) {
                         profiles.add(child.getValue(UserProfile.class));
                         for (int i = 0; i < matches.size(); i++) {
                             if (child.getKey().equals(matches.get(i).getUser()) ) {
-                                System.out.println("+++++++++++++++++++++++++++++++++++++++" + gender);
-                                System.out.println("----------------------------------------------------------------" + Gender.parseToInt(child.getValue(UserProfile.class).getGender()) + " " + child.getValue(UserProfile.class).getUid());
-                                UserProfile profile = child.getValue(UserProfile.class);
-                                if (Gender.parseToInt(profile.getGender()) == gender || gender == 2){
-                                     userProfiles[count] = profile;
+                                if (Gender.parseToInt(child.getValue(UserProfile.class).getGender()) == gender || gender == 2){
+                                     userProfiles[count] = child.getValue(UserProfile.class);
                                         try{
                                         UserResults results = new UserResults(userProfiles[count].getUid(), userProfiles[count].getName(), userProfiles[count].getAge(), userProfiles[count].getLevel(), userProfiles[count].getStudio(), userProfiles[count].getLocation(), userProfiles[count].getGender(), userProfiles[count].getThumbnail(), match.get(count).getTime());
                                         databaseReference.child("Searchresults").child(key).child(child.getKey()).setValue(results);
