@@ -5,6 +5,11 @@ import android.app.PendingIntent;
 import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.messaging.RemoteMessage;
 
 /**
@@ -59,10 +64,28 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
                             .setSmallIcon(R.drawable.ic_launcher_background)
                             .setContentTitle(notificationTitle)
                             .setContentText(notificationBody);
-
             Intent resultIntent = new Intent(click_action);
+
+
+            FirebaseDatabase.getInstance().getReference().child("Users2").child(from_user_id).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                   String user_name = dataSnapshot.child("name").getValue().toString();
+                    resultIntent.putExtra("user_name", user_name);
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
             resultIntent.putExtra("user_id", from_user_id);
-            resultIntent.putExtra("user_name", "test");
+
+
+
+
+
+
 
 
 
