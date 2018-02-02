@@ -50,6 +50,7 @@ public class SearchResults extends AppCompatActivity {
     private DatabaseReference RequestDatabase;
     DatabaseReference usersDatabase;
     String clickedUserID = "";
+    Boolean friends = false;
     DatabaseReference notificationDatabase;
     Boolean sentRequest;
     ProgressDialog dialog;
@@ -162,6 +163,26 @@ public class SearchResults extends AppCompatActivity {
                                     declineButton = popupDialog.findViewById(R.id.popup_button_decline2);
                                     declineButton.setVisibility(View.INVISIBLE);
 
+                                    rootRef.child("Friends").child(currentUserId).addValueEventListener(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(DataSnapshot dataSnapshot) {
+                                            if(dataSnapshot.hasChild(clicked)){
+                                                friends = true;
+                                                requestButton.setVisibility(View.INVISIBLE);
+                                                message.setVisibility(View.INVISIBLE);
+                                            } else {
+                                                friends = false;
+                                                requestButton.setVisibility(View.VISIBLE);
+                                                message.setVisibility(View.VISIBLE);
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onCancelled(DatabaseError databaseError) {
+
+                                        }
+                                    });
+
                                     rootRef.child("Friend_req").child(currentUserId).addValueEventListener(new ValueEventListener() {
                                         @Override
                                         public void onDataChange(DataSnapshot dataSnapshot) {
@@ -174,6 +195,11 @@ public class SearchResults extends AppCompatActivity {
                                                 sentRequest=false;
                                                 requestButton.setText("Ich will mittrainieren!");
                                                 message.setVisibility(View.VISIBLE);
+                                                if(friends == true){
+                                                    message.setVisibility(View.INVISIBLE);
+                                                } else {
+                                                    message.setVisibility(View.VISIBLE);
+                                                }
 
                                                 notifyDataSetChanged();
                                             }

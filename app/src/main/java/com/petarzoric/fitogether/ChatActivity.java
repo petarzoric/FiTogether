@@ -63,6 +63,7 @@ public class ChatActivity extends AppCompatActivity {
 
     private RecyclerView mMessageList;
     private SwipeRefreshLayout refreshLayout;
+    private DatabaseReference notificationDatabase;
 
     private final List<Messages> messagesList = new ArrayList<>();
     private LinearLayoutManager linearLayout;
@@ -129,6 +130,7 @@ public class ChatActivity extends AppCompatActivity {
         linearLayout = new LinearLayoutManager(this);
         mMessageList.setHasFixedSize(true);
         refreshLayout = (SwipeRefreshLayout) findViewById(R.id.message_swipe_layout);
+        notificationDatabase = FirebaseDatabase.getInstance().getReference().child("notifications");
         mMessageList.setLayoutManager(linearLayout);
 
         mMessageList.setAdapter(adapter);
@@ -457,16 +459,26 @@ public class ChatActivity extends AppCompatActivity {
             Map messageUserMap = new HashMap();
             messageUserMap.put(current_user_ref + "/" + push_id, messageMap);
             messageUserMap.put(chat_user_ref + "/" + push_id, messageMap);
+            HashMap<String, String> notificationData = new HashMap<>();
+            notificationData.put("from", currentUserId);
+            notificationData.put("type", "message");
+            notificationData.put("message", chatMessageView.getText().toString());
+
+            notificationDatabase.child(chatUser).push().setValue(notificationData);
 
             chatMessageView.setText("");
             chatMessageView.setHint("Enter Message...");
             chatMessageView.setHintTextColor(Color.LTGRAY);
+
+
 
             rootRef.updateChildren(messageUserMap, new DatabaseReference.CompletionListener() {
                 @Override
                 public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
                     if(databaseError != null){
                         Log.d("CHAT LOG", databaseError.getMessage().toString());
+
+
                     }
 
                 }

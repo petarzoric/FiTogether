@@ -55,11 +55,22 @@
         <activity android:name=".ProfileActivity">
 
         </activity>
+
         <activity android:name=".FriendsActivity" />
+
         <activity
             android:name=".ChatActivity"
             android:theme="@style/Theme.Design.NoActionBar"
-            android:parentActivityName=".FriendsActivity" />
+            android:parentActivityName=".FriendsActivity">
+
+            <intent-filter>
+                <action android:name="android.intent.action.PI" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+
         <activity android:name=".DateResults" />
         <activity android:name=".RequestActivity">
             <intent-filter>

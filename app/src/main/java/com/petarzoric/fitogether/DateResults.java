@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -50,6 +51,7 @@ public class DateResults extends AppCompatActivity {
     String clickedUserID = "";
     DatabaseReference notificationDatabase;
     Boolean sentRequest = false;
+    Boolean friends = false;
     ProgressDialog dialog;
     private int current_state;
     String month;
@@ -68,7 +70,7 @@ public class DateResults extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
 
         currentUserId = auth.getCurrentUser().getUid();
-        popupDialog = new Dialog(this);
+        popupDialog = new Dialog(this, R.style.Theme_D1NoTitleDim);
         friendRequestDatabase = FirebaseDatabase.getInstance().getReference().child("Friend_req");
         notificationDatabase = FirebaseDatabase.getInstance().getReference().child("notifications");
 
@@ -142,6 +144,7 @@ public class DateResults extends AppCompatActivity {
                                     TextView userStudio;
 
                                     popupDialog.setContentView(R.layout.result_popup);
+                                    popupDialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND);
                                     closeIcon = (TextView) popupDialog.findViewById(R.id.close);
                                     requestButton = popupDialog.findViewById(R.id.popup_button);
                                     String clicked = getRef(position).getKey();
@@ -151,6 +154,26 @@ public class DateResults extends AppCompatActivity {
                                     userStudio = popupDialog.findViewById(R.id.popup_fitnessstudio);
                                     declineButton = popupDialog.findViewById(R.id.popup_button_decline2);
                                     declineButton.setVisibility(View.INVISIBLE);
+
+                                    rootRef.child("Friends").child(currentUserId).addValueEventListener(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(DataSnapshot dataSnapshot) {
+                                            if(dataSnapshot.hasChild(clicked)){
+                                                friends = true;
+                                                requestButton.setVisibility(View.INVISIBLE);
+                                                message.setVisibility(View.INVISIBLE);
+                                            } else {
+                                                friends = false;
+                                                requestButton.setVisibility(View.VISIBLE);
+                                                message.setVisibility(View.VISIBLE);
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onCancelled(DatabaseError databaseError) {
+
+                                        }
+                                    });
 
                                     rootRef.child("Friend_req").child(currentUserId).addValueEventListener(new ValueEventListener() {
                                         @Override
@@ -164,6 +187,11 @@ public class DateResults extends AppCompatActivity {
                                                 sentRequest=false;
                                                 requestButton.setText("Ich will mittrainieren!");
                                                 message.setVisibility(View.VISIBLE);
+                                                if(friends == true){
+                                                    message.setVisibility(View.INVISIBLE);
+                                                } else {
+                                                    message.setVisibility(View.VISIBLE);
+                                                }
 
                                                 notifyDataSetChanged();
                                             }
@@ -222,7 +250,7 @@ public class DateResults extends AppCompatActivity {
                                             String clicked2 = getRef(position).getKey();
 
                                             if(sentRequest == false ){
-                                                sentRequest = true;
+
                                                 dialog.setTitle("sending friend_request...");
                                                 dialog.show();
 
