@@ -57,6 +57,7 @@ public class SearchResults extends AppCompatActivity {
     private int current_state;
     RecyclerView recycleList;
     DatabaseReference rootRef;
+    int gender;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +85,8 @@ public class SearchResults extends AppCompatActivity {
         dialog.setMessage("wait a second...");
         dialog.setCanceledOnTouchOutside(false);
 
+        Intent data = getIntent();
+        gender = data.getIntExtra("gender", 0);
 
 
 
@@ -100,10 +103,10 @@ public class SearchResults extends AppCompatActivity {
         databaseReference = database.getReference();
         final Intent data = getIntent();
         final int level = data.getIntExtra("level", 0);
-        final int gender = data.getIntExtra("gender", 0);
         final int muscle = data.getIntExtra("muscle", 0);
         final String month = data.getStringExtra("month");
         final String day = data.getStringExtra("day");
+        System.out.println("-----------------------------------------------------------"+level);
 
         if (databaseReference.child("TrainingsDate").child(month).child(day)!= null){
             databaseReference.child("TrainingsDate").child(month).child(day).addValueEventListener(new ValueEventListener() {
@@ -112,7 +115,10 @@ public class SearchResults extends AppCompatActivity {
                     Iterable<DataSnapshot> children = dataSnapshot.getChildren();
                     for (DataSnapshot child : children) {
                         if (!child.getKey().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
-                        if(child.getValue(UserTraining.class).getLevel() == level) {
+                            System.out.println(child.getValue(UserTraining.class).getUser()+"--------------------------------");
+                            System.out.println(child.getValue(UserTraining.class).getLevel()+"--------------------------------");
+
+                            if(child.getValue(UserTraining.class).getLevel() == level) {
 
                             if(child.getValue(UserTraining.class).getTrainingstype() == muscle) {
 
@@ -122,7 +128,7 @@ public class SearchResults extends AppCompatActivity {
                         }
                     }
                     }
-
+                    System.out.println("------------------------------------"+matches.size());
                     matchesToProfile(matches);
 
                     FirebaseRecyclerAdapter<UserResults, SearchViewHolder> firebaseRecyclerAdapter= new FirebaseRecyclerAdapter<UserResults, SearchViewHolder>(
@@ -374,9 +380,6 @@ public class SearchResults extends AppCompatActivity {
         ArrayList<UserTraining> matches = match;
         database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference();
-        int gender = getIntent().getIntExtra("gender", 0);
-        int level = getIntent().getIntExtra("level", 0);
-        System.out.println();
 
         String key = FirebaseAuth.getInstance().getCurrentUser().getUid();
         databaseReference.child("Searchresults").child(key).removeValue();
@@ -391,10 +394,13 @@ public class SearchResults extends AppCompatActivity {
                         profiles.add(child.getValue(UserProfile.class));
                         for (int i = 0; i < matches.size(); i++) {
                             if (child.getKey().equals(matches.get(i).getUser()) ) {
-                                    if (Gender.parseToInt(child.getValue(UserProfile.class).getGender()) == gender || gender == 2) {
-                                        userProfiles[count] = child.getValue(UserProfile.class);
+                                System.out.println("+++++++++++++++++++++++++++++++++++++++" + gender);
+                                System.out.println("----------------------------------------------------------------" + Gender.parseToInt(child.getValue(UserProfile.class).getGender()) + " " + child.getValue(UserProfile.class).getUid());
+                                UserProfile profile = child.getValue(UserProfile.class);
+                                if (Gender.parseToInt(profile.getGender()) == gender || gender == 2){
+                                     userProfiles[count] = profile;
                                         try{
-                                        UserResults results = new UserResults(userProfiles[i].getUid(), userProfiles[i].getName(), userProfiles[i].getAge(), userProfiles[i].getLevel(), userProfiles[i].getStudio(), userProfiles[i].getLocation(), userProfiles[i].getGender(), userProfiles[i].getThumbnail(), match.get(i).getTime());
+                                        UserResults results = new UserResults(userProfiles[count].getUid(), userProfiles[count].getName(), userProfiles[count].getAge(), userProfiles[count].getLevel(), userProfiles[count].getStudio(), userProfiles[count].getLocation(), userProfiles[count].getGender(), userProfiles[count].getThumbnail(), match.get(count).getTime());
                                         databaseReference.child("Searchresults").child(key).child(child.getKey()).setValue(results);
                                         count++;
                                     }catch (NullPointerException e){
