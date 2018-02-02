@@ -39,6 +39,8 @@ public class MainActivity extends AppCompatActivity {
     FirebaseDatabase database;
     FirebaseUser currentUser;
     private ProgressDialog progressDialog;
+    boolean exists;
+
 
     private DatabaseReference usersDatabase;
 
@@ -155,6 +157,7 @@ public class MainActivity extends AppCompatActivity {
                 progressDialog.setMessage("Please wait while we check your credentials. ");
                 progressDialog.setCanceledOnTouchOutside(false);
                 progressDialog.show();
+                exists = false;
                 String emailString = email.getEditableText().toString();
                 String passwordString = password.getEditableText().toString();
                 startLogIn(emailString, passwordString);
@@ -167,6 +170,7 @@ public class MainActivity extends AppCompatActivity {
                 progressDialog.setTitle("Registering User");
                 progressDialog.setMessage("Please wait while we create your account");
                 progressDialog.show();
+                exists = false;
                 String emailString = email.getEditableText().toString();
                 String passwordString = password.getEditableText().toString();
                 startSignIn(emailString, passwordString);
@@ -205,7 +209,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void startLogIn(String emailStr, String passwordStr) {
 
-
+        exists = false;
         final String mail = emailStr;
         String pw = passwordStr;
 
@@ -224,26 +228,17 @@ public class MainActivity extends AppCompatActivity {
                         emailtext = email.getText().toString();
                         key = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-                        databaseReference.child("Users2").addListenerForSingleValueEvent(new ValueEventListener() {
+                        databaseReference.child("Users2").child(key).addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
-                                boolean exists = false;
 
                                 String deviceToken = FirebaseInstanceId.getInstance().getToken();
                                 Iterable<DataSnapshot> children = dataSnapshot.getChildren();
-                                for (DataSnapshot child : children) {
-                                    if (child.getValue(UserProfile.class).getUid() != null) {
+                                    if (dataSnapshot.getValue(UserProfile.class).getUid() != null) {
                                         exists = true;
-                                    }
                                 }
                                 if (exists){
                                    Intent data = new Intent(MainActivity.this, MainScreen.class);
-                                    /*database.getReference().child("Users2").child(key).child("device_token").setValue(deviceToken).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void aVoid) {
-
-                                        }
-                                    });*/
                                     Toast.makeText(MainActivity.this, currentUser.getEmail(), Toast.LENGTH_LONG).show();
 
                                     startActivity(data);
@@ -280,11 +275,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void autoLogin(){
-
+        exists = false;
         databaseReference.child("Users2").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                boolean exists = false;
                 Iterable<DataSnapshot> children = dataSnapshot.getChildren();
                 key = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
