@@ -377,7 +377,7 @@ public class DateResults extends AppCompatActivity {
                         if (child.getKey().equals(match.get(i).getUser()) ) {
                             userProfiles[count] = child.getValue(UserProfile.class);
                             try {
-                                UserResults results = new UserResults(userProfiles[i].getUid(), userProfiles[i].getName(), userProfiles[i].getAge(), userProfiles[i].getLevel(), userProfiles[i].getStudio(), userProfiles[i].getLocation(), userProfiles[i].getGender(), userProfiles[i].getThumbnail(), match.get(i).getTime());
+                                UserResults results = new UserResults(userProfiles[count].getUid(), userProfiles[count].getName(), userProfiles[count].getAge(), userProfiles[count].getLevel(), userProfiles[count].getStudio(), userProfiles[count].getLocation(), userProfiles[count].getGender(), userProfiles[count].getThumbnail(), match.get(count).getTime());
                                 databaseReference.child("Searchresults").child(key).child(child.getKey()).setValue(results);
                                 count++;
                             }catch (NullPointerException e){

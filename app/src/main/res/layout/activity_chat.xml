@@ -31,15 +31,15 @@
     </android.support.v4.widget.SwipeRefreshLayout>
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="50dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
         android:background="@color/common_google_signin_btn_text_dark_default"
         android:gravity="bottom"
         android:orientation="horizontal"
-        android:weightSum="10"
-        android:id="@+id/linearLayout">
+        android:weightSum="10">
 
         <ImageButton
             android:id="@+id/chat_add_button"
