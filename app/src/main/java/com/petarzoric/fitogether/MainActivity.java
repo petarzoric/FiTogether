@@ -223,26 +223,20 @@ public class MainActivity extends AppCompatActivity {
                         emailtext = email.getText().toString();
                         key = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-                        databaseReference.child("Users2").addListenerForSingleValueEvent(new ValueEventListener() {
+                        databaseReference.child("Users2").child(key).addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
                                 boolean exists = false;
 
                                 String deviceToken = FirebaseInstanceId.getInstance().getToken();
                                 Iterable<DataSnapshot> children = dataSnapshot.getChildren();
-                                for (DataSnapshot child : children) {
-                                    if (child.getValue(UserProfile.class).getUid() != null) {
+                              //  for (DataSnapshot child : children) {
+                                    if (dataSnapshot.getValue(UserProfile.class).getUid() != null) {
                                         exists = true;
-                                    }
+                                  //  }
                                 }
                                 if (exists){
                                    Intent data = new Intent(MainActivity.this, MainScreen.class);
-                                    /*database.getReference().child("Users2").child(key).child("device_token").setValue(deviceToken).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void aVoid) {
-
-                                        }
-                                    });*/
                                     Toast.makeText(MainActivity.this, currentUser.getEmail(), Toast.LENGTH_LONG).show();
 
                                     startActivity(data);
