@@ -192,7 +192,7 @@
         app:layout_constraintHorizontal_bias="0.536"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintVertical_bias="0.00999999"
         app:srcCompat="@drawable/ic_account_box_black_24dp" />
 
     <ImageView
@@ -207,7 +207,7 @@
         app:layout_constraintEnd_toStartOf="@+id/agetext"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView2"
-        app:layout_constraintVertical_bias="0.01999998"
+        app:layout_constraintVertical_bias="0.04000002"
         app:srcCompat="@drawable/ic_date_range_greenk_24dp" />
 
     <ImageView
@@ -252,7 +252,7 @@
         app:layout_constraintEnd_toStartOf="@+id/levelspinner"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView4"
-        app:layout_constraintVertical_bias="0.01999998"
+        app:layout_constraintVertical_bias="0.029999971"
         app:srcCompat="@drawable/ic_grade_black_24dp" />
 
 </android.support.constraint.ConstraintLayout>
