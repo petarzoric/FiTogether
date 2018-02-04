@@ -275,7 +275,7 @@ public class SettingsActivity extends AppCompatActivity {
                                                 if(task.isSuccessful()){
 
                                                     progressDialog.dismiss();
-                                                    Toast.makeText(SettingsActivity.this, "Success uploading jawooohl aller", Toast.LENGTH_LONG).show();
+                                                    Toast.makeText(SettingsActivity.this, "Successfully uploaded your image", Toast.LENGTH_LONG).show();
 
 
                                                 }

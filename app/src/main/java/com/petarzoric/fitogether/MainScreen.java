@@ -126,11 +126,6 @@ public class MainScreen extends AppCompatActivity  {
             return true;
         }
 
-        if(item.getItemId() == R.id.allUsers){
-
-            Intent settingsIntent = new Intent(MainScreen.this, UsersActivity.class);
-            startActivity(settingsIntent);
-        }
 
 
         if(item.getItemId() == R.id.logout){

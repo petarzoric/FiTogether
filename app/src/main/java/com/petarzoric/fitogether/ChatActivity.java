@@ -19,6 +19,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -136,7 +137,13 @@ public class ChatActivity extends AppCompatActivity {
         mMessageList.setAdapter(adapter);
         imageStorage = FirebaseStorage.getInstance().getReference();
 
-        loadMessages();
+        try {loadMessages(); } catch (Exception e){
+            System.out.println(e.toString());
+            Intent data = new Intent(ChatActivity.this, MainScreen.class);
+
+            startActivity(data);
+            return;
+        }
 
         titleView.setText(userName);
 
