@@ -19,17 +19,17 @@ import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 
 public class EditProfile extends AppCompatActivity {
-    TextView emailtext;
-    EditText name;
-    EditText age;
-    Spinner level;
-    TextView studios;
-    TextView gendertext;
-    Button savechanges;
-    FirebaseDatabase database;
-    DatabaseReference databaseReference;
-    UserProfile profile;
-    String uid;
+    private TextView emailtext;
+    private EditText name;
+    private EditText age;
+    private Spinner level;
+    private TextView studios;
+    private TextView gendertext;
+    private Button savechanges;
+    private FirebaseDatabase database;
+    private DatabaseReference databaseReference;
+    private UserProfile profile;
+    private String uid;
 
 
     @Override

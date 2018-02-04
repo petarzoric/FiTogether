@@ -27,19 +27,19 @@ import com.google.firebase.iid.FirebaseInstanceId;
 
 
 public class MainActivity extends AppCompatActivity {
-    EditText email;
-    EditText password;
-    FirebaseAuth auth;
-    FirebaseAuth.AuthStateListener authListener;
-    Button signup;
-    Button login;
-    String emailtext;
-    String key;
-    DatabaseReference databaseReference;
-    FirebaseDatabase database;
-    FirebaseUser currentUser;
+    private EditText email;
+    private EditText password;
+    private FirebaseAuth auth;
+    private FirebaseAuth.AuthStateListener authListener;
+    private Button signup;
+    private Button login;
+    private String emailtext;
+    private String key;
+    private DatabaseReference databaseReference;
+    private FirebaseDatabase database;
+    private FirebaseUser currentUser;
     private ProgressDialog progressDialog;
-    boolean exists;
+    private boolean exists;
 
 
     private DatabaseReference usersDatabase;

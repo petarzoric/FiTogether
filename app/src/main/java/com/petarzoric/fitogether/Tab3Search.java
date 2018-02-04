@@ -22,17 +22,16 @@ import java.util.TimeZone;
  */
 
 public class Tab3Search extends Fragment {
-    Button search;
-    int level;
-    int gender;
-    int muscle;;
-    Spinner levelspinner;
-    Spinner genderspinner;
-    Spinner musclespinner;
-    EditText day;
-    int days;
-    int months;
-    EditText month;
+    private Button search;
+    private int level;
+    private int gender;
+    private int muscle;;
+    private Spinner levelspinner;
+    private Spinner genderspinner;
+    private Spinner musclespinner;
+    private EditText day;
+    private int days;
+    private int months;
 
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

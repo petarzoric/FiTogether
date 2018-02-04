@@ -18,16 +18,16 @@ import com.google.firebase.auth.FirebaseAuth;
 
 
 public class SecondScreen extends AppCompatActivity {
-    Button signout;
-    Button save;
-    EditText name;
-    EditText age;
-    Spinner level;
-    Spinner gender;
-    int userage;
-    String username;
-    int userlevel;
-    int usergender;
+    private Button signout;
+    private Button save;
+    private EditText name;
+    private EditText age;
+    private Spinner level;
+    private Spinner gender;
+    private int userage;
+    private String username;
+    private int userlevel;
+    private int usergender;
 
 
     @Override
