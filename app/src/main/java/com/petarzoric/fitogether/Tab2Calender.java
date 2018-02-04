@@ -30,27 +30,27 @@ import java.util.TimeZone;
  */
 
 public class Tab2Calender extends Fragment {
-    Spinner training;
-    Button saveTraining;
-    Button search;
-    CalendarView calendar;
-    String selectedDate;
-    String key;
-    DatabaseReference databaseReferencecalender;
-    FirebaseDatabase database;
-    DatabaseReference databaseReferenceprofile;
-    int trainingType;
-    UserTraining trainingProfile;
-    UserProfile profile;
-    int level;
-    int studio;
-    int location;
-    int m;
-    int d;
-    int day;
-    int month;
-    EditText time;
-    String times;
+    private Spinner training;
+    private Button saveTraining;
+    private Button search;
+    private CalendarView calendar;
+    private String selectedDate;
+    private String key;
+    private DatabaseReference databaseReferencecalender;
+    private FirebaseDatabase database;
+    private DatabaseReference databaseReferenceprofile;
+    private int trainingType;
+    private UserTraining trainingProfile;
+    private UserProfile profile;
+    private int level;
+    private int studio;
+    private int location;
+    private int m;
+    private int d;
+    private int day;
+    private int month;
+    private EditText time;
+    private String times;
 
 
 

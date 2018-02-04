@@ -15,9 +15,9 @@ import java.util.HashMap;
 
 public class StudioScreen extends AppCompatActivity {
 
-    Button save;
-    Spinner studio;
-    Spinner location;
+    private Button save;
+    private Spinner studio;
+    private Spinner location;
 
 
     @Override

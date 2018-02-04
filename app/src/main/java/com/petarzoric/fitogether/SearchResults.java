@@ -28,36 +28,38 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class SearchResults extends AppCompatActivity {
 
 
-    ArrayList <UserTraining> matches = new ArrayList<>();
-    FirebaseDatabase database;
-    DatabaseReference databaseReference;
-    UserProfile[] userProfiles;
-    FirebaseAuth auth;
-    String currentUserId;
-    Dialog popupDialog;
+    private ArrayList <UserTraining> matches = new ArrayList<>();
+    private FirebaseDatabase database;
+    private DatabaseReference databaseReference;
+    private UserProfile[] userProfiles;
+    private FirebaseAuth auth;
+    private String currentUserId;
+    private Dialog popupDialog;
 
-    TextView userName;
-    TextView userStudio;
-    EditText userMessage;
-    CircleImageView userImage;
-    DatabaseReference friendRequestDatabase;
+
+    private TextView userName;
+    private TextView userStudio;
+    private EditText userMessage;
+    private CircleImageView userImage;
+    private DatabaseReference friendRequestDatabase;
     private DatabaseReference RequestDatabase;
-    DatabaseReference usersDatabase;
-    String clickedUserID = "";
-    Boolean friends = false;
-    DatabaseReference notificationDatabase;
-    Boolean sentRequest;
-    ProgressDialog dialog;
+    private DatabaseReference usersDatabase;
+    private String clickedUserID = "";
+    private Boolean friends = false;
+    private DatabaseReference notificationDatabase;
+    private Boolean sentRequest;
+    private ProgressDialog dialog;
     private int current_state;
-    RecyclerView recycleList;
-    DatabaseReference rootRef;
-    int gender;
+    private RecyclerView recycleList;
+    private DatabaseReference rootRef;
+    private int gender;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

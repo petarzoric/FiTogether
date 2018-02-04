@@ -33,38 +33,38 @@ import java.util.HashMap;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class DateResults extends AppCompatActivity {
-    ArrayList <UserTraining> matches = new ArrayList<>();
-    FirebaseDatabase database;
-    DatabaseReference databaseReference;
-    UserProfile[] userProfiles;
-    FirebaseAuth auth;
-    String currentUserId;
-    Dialog popupDialog;
-    Button requestButton;
-    TextView userName;
-    TextView userStudio;
-    EditText userMessage;
-    CircleImageView userImage;
-    DatabaseReference friendRequestDatabase;
+    private ArrayList <UserTraining> matches = new ArrayList<>();
+    private FirebaseDatabase database;
+    private DatabaseReference databaseReference;
+    private UserProfile[] userProfiles;
+    private FirebaseAuth auth;
+    private String currentUserId;
+    private Dialog popupDialog;
+    private Button requestButton;
+    private TextView userName;
+    private TextView userStudio;
+    private EditText userMessage;
+    private CircleImageView userImage;
+    private DatabaseReference friendRequestDatabase;
     private DatabaseReference RequestDatabase;
-    DatabaseReference usersDatabase;
-    String clickedUserID = "";
-    DatabaseReference notificationDatabase;
-    Boolean sentRequest = false;
-    Boolean friends = false;
-    ProgressDialog dialog;
+    private DatabaseReference usersDatabase;
+    private String clickedUserID = "";
+    private DatabaseReference notificationDatabase;
+    private Boolean sentRequest = false;
+    private Boolean friends = false;
+    private ProgressDialog dialog;
     private int current_state;
-    String month;
-    String day;
-    DatabaseReference rootRef;
+    private String month;
+    private String day;
+    private DatabaseReference rootRef;
 
     RecyclerView recycleList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search_results);
+        setContentView(R.layout.activity_date_results);
 
-        recycleList = findViewById(R.id.recyclelist);
+        recycleList = findViewById(R.id.daterecyclelist);
         recycleList.setHasFixedSize(true);
         recycleList.setLayoutManager(new LinearLayoutManager(this));
         auth = FirebaseAuth.getInstance();

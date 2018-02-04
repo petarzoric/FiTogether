@@ -24,22 +24,22 @@ import java.util.Calendar;
  */
 
 public class Tab1Dashboard extends Fragment {
-    FirebaseDatabase database;
-    DatabaseReference databaseReference;
-    TextView upCommingT;
-    TextView trainingsday;
-    TextView trainingstime;
-    TextView trainingstype;
-    TextView training1day;
-    TextView training1time;
-    TextView training1type;
-    TextView training2day;
-    TextView training2time;
-    TextView training2type;
-    String uid;
-    GraphView graph;
-    int upcommingtraining1;
-    int upcommingtraining2;
+    private FirebaseDatabase database;
+    private DatabaseReference databaseReference;
+    private TextView upCommingT;
+    private TextView trainingsday;
+    private TextView trainingstime;
+    private TextView trainingstype;
+    private TextView training1day;
+    private TextView training1time;
+    private TextView training1type;
+    private TextView training2day;
+    private TextView training2time;
+    private TextView training2type;
+    private String uid;
+    private GraphView graph;
+    private int upcommingtraining1;
+    private int upcommingtraining2;
 
 
 

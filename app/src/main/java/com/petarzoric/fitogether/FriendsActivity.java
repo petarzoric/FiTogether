@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -54,6 +55,7 @@ public class FriendsActivity extends AppCompatActivity {
     private FirebaseAuth auth;
 
     private String currentUserId;
+    private Button back;
 
 
     @Override
@@ -72,6 +74,14 @@ public class FriendsActivity extends AppCompatActivity {
 
         friendsList.setHasFixedSize(true);
         friendsList.setLayoutManager(new LinearLayoutManager(FriendsActivity.this));
+        back = findViewById(R.id.backb);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(FriendsActivity.this, MainScreen.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
