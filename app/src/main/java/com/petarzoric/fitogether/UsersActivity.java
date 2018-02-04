@@ -18,6 +18,14 @@ import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+/*
+    War urspünglich in der Action Bar unter All Users zu erreichen.
+    War allerdings nur eine Übergangslösung, damit ich von dort aus den Chat und die ganze Requests Geschichte
+    unabhängig von den ganzen Searchresults bauen konnte.
+    Brauchen wir jetzt nicht mehr, aber hat auf jeden Fall ihren Beitrag dazu geleistet, dass der Chat gut
+    funktioniert, wird teilweise noch zum testen verwendet, deswegen lass ich die immer noch drinnen.
+ */
+
 
 public class UsersActivity extends AppCompatActivity {
 

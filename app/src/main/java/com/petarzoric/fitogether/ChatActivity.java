@@ -44,8 +44,14 @@ import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+/*
+Klasse für den Chat Screen.
+Hier werden Nachrichten versendet.
+ */
 
 public class ChatActivity extends AppCompatActivity {
+
+
 
     private String chatUser;
     private Toolbar chatToolbar;
@@ -104,9 +110,6 @@ public class ChatActivity extends AppCompatActivity {
 
         chatUser = getIntent().getStringExtra("user_id");
         String userName = getIntent().getStringExtra("user_name");
-
-        //getSupportActionBar().setTitle(userName);
-
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View actionBarView = inflater.inflate(R.layout.chat_custom_bar, null);
 
@@ -318,7 +321,9 @@ public class ChatActivity extends AppCompatActivity {
     }
 
 
-
+    /*
+        Swipe to refresh funktion
+ */
     private void loadMoreMessages(){
 
         DatabaseReference messageReference = rootRef.child("messages").child(currentUserId).child(chatUser);
@@ -442,10 +447,17 @@ public class ChatActivity extends AppCompatActivity {
 
 
 
-
+    /*
+        Wird ausgelöst, sobald der Senden-Button gedrückt wird.
+        Prüft ob, das Feld leer ist - falls nicht, wird die Nachricht in DB reingehauen und angezeigt.
+    */
     private void sendMessage(){
 
         String message = chatMessageView.getText().toString();
+        if(TextUtils.isEmpty(message)){
+            Toast.makeText(ChatActivity.this, "Du kannst keine leere Nachricht senden.", Toast.LENGTH_LONG).show();
+        }
+
 
         if(!TextUtils.isEmpty(message)){
 

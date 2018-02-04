@@ -21,6 +21,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 
+/*
+    Activity, die es dem User erlaubt, seinen Status zu ändern. Erreicht wird sie über den
+    "Status ändern"-Button in der Settingsactivity.
+    Gibt nicht so viel mehr zu der Klasse zu sagen.
+ */
+
 public class StatusActivity extends AppCompatActivity {
 
    // private Toolbar toolbar;

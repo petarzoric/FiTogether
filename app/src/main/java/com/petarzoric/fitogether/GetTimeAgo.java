@@ -25,6 +25,13 @@ public class GetTimeAgo extends Application {
  * limitations under the License.
  */
 
+    /*
+    Coole Klasse, die bestimmt, was in der ChatView anzeigt wird,
+    abhängig davon, wann der User das letzte mal Online war.
+    Danke, dass es dich gibt, Stackoverflow.
+    Copyrights oben.
+     */
+
     private static final int SECOND_MILLIS = 1000;
     private static final int MINUTE_MILLIS = 60 * SECOND_MILLIS;
     private static final int HOUR_MILLIS = 60 * MINUTE_MILLIS;

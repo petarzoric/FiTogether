@@ -3,6 +3,10 @@ package com.petarzoric.fitogether;
 /**
  * Created by petarzoric on 15.12.17.
  */
+/*
+    Model Klasse für die Users Acitvity.
+    Recht selbsterklärend, speichert halt Sachen, die wir benötigen und/oder anzeigen wollen in der Recylcerview.
+ */
 
 public class Users {
 

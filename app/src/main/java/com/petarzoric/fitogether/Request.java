@@ -3,6 +3,11 @@ package com.petarzoric.fitogether;
 /**
  * Created by petarzoric on 31.01.18.
  */
+/*
+    Model Klasse für die RequestActivity.
+    Speichert halt Infos zu Requests, die wir anzeigen,
+    vor allem die Reuqest Message.
+ */
 
 public class Request {
 

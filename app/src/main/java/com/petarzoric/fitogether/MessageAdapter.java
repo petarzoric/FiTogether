@@ -27,6 +27,18 @@ import de.hdodenhof.circleimageview.CircleImageView;
 /**
  * Created by petarzoric on 17.01.18.
  */
+/*
+    Viewholder, um die Nachrichten in der ChatActivity anzuzeigen.
+    Sorgt u.a. dafür, dass die eigenen Nachrichten und die des Chatpartners
+    unterschiedlich dargestellt werden und dass die Zeit angezeigt wird.
+
+    Kümmert sich auch darum, die Bilder passend darzustellen, falls man ein
+    Bild sendet. Leider ist das etwas verbuggt und das Layout wird durch
+    Bilder teilweise zerschossen.
+    Ich lasse das Feature aber trotzdem drinnen, weil es m.M.n. ein ganz
+    cooles Optional feature ist und nur "nice to have" ist.
+
+ */
 
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageViewHolder> {
 

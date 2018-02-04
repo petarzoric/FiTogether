@@ -5,6 +5,10 @@ import java.util.HashMap;
 /**
  * Created by petarzoric on 13.12.17.
  */
+/*
+    Parser-Klasse, die uns bisschen Zeit spart beim einpflegen der Profiles in die DB.
+
+ */
 
 class ProfileParser {
 

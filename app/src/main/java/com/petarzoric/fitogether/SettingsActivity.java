@@ -40,6 +40,20 @@ import java.util.Map;
 import de.hdodenhof.circleimageview.CircleImageView;
 import id.zelory.compressor.Compressor;
 
+/*
+    Activity, welche über die Action Bar im MainScreen über den Punkt "profile settings" erreicht werden kann.
+    Zeigt das eigene Profilbild und den eigenen Status an.
+    Bietet folgenden Einstellungsmöglichkeiten, die über die entsprechenden Buttons erreichtt werden können:
+
+    Foto wechseln: selbsterklärend, öffnet Menü, indem man entweder die Kamera oder Gallery verwenden kann,
+    um sein Bild zu ändern. Das Bild kann außerdem gecropped werden.
+
+    Status ändern:
+    Führt einen weiter zu StatusActivity, dort kann man seinen Status ändern.
+
+    Profil bearbeiten: führt zu EditProfile(Activity), dort kann man sein Trainingslevel und co ändern.
+ */
+
 public class SettingsActivity extends AppCompatActivity {
 
     private DatabaseReference mUserDatabase;

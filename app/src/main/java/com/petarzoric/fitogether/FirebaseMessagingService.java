@@ -15,6 +15,15 @@ import com.google.firebase.messaging.RemoteMessage;
 /**
  * Created by petarzoric on 15.01.18.
  */
+    /*
+        Klasse für die Notifications.
+        Unterscheidet zwischen Request und Messages Notifications und baut dementsprechend
+        Notifications.
+        Zieht Datan aus der Index.js Klasse im Functions Folder.
+        Arbeitet mit Firebase Functions, siehe:
+        https://console.firebase.google.com/u/2/project/pem1718-f8aa0/functions/list
+    */
+
 
 public class FirebaseMessagingService extends com.google.firebase.messaging.FirebaseMessagingService {
 
@@ -31,6 +40,8 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
         String type = remoteMessage.getData().get("type");
         System.out.println(from_user_id);
         System.out.println("-----------------------------------------");
+
+        //Falls die Notifcation vom Type Request ist
         if(type.equals("request")){
             NotificationCompat.Builder mBuilder =
                     new NotificationCompat.Builder(this)
@@ -58,6 +69,8 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
             int mNotificationId = (int) System.currentTimeMillis();
             NotificationManager mNotifyMgr = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
             mNotifyMgr.notify(mNotificationId, mBuilder.build());
+
+            //Falls sie nicht vom Type Request ist(und somit Type Message ist, da wir nur diese 2 Types haben)
         } else {
             NotificationCompat.Builder mBuilder =
                     new NotificationCompat.Builder(this)
@@ -71,6 +84,10 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                    String user_name = dataSnapshot.child("name").getValue().toString();
+                   /*
+                   Komischerweise funktioniert das nicht ganz, das Name Field in der Chat view bleibt leer,
+                   wenn man auf die Notification klickt
+                    */
                     resultIntent.putExtra("user_name", user_name);
                 }
 

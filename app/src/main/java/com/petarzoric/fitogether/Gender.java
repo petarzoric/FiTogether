@@ -4,6 +4,11 @@ package com.petarzoric.fitogether;
 /**
  * Created by petarzoric on 12.12.17.
  */
+/*
+    Enum-Klasse für die ganze Gender-Geschichte.
+    Macht uns das Leben mit den Parse-Funktionen ein bisschen leichter,
+    sonst passiert hier nicht viel.
+ */
 
 public enum Gender {
     MÄNNLICH,

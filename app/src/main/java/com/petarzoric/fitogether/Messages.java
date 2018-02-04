@@ -3,6 +3,11 @@ package com.petarzoric.fitogether;
 /**
  * Created by petarzoric on 17.01.18.
  */
+/*
+    Model Klasse für den MessagesAdapter,
+    speichert halt paar Infos, die wird brauchen,
+    imo recht selbsterklärend.
+ */
 
 public class Messages {
 

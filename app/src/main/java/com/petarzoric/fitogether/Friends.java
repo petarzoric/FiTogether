@@ -3,6 +3,12 @@ package com.petarzoric.fitogether;
 /**
  * Created by petarzoric on 16.01.18.
  */
+/*
+    Model Klasse für den ViewHolder in der FriendsView
+    Siehe FriendsActivity.
+    Macht nicht besonders viel, speichert lediglich, seit wann man
+    miteinander befreundet ist.
+ */
 
 public class Friends {
 

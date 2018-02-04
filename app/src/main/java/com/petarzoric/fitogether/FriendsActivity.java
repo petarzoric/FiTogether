@@ -25,6 +25,25 @@ import com.squareup.picasso.Picasso;
 
 import java.sql.Struct;
 
+
+
+/*
+    Activity für die Friends View.
+    Diese View erreicht, in dem man den Plus Button im Chat Tab drückt,
+    ähnlich wie bei Whatsapp.
+    Das Tab zeigt alle Freunde an.
+
+    Will man einer Person schreiben, muss man zuerst auf diese View.
+    Hat man von hier aus die erste Nachricht gesendet,landet der entsprechende
+    Chat in im Tab für die Chats, so wie es bei Whatsapp auch der Fall ist.
+    Die Klasse bietet außerdem die Möglichkeit, eine Profilansicht von Freunden
+    anzusehen und diese zu entfernen.
+    Viel mehr gibt es dazu nicht zu sagen, standard Recycler View,
+    die die Eintrage mit dem unserem user single layout anzeigt.
+    Siehe dazu:
+    layout/user_single_layout.xml
+ */
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class FriendsActivity extends AppCompatActivity {

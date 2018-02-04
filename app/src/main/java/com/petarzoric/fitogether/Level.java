@@ -3,6 +3,10 @@ package com.petarzoric.fitogether;
 /**
  * Created by petarzoric on 12.12.17.
  */
+/*
+Auch nur ne Klasse, die uns das Leben mit Parse-Functions leichter macht, ähnlich wie die Gender Klasse.
+In dem Fall halt beim Level des Users.
+ */
 
 public enum Level {
     ANFÄNGER,

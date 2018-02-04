@@ -34,6 +34,20 @@ import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+/*
+    Activity die Friend/Trainings Request anzeigt.
+    Falls man mindesens eine Request hat, wird ein kleiner Button am linken unteren Rand im Chat Tab angezeigt.
+    Der Button zeigt die Nummer der Requests an. Klickt man drauf, gelangt man auf dies Activity, die die
+    entsprechenden Requests in einer Recyclerview mit unserem gewohnten Layout anzeigt.
+    Klickt man auf ein Item, bzw eine Request öffnet sich ein Popup:
+    Das Popup zeigt das Bild, den Namen, das Gym und die Message der Person an, die einem
+    die Request gesendet hat.
+    Man kann die Request dann abnehmen oder ablehnen.
+    Nimmt man, ist man offiziell befreundet und es wird ein Eintrag in der Friends DB angelegt.
+    In der FriendsActivity wird dann ein entsprechender Beitrag zu der Person gelistet.
+    Wenn man ablehnt, ist das logscherweise nicht der Fall.
+ */
+
 public class RequestActivity extends AppCompatActivity {
 
     private RecyclerView requestsList;
