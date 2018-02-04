@@ -1,6 +1,7 @@
 package com.petarzoric.fitogether;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -27,6 +28,15 @@ import java.text.DateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
+/*
+    Activity, die über die FriendsActitvity erreicht werden kann. Durch den klick auf einen user und dann auf "open profile"
+    gelangt man zu diesem Screen.
+    Die Klasse bietet auch die ganzen request sachen an, wird aber so nicht mehr verwendet. Wurde damals mit UsersActivity aber so verwendet.
+    Hat jetzt "nur noch" die Funktion, eine Person unfrienden zu können, da der Screen jetzt nur noch erreichbar ist, wenn man
+    bereits mit der Person befreundet ist.
+    Löscht dann die Einträge aus der DB und auch den entsprechenden Chat.
+ */
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -237,7 +247,7 @@ public class ProfileActivity extends AppCompatActivity {
 
 
 
-                                        //Toast.makeText(ProfileActivity.this, "request sent succesfully", Toast.LENGTH_LONG);
+
                                     }
                                 });
 
@@ -326,10 +336,15 @@ public class ProfileActivity extends AppCompatActivity {
                             friendDatabase.child(user_id).child(currentUser.getUid()).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
-                                    current_state = 0;
-                                    sendRequestButton.setText("SEND FRIEND REQUEST");
-                                    sendRequestButton.setEnabled(true);
+                                    DatabaseReference chatDataBase = rootref.child("Chat");
+                                    DatabaseReference messagesDataBase =rootref.child("messages");
+                                    messagesDataBase.child(currentUser.getUid()).child(user_id).removeValue();
+                                    messagesDataBase.child(user_id).child(currentUser.getUid()).removeValue();
+                                    chatDataBase.child(currentUser.getUid()).child(user_id).removeValue();
+                                    chatDataBase.child(user_id).child(currentUser.getUid()).removeValue();
                                     dialog.dismiss();
+                                    Intent backscreen = new Intent(ProfileActivity.this, FriendsActivity.class);
+                                    startActivity(backscreen);
                                 }
                             });
                         }
@@ -341,3 +356,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     }
 }
+
+
+
+

@@ -149,6 +149,7 @@ public class ChatActivity extends AppCompatActivity {
         }
 
         titleView.setText(userName);
+        rootRef.child("Chat").child(currentUserId).child(chatUser).child("seen").setValue(true);
 
         rootRef.child("Users2").child(chatUser).addValueEventListener(new ValueEventListener() {
             @Override

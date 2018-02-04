@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
@@ -49,6 +50,8 @@ public class Tab4Chat extends Fragment {
     private View mainView;
     private RecyclerView chatList;
     private long requestNumber;
+    private boolean friends;
+    private DatabaseReference friendsDatabase;
 
     //leerer Konstruktor wird benötigt, sonst gehts nicht
     public Tab4Chat(){
@@ -62,6 +65,7 @@ public class Tab4Chat extends Fragment {
                              Bundle savedInstanceState) {
 
         mainView = inflater.inflate(R.layout.tab4chat, container, false);
+        friendsDatabase = FirebaseDatabase.getInstance().getReference().child("Friends");
 
         requestNumber = 0;
         auth = FirebaseAuth.getInstance();
@@ -74,6 +78,8 @@ public class Tab4Chat extends Fragment {
         messageDatabase = FirebaseDatabase.getInstance().getReference().child("messages").child(current_user_id);
         chatList = (RecyclerView) mainView.findViewById(R.id.chatList2);
         System.out.println(chatList);
+
+
 
 
 
@@ -199,11 +205,32 @@ public class Tab4Chat extends Fragment {
                         viewHolder.view.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
+                                userDatabase.child(current_user_id).addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        if(dataSnapshot.hasChild(list_user_id)){
+                                            friends = true;
+                                        } else {
+                                            friends = false;
+                                        }
+                                    }
 
-                                Intent intent = new Intent(getContext(), ChatActivity.class);
-                                intent.putExtra("user_id", list_user_id);
-                                intent.putExtra("user_name", userName);
-                                startActivity(intent);
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+
+                                    }
+                                });
+
+                                if(friends == true){
+                                    Intent intent = new Intent(getContext(), ChatActivity.class);
+                                    intent.putExtra("user_id", list_user_id);
+                                    intent.putExtra("user_name", userName);
+                                    startActivity(intent);
+                                } else {
+                                    Toast.makeText(getActivity(), "Ihr seid nicht mehr befreundet.", Toast.LENGTH_SHORT).show();
+                                }
+
+
                             }
                         });
                     }

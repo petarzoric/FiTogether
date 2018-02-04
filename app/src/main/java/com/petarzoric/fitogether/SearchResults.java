@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -261,57 +262,61 @@ public class SearchResults extends AppCompatActivity {
                                             declineButton.setVisibility(View.INVISIBLE);
 
                                             if(sentRequest == false ){
-                                                sentRequest = true;
-                                                dialog.setTitle("sending friend_request...");
-                                                dialog.show();
+                                               if(!TextUtils.isEmpty(message.getText().toString())){
+                                                   sentRequest = true;
+                                                   dialog.setTitle("sending friend_request...");
+                                                   dialog.show();
 
-                                                HashMap<String, String> requestData = new HashMap<>();
-                                                requestData.put("request_type", "sent");
-                                                requestData.put("message", message.getText().toString());
+                                                   HashMap<String, String> requestData = new HashMap<>();
+                                                   requestData.put("request_type", "sent");
+                                                   requestData.put("message", message.getText().toString());
 
-                                                //notificationData.put("message", message.getText().toString());
-                                                friendRequestDatabase.child(currentUserId).child(clicked2).setValue(requestData)
-                                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                            @Override
-                                                            public void onComplete(@NonNull Task<Void> task) {
-                                                                if(task.isSuccessful()){
-                                                                    HashMap<String, String> requestData = new HashMap<>();
-                                                                    requestData.put("request_type", "received");
-                                                                    requestData.put("message", message.getText().toString());
+                                                   //notificationData.put("message", message.getText().toString());
+                                                   friendRequestDatabase.child(currentUserId).child(clicked2).setValue(requestData)
+                                                           .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                               @Override
+                                                               public void onComplete(@NonNull Task<Void> task) {
+                                                                   if(task.isSuccessful()){
+                                                                       HashMap<String, String> requestData = new HashMap<>();
+                                                                       requestData.put("request_type", "received");
+                                                                       requestData.put("message", message.getText().toString());
 
-                                                                    friendRequestDatabase.child(clicked2).child(currentUserId).setValue(requestData)
-                                                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                                                @Override
-                                                                                public void onSuccess(Void aVoid) {
-                                                                                    HashMap<String, String> notificationData = new HashMap<>();
-                                                                                    notificationData.put("from", currentUserId);
-                                                                                    notificationData.put("type", "request");
-                                                                                    notificationData.put("message", message.getText().toString());
+                                                                       friendRequestDatabase.child(clicked2).child(currentUserId).setValue(requestData)
+                                                                               .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                                                   @Override
+                                                                                   public void onSuccess(Void aVoid) {
+                                                                                       HashMap<String, String> notificationData = new HashMap<>();
+                                                                                       notificationData.put("from", currentUserId);
+                                                                                       notificationData.put("type", "request");
+                                                                                       notificationData.put("message", message.getText().toString());
 
-                                                                                    notificationDatabase.child(clicked2).push().setValue(notificationData)
-                                                                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                                                                @Override
-                                                                                                public void onComplete(@NonNull Task<Void> task) {
-                                                                                                    if(task.isSuccessful()){
+                                                                                       notificationDatabase.child(clicked2).push().setValue(notificationData)
+                                                                                               .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                                                                   @Override
+                                                                                                   public void onComplete(@NonNull Task<Void> task) {
+                                                                                                       if(task.isSuccessful()){
 
 
-                                                                                                        requestButton.setText("Anfrage abbrechen");
-                                                                                                        Request request = new Request(message.getText().toString(), currentUserId);
-                                                                                                        friendRequestDatabase.child(clicked2).child("requests").child(currentUserId).setValue(request);
-                                                                                                        message.setText("");
-                                                                                                        message.setVisibility(View.INVISIBLE);
-                                                                                                        declineButton.setVisibility(View.INVISIBLE);
-                                                                                                        dialog.dismiss();
+                                                                                                           requestButton.setText("Anfrage abbrechen");
+                                                                                                           Request request = new Request(message.getText().toString(), currentUserId);
+                                                                                                           friendRequestDatabase.child(clicked2).child("requests").child(currentUserId).setValue(request);
+                                                                                                           message.setText("");
+                                                                                                           message.setVisibility(View.INVISIBLE);
+                                                                                                           declineButton.setVisibility(View.INVISIBLE);
+                                                                                                           dialog.dismiss();
 
-                                                                                                    }
-                                                                                                }
-                                                                                            });
+                                                                                                       }
+                                                                                                   }
+                                                                                               });
 
-                                                                                }
-                                                                            });
-                                                                }
-                                                            }
-                                                        });
+                                                                                   }
+                                                                               });
+                                                                   }
+                                                               }
+                                                           });
+                                               } else {
+                                                   Toast.makeText(SearchResults.this, "Eine Anfrage ohne Nachricht ist bisschen strange, findest du nicht?", Toast.LENGTH_LONG).show();
+                                               }
                                             } else {
 
                                                 dialog.setTitle("deleting friend_request...");
